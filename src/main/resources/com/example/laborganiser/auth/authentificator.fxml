@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane minHeight="300.0" minWidth="500.0" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.laborganiser.auth.AuthController">
+   <children>
+      <HBox prefHeight="100.0" prefWidth="300.0">
+         <children>
+            <Region HBox.hgrow="ALWAYS" />
+            <VBox alignment="CENTER"  minHeight="-Infinity" minWidth="200.0" prefHeight="400" prefWidth="300" spacing="10.0">
+               <children>
+                  <Label text="Enter your credentials" />
+                  <TextField />
+                  <PasswordField />
+                  <Button mnemonicParsing="false" text="Login" />
+                  <Hyperlink onAction="#onRegisterClicked" text="Don't have an account? Register here" />
+               </children>
+            </VBox>
+            <Region HBox.hgrow="ALWAYS" />
+         </children>
+      </HBox>
+   </children>
+</StackPane>
