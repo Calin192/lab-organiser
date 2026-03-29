@@ -3,22 +3,18 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<StackPane minHeight="300.0" minWidth="500.0" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.laborganiser.auth.AuthController">
+<StackPane stylesheets="@authentificator.css" styleClass="root" minHeight="300.0" minWidth="500.0" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.laborganiser.auth.AuthController">
    <children>
-      <HBox prefHeight="100.0" prefWidth="300.0">
-         <children>
-            <Region HBox.hgrow="ALWAYS" />
-            <VBox alignment="CENTER"  minHeight="-Infinity" minWidth="200.0" prefHeight="400" prefWidth="300" spacing="10.0">
+
+            <VBox alignment="CENTER" styleClass="card" fx:id="vbox" spacing="15.0">
                <children>
-                  <Label text="Enter your credentials" />
-                  <TextField />
-                  <PasswordField />
-                  <Button mnemonicParsing="false" text="Login" />
-                  <Hyperlink onAction="#onRegisterClicked" text="Don't have an account? Register here" />
+                  <Label text="Enter your credentials" styleClass="title"/>
+                  <TextField promptText="Username" fx:id="usernameField" styleClass="input" maxWidth="300"/>
+                  <PasswordField promptText="Password" fx:id="passwordField" styleClass="input" maxWidth="300"/>
+                  <Button mnemonicParsing="false" text="Login" onAction="#onLoginClicked" styleClass="primary-button"/>
+                  <Hyperlink onAction="#onRegisterClicked" text="Don't have an account? Register here" styleClass="link"/>
                </children>
             </VBox>
-            <Region HBox.hgrow="ALWAYS" />
-         </children>
-      </HBox>
+
    </children>
 </StackPane>

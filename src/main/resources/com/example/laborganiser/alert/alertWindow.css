@@ -1,0 +1,46 @@
+/* Background overlay */
+.root {
+    -fx-background-color: rgba(0, 0, 0, 0.6);
+}
+
+/* Card (container alert) */
+.card {
+    -fx-background-color: #2f2f4f;
+    -fx-padding: 25;
+    -fx-background-radius: 0;
+    -fx-spacing: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.5), 20, 0.3, 0, 5);
+}
+
+/* Title */
+.title {
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+/* Message text */
+.label {
+    -fx-text-fill: #cccccc;
+    -fx-font-size: 13px;
+}
+
+/* Button */
+.primary-button {
+    -fx-background-color: #6c63ff;
+    -fx-text-fill: white;
+    -fx-background-radius: 8;
+    -fx-padding: 8 15;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+/* Hover effect */
+.primary-button:hover {
+    -fx-background-color: #7d75ff;
+}
+
+/* Press effect (nice touch) */
+.primary-button:pressed {
+    -fx-background-color: #5a54e0;
+}

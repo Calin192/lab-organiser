@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="$CONTROLLER_NAME$"
-            prefHeight="400.0" prefWidth="600.0" >
+<StackPane stylesheets="@register.css" styleClass="root" minHeight="300.0" minWidth="500.0" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.laborganiser.auth.RegisterController">
 
-</AnchorPane>
+               <children>
+
+                      <VBox alignment="CENTER" minHeight="-Infinity" minWidth="200.0" prefHeight="400" prefWidth="300" spacing="10.0" styleClass="card">
+                          <children>
+                              <Label text="Enter your credentials" styleClass="title"/>
+                              <TextField promptText="Username" fx:id="username" styleClass="input" maxWidth="300"/>
+                              <PasswordField promptText="Password" fx:id="password" styleClass="input" maxWidth="300"/>
+                              <PasswordField promptText="Confirm password" fx:id="passwordConfirm" styleClass="input" maxWidth="300"/>
+                              <Button mnemonicParsing="false" text="Register" onAction="#onRegisterClick" styleClass="primary-button"/>
+
+                          </children>
+                      </VBox>
+                   <Button mnemonicParsing="false" onAction="#onBackToLoginClicked" text="Back" StackPane.alignment="TOP_LEFT"  styleClass="back-button"/>
+                  </children>
+
+</StackPane>

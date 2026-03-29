@@ -17,7 +17,7 @@ val junitVersion = "5.12.1"
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(8)
+        languageVersion = JavaLanguageVersion.of(21)
     }
 }
 
@@ -38,11 +38,9 @@ javafx {
 dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+    implementation("com.google.code.gson:gson:2.10.1")
 }
 
-tasks.withType<Test> {
-    useJUnitPlatform()
-}
 
 jlink {
     imageZip.set(layout.buildDirectory.file("/distributions/app-${javafx.platform.classifier}.zip"))

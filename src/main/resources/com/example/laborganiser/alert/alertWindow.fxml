@@ -1,14 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="$CONTROLLER_NAME$"
-            prefHeight="400.0" prefWidth="600.0" >
+<StackPane xmlns="http://javafx.com/javafx/17"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.example.laborganiser.alerts.AlertController"
+           stylesheets="@alertWindow.css"
+           styleClass="root"
+            prefWidth="300">
 
-</AnchorPane>
+    <children>
+        <VBox alignment="CENTER"
+              spacing="15"
+              styleClass="card">
+
+            <children>
+                <Label fx:id="titleLabel" text="Title" styleClass="title" wrapText="true"/>
+
+                <Label fx:id="messageLabel"
+                       text="Message"
+                       wrapText="true"
+                       style="-fx-text-fill: #cccccc;"/>
+
+                <Button text="OK"
+                        onAction="#onOkClicked"
+                        styleClass="primary-button"/>
+            </children>
+
+        </VBox>
+    </children>
+
+</StackPane>
