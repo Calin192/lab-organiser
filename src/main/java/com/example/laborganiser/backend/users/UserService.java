@@ -1,7 +1,4 @@
-package com.example.laborganiser.users.service;
-
-import com.example.laborganiser.users.domain.User;
-import com.example.laborganiser.users.repository.UserRepo;
+package com.example.laborganiser.backend.users;
 
 import java.util.List;
 

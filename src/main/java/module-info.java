@@ -4,9 +4,10 @@ module com.example.laborganiser {
     requires com.google.gson;
 
     opens com.example.laborganiser to javafx.fxml;
-    opens com.example.laborganiser.auth to javafx.fxml;
-    opens com.example.laborganiser.users.domain to com.google.gson;
-    opens com.example.laborganiser.alerts to javafx.fxml;
+    opens com.example.laborganiser.frontend.auth to javafx.fxml;
+    opens com.example.laborganiser.backend.users to com.google.gson;
+    opens com.example.laborganiser.frontend.alerts to javafx.fxml;
+    opens com.example.laborganiser.frontend.mainPage to javafx.fxml;
 
     exports com.example.laborganiser;
 }

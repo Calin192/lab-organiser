@@ -1,9 +1,9 @@
 package com.example.laborganiser;
 
 
-import com.example.laborganiser.auth.AuthController;
-import com.example.laborganiser.users.repository.UserRepo;
-import com.example.laborganiser.users.service.UserService;
+import com.example.laborganiser.frontend.auth.AuthController;
+import com.example.laborganiser.backend.users.UserRepo;
+import com.example.laborganiser.backend.users.UserService;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -23,7 +23,7 @@ public class HelloApplication extends Application {
 
     public void start(Stage stage) throws IOException {
         
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/com/example/laborganiser/auth/authentificator.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/com/example/laborganiser/frontend/auth/authentificator.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 800, 600);
         AuthController controller = fxmlLoader.getController();
 
@@ -32,7 +32,7 @@ public class HelloApplication extends Application {
         userService = new UserService(userRepo);
         controller.setStage(stage, userService);
 
-        stage.setTitle("Hello!");
+        stage.setTitle("Flasky");
         stage.setScene(scene);
         stage.setResizable(true);
         stage.show();

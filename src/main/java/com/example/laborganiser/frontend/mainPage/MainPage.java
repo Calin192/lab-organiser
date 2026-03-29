@@ -1,9 +1,9 @@
-package com.example.laborganiser.mainPage;
+package com.example.laborganiser.frontend.mainPage;
 
-import com.example.laborganiser.users.service.UserService;
+import com.example.laborganiser.backend.users.UserService;
 import javafx.stage.Stage;
 
-public class mainPage {
+public class MainPage {
 
     private Stage stage;
     private UserService userService;
@@ -11,5 +11,9 @@ public class mainPage {
     public void setStage(Stage stage, UserService userService) {
         this.stage = stage;
         this.userService = userService;
+
+        stage.setWidth(1200);
+        stage.setHeight(800);
+        stage.centerOnScreen();
     }
 }

@@ -1,4 +1,4 @@
-package com.example.laborganiser.alerts;
+package com.example.laborganiser.frontend.alerts;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

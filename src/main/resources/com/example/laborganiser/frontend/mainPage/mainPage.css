@@ -1,0 +1,57 @@
+/* Background */
+.root {
+    -fx-background-color: #1e1e2f;
+    -fx-font-family: "Segoe UI", "Roboto", sans-serif;
+}
+
+/* 🔝 Navbar */
+.navbar {
+    -fx-background-color: #2b2b45;
+    -fx-padding: 15;
+}
+
+.logo {
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+.nav-button {
+    -fx-background-color: #6c63ff;
+    -fx-text-fill: white;
+    -fx-background-radius: 8;
+    -fx-padding: 8 15;
+}
+
+.nav-button:hover {
+    -fx-background-color: #7d75ff;
+}
+
+/* 📚 Sidebar */
+.sidebar {
+    -fx-background-color: #25253a;
+    -fx-padding: 15;
+    -fx-pref-width: 180;
+}
+
+.sidebar-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #cccccc;
+    -fx-padding: 10;
+    -fx-alignment: CENTER_LEFT;
+}
+
+.sidebar-button:hover {
+    -fx-background-color: #3b3b5f;
+    -fx-text-fill: white;
+}
+
+/* 🧩 Content */
+.content {
+    -fx-padding: 20;
+}
+
+.title {
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
+}

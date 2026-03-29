@@ -1,6 +1,5 @@
-package com.example.laborganiser.users.repository;
+package com.example.laborganiser.backend.users;
 
-import com.example.laborganiser.users.domain.User;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

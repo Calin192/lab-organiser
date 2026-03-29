@@ -1,4 +1,4 @@
-package com.example.laborganiser.alerts;
+package com.example.laborganiser.frontend.alerts;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,7 +12,6 @@ public class AlertWindow {
         try {
             FXMLLoader loader = new FXMLLoader(
                     AlertWindow.class.getResource("/com/example/laborganiser/alert/alertWindow.fxml")
-
             );
 
             Parent root = loader.load();

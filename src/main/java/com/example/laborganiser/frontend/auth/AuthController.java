@@ -1,13 +1,12 @@
-package com.example.laborganiser.auth;
+package com.example.laborganiser.frontend.auth;
 
-import com.example.laborganiser.alerts.AlertWindow;
-import com.example.laborganiser.users.service.UserService;
+import com.example.laborganiser.frontend.alerts.AlertWindow;
+import com.example.laborganiser.frontend.mainPage.MainPage;
+import com.example.laborganiser.backend.users.UserService;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
@@ -42,7 +41,7 @@ public class AuthController {
     @FXML
     private void onRegisterClicked() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/laborganiser/auth/register.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/laborganiser/frontend/auth/register.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 800, 600);
             RegisterController controller = fxmlLoader.getController();
 
@@ -58,8 +57,22 @@ public class AuthController {
 
     @FXML
     private void onLoginClicked() {
+//        usernameField.setText("admin");
+//        passwordField.setText("admin123");
         if(userService.loginUser(usernameField.getText(), passwordField.getText())) {
-            System.out.println("smecher");
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/laborganiser/frontend/mainPage/mainPage.fxml"));
+                Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+                MainPage controller = fxmlLoader.getController();
+
+
+                controller.setStage(stage,userService);
+
+
+                stage.setScene(scene);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }else
         {
             alert.showAlert( "Error processing the username and/or password",

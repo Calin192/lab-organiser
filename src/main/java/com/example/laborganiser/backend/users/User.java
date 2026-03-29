@@ -1,4 +1,4 @@
-package com.example.laborganiser.users.domain;
+package com.example.laborganiser.backend.users;
 
 public class User {
     private String username;

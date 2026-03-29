@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="/HelloApplication (snapshot).java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="/HelloApplication (snapshot).java" />
+              <option name="originalContent" value="package com.example.laborganiser;&#10;&#10;import javafx.application.Application;&#10;import javafx.fxml.FXMLLoader;&#10;import javafx.scene.Scene;&#10;import javafx.stage.Stage;&#10;&#10;import java.io.IOException;&#10;&#10;public class HelloApplication extends Application {&#10;    @Override&#10;    public void start(Stage stage) throws IOException {&#10;        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(&quot;authentificator.fxml&quot;));&#10;        Scene scene = new Scene(fxmlLoader.load());&#10;        stage.setTitle(&quot;Hello!&quot;);&#10;        stage.setScene(scene);&#10;        stage.setResizable(true);&#10;        stage.show();&#10;    }&#10;}&#10;" />
+              <option name="updatedContent" value="package com.example.laborganiser;&#10;&#10;import javafx.application.Application;&#10;import javafx.fxml.FXMLLoader;&#10;import javafx.scene.Scene;&#10;import javafx.stage.Stage;&#10;&#10;import java.io.IOException;&#10;&#10;public class HelloApplication extends Application {&#10;    @Override&#10;    public void start(Stage stage) throws IOException {&#10;        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource(&quot;/com/example/laborganiser/authentificator.fxml&quot;));&#10;        Scene scene = new Scene(fxmlLoader.load());&#10;        stage.setTitle(&quot;Hello!&quot;);&#10;        stage.setScene(scene);&#10;        stage.setResizable(true);&#10;        stage.show();&#10;    }&#10;}" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="/User (snapshot).java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="/User (snapshot).java" />
+              <option name="originalContent" value="package com.example.laborganiser.users.domain;&#10;&#10;public class User {&#10;    private String username;&#10;    private String password;&#10;&#10;    public void User(String username, String password) {&#10;        this.username = username;&#10;        this.password = password;&#10;    }&#10;&#10;    public String getUsername() {&#10;        return username;&#10;    }&#10;&#10;    public void setUsername(String username) {&#10;        this.username = username;&#10;    }&#10;&#10;    public String getPassword() {&#10;        return password;&#10;    }&#10;&#10;    public void setPassword(String password) {&#10;        this.password = password;&#10;    }&#10;}&#10;" />
+              <option name="updatedContent" value="package com.example.laborganiser.users.domain;&#10;&#10;public class User {&#10;    private String username;&#10;    private String password;&#10;&#10;    public User() {&#10;    }&#10;&#10;    public User(String username, String password) {&#10;        this.username = username;&#10;        this.password = password;&#10;    }&#10;&#10;    public String getUsername() {&#10;        return username;&#10;    }&#10;&#10;    public void setUsername(String username) {&#10;        this.username = username;&#10;    }&#10;&#10;    public String getPassword() {&#10;        return password;&#10;    }&#10;&#10;    public void setPassword(String password) {&#10;        this.password = password;&#10;    }&#10;}" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="/build.gradle (snapshot).kts">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="/build.gradle (snapshot).kts" />
+              <option name="originalContent" value="plugins {&#10;    java&#10;    application&#10;    id(&quot;org.javamodularity.moduleplugin&quot;) version &quot;1.8.15&quot;&#10;    id(&quot;org.openjfx.javafxplugin&quot;) version &quot;0.0.13&quot;&#10;    id(&quot;org.beryx.jlink&quot;) version &quot;2.25.0&quot;&#10;}&#10;&#10;group = &quot;com.example&quot;&#10;version = &quot;1.0-SNAPSHOT&quot;&#10;&#10;repositories {&#10;    mavenCentral()&#10;}&#10;&#10;val junitVersion = &quot;5.12.1&quot;&#10;&#10;java {&#10;    toolchain {&#10;        languageVersion = JavaLanguageVersion.of(21)&#10;    }&#10;}&#10;&#10;tasks.withType&lt;JavaCompile&gt; {&#10;    options.encoding = &quot;UTF-8&quot;&#10;}&#10;&#10;application {&#10;    mainModule.set(&quot;com.example.laborganiser&quot;)&#10;    mainClass.set(&quot;com.example.laborganiser.HelloApplication&quot;)&#10;}&#10;&#10;javafx {&#10;    version = &quot;21.0.6&quot;&#10;    modules = listOf(&quot;javafx.controls&quot;, &quot;javafx.fxml&quot;)&#10;}&#10;&#10;dependencies {&#10;    testImplementation(&quot;org.junit.jupiter:junit-jupiter-api:${junitVersion}&quot;)&#10;    testRuntimeOnly(&quot;org.junit.jupiter:junit-jupiter-engine:${junitVersion}&quot;)&#10;}&#10;&#10;tasks.withType&lt;Test&gt; {&#10;    useJUnitPlatform()&#10;}&#10;&#10;jlink {&#10;    imageZip.set(layout.buildDirectory.file(&quot;/distributions/app-${javafx.platform.classifier}.zip&quot;))&#10;    options.set(listOf(&quot;--strip-debug&quot;, &quot;--compress&quot;, &quot;2&quot;, &quot;--no-header-files&quot;, &quot;--no-man-pages&quot;))&#10;    launcher {&#10;        name = &quot;app&quot;&#10;    }&#10;}&#10;" />
+              <option name="updatedContent" value="plugins {&#10;    java&#10;    application&#10;    id(&quot;org.javamodularity.moduleplugin&quot;) version &quot;1.8.15&quot;&#10;    id(&quot;org.openjfx.javafxplugin&quot;) version &quot;0.0.13&quot;&#10;    id(&quot;org.beryx.jlink&quot;) version &quot;2.25.0&quot;&#10;}&#10;&#10;group = &quot;com.example&quot;&#10;version = &quot;1.0-SNAPSHOT&quot;&#10;&#10;repositories {&#10;    mavenCentral()&#10;}&#10;&#10;val junitVersion = &quot;5.12.1&quot;&#10;&#10;java {&#10;    toolchain {&#10;        languageVersion = JavaLanguageVersion.of(21)&#10;    }&#10;}&#10;&#10;tasks.withType&lt;JavaCompile&gt; {&#10;    options.encoding = &quot;UTF-8&quot;&#10;}&#10;&#10;application {&#10;    mainModule.set(&quot;com.example.laborganiser&quot;)&#10;    mainClass.set(&quot;com.example.laborganiser.HelloApplication&quot;)&#10;}&#10;&#10;javafx {&#10;    version = &quot;21.0.6&quot;&#10;    modules = listOf(&quot;javafx.controls&quot;, &quot;javafx.fxml&quot;)&#10;}&#10;&#10;dependencies {&#10;    testImplementation(&quot;org.junit.jupiter:junit-jupiter-api:${junitVersion}&quot;)&#10;    testRuntimeOnly(&quot;org.junit.jupiter:junit-jupiter-engine:${junitVersion}&quot;)&#10;    implementation(&quot;com.google.code.gson:gson:2.10.1&quot;)&#10;}&#10;&#10;tasks.withType&lt;Test&gt; {&#10;    useJUnitPlatform()&#10;}&#10;&#10;jlink {&#10;    imageZip.set(layout.buildDirectory.file(&quot;/distributions/app-${javafx.platform.classifier}.zip&quot;))&#10;    options.set(listOf(&quot;--strip-debug&quot;, &quot;--compress&quot;, &quot;2&quot;, &quot;--no-header-files&quot;, &quot;--no-man-pages&quot;))&#10;    launcher {&#10;        name = &quot;app&quot;&#10;    }&#10;}" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="/module-info (snapshot).java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="/module-info (snapshot).java" />
+              <option name="originalContent" value="module com.example.laborganiser {&#10;    requires javafx.controls;&#10;    requires javafx.fxml;&#10;&#10;&#10;    opens com.example.laborganiser to javafx.fxml;&#10;    opens com.example.laborganiser.auth to javafx.fxml;&#10;&#10;    exports com.example.laborganiser;&#10;}" />
+              <option name="updatedContent" value="module com.example.laborganiser {&#10;    requires javafx.controls;&#10;    requires javafx.fxml;&#10;    requires com.google.gson;&#10;&#10;&#10;    opens com.example.laborganiser to javafx.fxml;&#10;    opens com.example.laborganiser.auth to javafx.fxml;&#10;    opens com.example.laborganiser.users.domain to com.google.gson;&#10;&#10;    exports com.example.laborganiser;&#10;}" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

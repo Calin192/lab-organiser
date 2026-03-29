@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane styleClass="root" stylesheets="@mainPage.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.laborganiser.frontend.mainPage.MainPage">
+
+
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20" styleClass="navbar">
+            <children>
+                <Label styleClass="logo" text="Lab Organiser" />
+                <Region HBox.hgrow="ALWAYS" />
+                <Button styleClass="nav-button" text="Logout" />
+            </children>
+        </HBox>
+    </top>
+
+
+    <left>
+        <VBox spacing="10" styleClass="sidebar" fx:id="sidebarContainer">
+        </VBox>
+    </left>
+
+    <center>
+        <StackPane styleClass="content">
+            <children>
+                <Label styleClass="title" text="Welcome to your dashboard" />
+            </children>
+        </StackPane>
+    </center>
+   <right>
+      <ScrollBar orientation="VERTICAL" BorderPane.alignment="CENTER" />
+   </right>
+
+</BorderPane>

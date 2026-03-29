@@ -1,13 +1,12 @@
-package com.example.laborganiser.auth;
+package com.example.laborganiser.frontend.auth;
 
-import com.example.laborganiser.alerts.AlertWindow;
-import com.example.laborganiser.users.domain.User;
-import com.example.laborganiser.users.service.UserService;
+import com.example.laborganiser.frontend.alerts.AlertWindow;
+import com.example.laborganiser.backend.users.User;
+import com.example.laborganiser.backend.users.UserService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -35,7 +34,7 @@ public class RegisterController {
     @FXML
     private void onBackToLoginClicked() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/laborganiser/auth/authentificator.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/laborganiser/frontend/auth/authentificator.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 800, 600);
             AuthController controller = fxmlLoader.getController();
             controller.setStage(stage,userService);
