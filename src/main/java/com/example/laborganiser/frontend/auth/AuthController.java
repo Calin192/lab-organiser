@@ -40,6 +40,7 @@ public class AuthController {
 
     @FXML
     private void onRegisterClicked() {
+
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/laborganiser/frontend/auth/register.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 800, 600);
@@ -57,8 +58,8 @@ public class AuthController {
 
     @FXML
     private void onLoginClicked() {
-//        usernameField.setText("admin");
-//        passwordField.setText("admin123");
+        usernameField.setText("admin");
+        passwordField.setText("admin123");
         if(userService.loginUser(usernameField.getText(), passwordField.getText())) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/laborganiser/frontend/mainPage/mainPage.fxml"));

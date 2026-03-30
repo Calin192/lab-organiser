@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.laborganiser.frontend.vialAdd.VialAddController"
+            prefHeight="400.0" prefWidth="600.0">
+    <children>
+        <VBox alignment="CENTER" spacing="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+            <children>
+                <Label text="Add New Vial" styleClass="title"/>
+                <TextField promptText="Vial Name" fx:id="vialNameField" styleClass="input" maxWidth="300"/>
+                <TextField promptText="Material" fx:id="vialMaterialField" styleClass="input" maxWidth="300"/>
+                <TextField promptText="Shape" fx:id="vialShapeField" styleClass="input" maxWidth="300"/>
+                <TextField promptText="Volume" fx:id="vialVolumeField" styleClass="input" maxWidth="300"/>
+                <TextField promptText="Unit" fx:id="vialUnitField" styleClass="input" maxWidth="300"/>
+                <TextField promptText="Color" fx:id="vialColorField" styleClass="input" maxWidth="300"/>
+                <TextField promptText="Cap" fx:id="vialCapField" styleClass="input" maxWidth="300"/>
+                <TextField promptText="Cap Color" fx:id="vialCapColorField" styleClass="input" maxWidth="300"/>
+                <TextField promptText="Description" fx:id="vialDescriptionField" styleClass="input"  maxWidth="300"/>
+                <Button mnemonicParsing="false" text="Add Vial" onAction="#onAddVialClicked" styleClass="primary-button"/>
+            </children>
+        </VBox>
+    </children>
+
+</AnchorPane>
+
+<!--        private int id;-->
+<!--        private String name;-->
+<!--        private String material;-->
+<!--        private String shape;-->
+<!--        private String size;-->
+<!--        private String unit;-->
+<!--        private String color;-->
+<!--        private String cap;-->
+<!--        private String capColor;-->
+<!--        private String description;-->
