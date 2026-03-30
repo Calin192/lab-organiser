@@ -1,5 +1,8 @@
 package com.example.laborganiser.frontend.auth;
 
+import com.example.laborganiser.app.AppContext;
+import com.example.laborganiser.backend.security.PasswordUtil;
+import com.example.laborganiser.backend.vials.VialService;
 import com.example.laborganiser.frontend.alerts.AlertWindow;
 import com.example.laborganiser.frontend.mainPage.MainPage;
 import com.example.laborganiser.backend.users.UserService;
@@ -19,19 +22,21 @@ public class AuthController {
     public TextField usernameField;
     public PasswordField passwordField;
     private Stage stage;
-    private AlertWindow alert;
+    private final AlertWindow alert = new AlertWindow();
+    private final PasswordUtil passwordUtil = new PasswordUtil();
 
-    private UserService userService;
 
+    private AppContext appContext;
 
     @FXML
     private VBox vbox;
 
-    public void setStage(Stage stage, UserService userService) {
+
+    public void init(Stage stage,AppContext appContext) {
         this.stage = stage;
-        this.userService = userService;
-        this.alert = new AlertWindow();
+        this.appContext = appContext;
     }
+
 
     @FXML
     private void initialize() {
@@ -47,7 +52,7 @@ public class AuthController {
             RegisterController controller = fxmlLoader.getController();
 
 
-            controller.setStage(stage,userService);
+            controller.init(stage,appContext);
 
 
             stage.setScene(scene);
@@ -58,16 +63,19 @@ public class AuthController {
 
     @FXML
     private void onLoginClicked() {
-        usernameField.setText("admin");
-        passwordField.setText("admin123");
-        if(userService.loginUser(usernameField.getText(), passwordField.getText())) {
+//        usernameField.setText("admin");
+//        passwordField.setText("admin123");
+
+
+
+        if(appContext.getUserService().loginUser(usernameField.getText(), passwordField.getText())) {
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/laborganiser/frontend/mainPage/mainPage.fxml"));
                 Scene scene = new Scene(fxmlLoader.load(), 800, 600);
                 MainPage controller = fxmlLoader.getController();
 
 
-                controller.setStage(stage,userService);
+                controller.init(stage,appContext);
 
 
                 stage.setScene(scene);

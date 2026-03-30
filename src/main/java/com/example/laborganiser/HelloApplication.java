@@ -1,6 +1,9 @@
 package com.example.laborganiser;
 
 
+import com.example.laborganiser.app.AppContext;
+import com.example.laborganiser.backend.vials.VialRepo;
+import com.example.laborganiser.backend.vials.VialService;
 import com.example.laborganiser.frontend.auth.AuthController;
 import com.example.laborganiser.backend.users.UserRepo;
 import com.example.laborganiser.backend.users.UserService;
@@ -16,6 +19,8 @@ public class HelloApplication extends Application {
 
     private static UserRepo userRepo;
     private static UserService userService;
+    private static VialRepo vialRepo;
+    private static VialService vialService;
 
     @Override
 
@@ -28,9 +33,11 @@ public class HelloApplication extends Application {
         AuthController controller = fxmlLoader.getController();
 
 
-        UserRepo userRepo = new UserRepo();
-        userService = new UserService(userRepo);
-        controller.setStage(stage, userService);
+        AppContext appContext = new AppContext();
+
+
+
+        controller.init(stage,appContext);
 
         stage.setTitle("Flasky");
         stage.setScene(scene);

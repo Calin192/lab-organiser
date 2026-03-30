@@ -1,6 +1,7 @@
 package com.example.laborganiser.backend.users;
 
 import java.util.List;
+import com.example.laborganiser.backend.security.PasswordUtil;
 
 public class UserService {
 
@@ -11,7 +12,13 @@ public class UserService {
     }
 
     public boolean loginUser(String username, String password) {
-        User user = new User(username, password);
+        User user = new User(username, PasswordUtil.hashPassword(password));
+
+        if(user==null){
+            return false;
+        }
+
+
         return userRepo.loginUser(user);
     }
 
@@ -20,6 +27,9 @@ public class UserService {
     }
 
     public void addUser(User user) {
+        String hashedPassword = PasswordUtil.hashPassword(user.getPassword());
+        user.setPassword(hashedPassword);
+
         userRepo.addUser(user);
     }
 

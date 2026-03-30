@@ -1,5 +1,6 @@
 package com.example.laborganiser.frontend.auth;
 
+import com.example.laborganiser.app.AppContext;
 import com.example.laborganiser.frontend.alerts.AlertWindow;
 import com.example.laborganiser.backend.users.User;
 import com.example.laborganiser.backend.users.UserService;
@@ -15,20 +16,23 @@ import java.io.IOException;
 
 public class RegisterController {
 
+    @FXML
     public PasswordField passwordConfirm;
+    @FXML
     public PasswordField password;
+    @FXML
     public TextField username;
     private Stage stage;
-    private AlertWindow alert;
+    private final AlertWindow alert = new AlertWindow();
 
     private UserService userService;
+    private AppContext appContext;
 
 
-    public void setStage(Stage stage,UserService userService) {
+    public void init(Stage stage, AppContext  appContext) {
         this.stage = stage;
-        this.userService = userService;
-
-        this.alert = new AlertWindow();
+        this.appContext = appContext;
+        this.userService = appContext.getUserService();
     }
 
     @FXML
@@ -37,10 +41,10 @@ public class RegisterController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/laborganiser/frontend/auth/authentificator.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 800, 600);
             AuthController controller = fxmlLoader.getController();
-            controller.setStage(stage,userService);
+            controller.init(stage,appContext);
             stage.setScene(scene);
         } catch (IOException e) {
-            e.printStackTrace();
+            alert.showAlert("Error", "Could not load login page.");
         }
     }
 
