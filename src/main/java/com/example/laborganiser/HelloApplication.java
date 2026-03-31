@@ -27,6 +27,7 @@ public class HelloApplication extends Application {
 
 
     public void start(Stage stage) throws IOException {
+        //bigest change
         
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/com/example/laborganiser/frontend/auth/authentificator.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 800, 600);
