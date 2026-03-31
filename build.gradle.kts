@@ -6,6 +6,8 @@ plugins {
     id("org.beryx.jlink") version "2.25.0"
 }
 
+
+
 group = "com.example"
 version = "1.0-SNAPSHOT"
 
@@ -32,7 +34,7 @@ application {
 
 javafx {
     version = "21.0.6"
-    modules = listOf("javafx.controls", "javafx.fxml")
+    modules = listOf("javafx.controls", "javafx.fxml","javafx.media")
 }
 
 dependencies {

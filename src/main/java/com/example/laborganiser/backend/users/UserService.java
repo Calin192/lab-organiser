@@ -41,7 +41,9 @@ public class UserService {
         userRepo.deleteUser(user);
     }
 
-
+    public User getUser(String username) {
+        return userRepo.getUser(username);
+    }
 
 
 }

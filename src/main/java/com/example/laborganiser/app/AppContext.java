@@ -1,5 +1,6 @@
 package com.example.laborganiser.app;
 
+import com.example.laborganiser.backend.users.User;
 import com.example.laborganiser.backend.users.UserRepo;
 import com.example.laborganiser.backend.users.UserService;
 import com.example.laborganiser.backend.vials.VialRepo;
@@ -8,6 +9,8 @@ import com.example.laborganiser.backend.vials.VialService;
 public class AppContext {
     private final UserService userService;
     private final VialService vialService;
+
+    private User currentUser;
 
     public AppContext() {
         UserRepo userRepo = new UserRepo();
@@ -23,5 +26,13 @@ public class AppContext {
 
     public VialService getVialService() {
         return vialService;
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+    }
+
+    public User getCurrentUser() {
+        return currentUser;
     }
 }

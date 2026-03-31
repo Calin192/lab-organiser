@@ -2,6 +2,7 @@ package com.example.laborganiser.frontend.auth;
 
 import com.example.laborganiser.app.AppContext;
 import com.example.laborganiser.backend.security.PasswordUtil;
+import com.example.laborganiser.backend.users.User;
 import com.example.laborganiser.backend.vials.VialService;
 import com.example.laborganiser.frontend.alerts.AlertWindow;
 import com.example.laborganiser.frontend.mainPage.MainPage;
@@ -63,8 +64,8 @@ public class AuthController {
 
     @FXML
     private void onLoginClicked() {
-//        usernameField.setText("admin");
-//        passwordField.setText("admin123");
+        usernameField.setText("admin");
+        passwordField.setText("admin123");
 
 
 
@@ -74,6 +75,9 @@ public class AuthController {
                 Scene scene = new Scene(fxmlLoader.load(), 800, 600);
                 MainPage controller = fxmlLoader.getController();
 
+                User user = appContext.getUserService().getUser(usernameField.getText());
+
+                appContext.setCurrentUser(user);
 
                 controller.init(stage,appContext);
 

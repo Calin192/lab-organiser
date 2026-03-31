@@ -13,7 +13,6 @@ public class MainPage {
 
     private Stage stage;
 
-
     private AppContext appContext;
 
     public void init(Stage stage, AppContext appContext) {
@@ -29,14 +28,17 @@ public class MainPage {
     public void onAddVialClick(ActionEvent actionEvent) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/laborganiser/frontend/vial/vialAdd.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+            Scene scene = new Scene(fxmlLoader.load(), 600, 800);
+
             VialAddController controller = fxmlLoader.getController();
 
+            controller.init(null,appContext);
 
-            controller.init(stage,appContext);
-
-
+            Stage stage = new Stage();
+            stage.setTitle("Add Vial");
             stage.setScene(scene);
+
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }

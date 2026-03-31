@@ -22,10 +22,22 @@ public class UserRepo {
     private List<User> loadUsersFromJson() {
         try {
             Path path = Paths.get(JSON_FILE_PATH);
+
+            if (!Files.exists(path)) {
+                return new ArrayList<>();
+            }
+
             String jsonContent = Files.readString(path);
+
+            if (jsonContent.isBlank()) {
+                return new ArrayList<>();
+            }
+
             Gson gson = new Gson();
-            users = gson.fromJson(jsonContent, new TypeToken<ArrayList<User>>(){}.getType());
-            return users;
+            List<User> loaded = gson.fromJson(jsonContent, new TypeToken<ArrayList<User>>(){}.getType());
+
+            return (loaded != null) ? loaded : new ArrayList<>();
+
         } catch (IOException e) {
             System.err.println("Error reading users.json: " + e.getMessage());
             return new ArrayList<>();
@@ -79,5 +91,18 @@ public class UserRepo {
         } catch (IOException e) {
             System.err.println("Error writing users.json: " + e.getMessage());
         }
+    }
+
+    public User getUser(String username) {
+        try{
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                return user;
+            }
+        }}
+        catch (NullPointerException e){
+            System.err.println("Error: " + e.getMessage());
+        }
+        return null;
     }
 }

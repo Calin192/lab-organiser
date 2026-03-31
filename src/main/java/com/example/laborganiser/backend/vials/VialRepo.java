@@ -14,6 +14,7 @@ import java.util.List;
 public class VialRepo {
     private List<Vial> vials;
     private static final String JSON_FILE_PATH = "src/main/resources/vials.json";
+    private int currentId;
 
     public VialRepo(List<Vial> vials) {
         this.vials = vials;
@@ -21,15 +22,37 @@ public class VialRepo {
 
     public VialRepo() {
         this.vials = loadVialsFromJson();
+
+        try{
+            currentId = vials.stream()
+                    .mapToInt(Vial::getId)
+                    .max()
+                    .orElse(0);
+        }catch(Exception e){
+            currentId = 0;
+        }
+
     }
 
     private List<Vial> loadVialsFromJson() {
         try {
             Path path = Paths.get(JSON_FILE_PATH);
+
+            if (!Files.exists(path)) {
+                return new ArrayList<>();
+            }
+
             String jsonContent = Files.readString(path);
+
+            if (jsonContent.isBlank()) {
+                return new ArrayList<>();
+            }
+
             Gson gson = new Gson();
-            vials = gson.fromJson(jsonContent, new TypeToken<ArrayList<Vial>>(){}.getType());
-            return vials;
+            List<Vial> loaded = gson.fromJson(jsonContent, new TypeToken<ArrayList<Vial>>(){}.getType());
+
+            return (loaded != null) ? loaded : new ArrayList<>();
+
         } catch (IOException e) {
             System.err.println("Error reading vials.json: " + e.getMessage());
             return new ArrayList<>();
@@ -48,13 +71,12 @@ public class VialRepo {
     }
 
     public boolean addVial(Vial vial) {
-            if (vial != null && !vials.contains(vial)) {
+            if (vials.size() == 0||(vial != null && !vials.contains(vial))) {
                 vials.add(vial);
                 saveVialsToJson();
                 return true;
             }
             return false;
-
     }
 
     private boolean removeVial(Vial vial) {
@@ -75,4 +97,13 @@ public class VialRepo {
         }
         return false;
     }
+
+    public int getVialCount() {
+        return vials.size();
+    }
+
+    public int getNextId(){
+        return ++currentId;
+    }
+
 }
