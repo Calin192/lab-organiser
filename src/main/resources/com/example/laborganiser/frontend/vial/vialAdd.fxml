@@ -19,10 +19,15 @@
 
                 <Label text="Add New Vial" styleClass="title"/>
                 <TextField promptText="Vial Name" fx:id="vialNameField" styleClass="input" maxWidth="300"/>
-                <TextField promptText="Material" fx:id="vialMaterialField" styleClass="input" maxWidth="300"/>
+                <HBox spacing="10" alignment="CENTER">
+                    <ToggleButton text="PLASTIC" fx:id="plasticBtn" styleClass="material-btn"/>
+                    <ToggleButton text="GLASS" fx:id="glassBtn" styleClass="material-btn"/>
+                </HBox>
                 <TextField promptText="Shape" fx:id="vialShapeField" styleClass="input" maxWidth="300"/>
-                <TextField promptText="Volume" fx:id="vialVolumeField" styleClass="input" maxWidth="300"/>
-                <TextField promptText="Unit" fx:id="vialUnitField" styleClass="input" maxWidth="300"/>
+                <HBox spacing="10" alignment="CENTER">
+                    <TextField promptText="Volume" fx:id="vialVolumeField" styleClass="input" maxWidth="300"/>
+                    <ComboBox promptText="Unit" fx:id="vialUnitField" styleClass="input" maxWidth="300"/>
+                </HBox>
                 <TextField promptText="Color" fx:id="vialColorField" styleClass="input" maxWidth="300"/>
                 <TextField promptText="Cap" fx:id="vialCapField" styleClass="input" maxWidth="300"/>
                 <TextField promptText="Cap Color" fx:id="vialCapColorField" styleClass="input" maxWidth="300"/>
@@ -30,7 +35,7 @@
                 <Button mnemonicParsing="false" fx:id="addButton" text="Add Vial" onAction="#onAddVialClicked" styleClass="primary-button" visible="false"/>
             </children>
         </VBox>
-        <Button mnemonicParsing="false" text="Back"  styleClass="back-button" StackPane.alignment="TOP_LEFT"/>
+        <Button mnemonicParsing="false" text="Back"  onAction="#onBackButtonClick" styleClass="back-button" StackPane.alignment="TOP_LEFT"/>
     </children>
 
 </StackPane>

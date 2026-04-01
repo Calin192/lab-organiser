@@ -11,6 +11,7 @@ module com.example.laborganiser {
     opens com.example.laborganiser.frontend.mainPage to javafx.fxml;
     opens com.example.laborganiser.frontend.vialAdd to javafx.fxml;
     opens com.example.laborganiser.backend.vials to com.google.gson;
+    opens com.example.laborganiser.app to javafx.fxml;
 
     exports com.example.laborganiser;
 }

@@ -18,6 +18,10 @@
     -fx-padding: 10;
 }
 
+.title{
+    -fx-text-fill: white;
+}
+
 
 .input {
     -fx-background-color: #3b3b5f;
@@ -27,10 +31,25 @@
     -fx-padding: 8;
 }
 
+
 .input .content {
     -fx-background-color: #3b3b5f;
 }
 
+.material-btn {
+    -fx-background-color: #3b3b5f;
+    -fx-text-fill: white;
+    -fx-background-radius: 8;
+    -fx-padding: 8 16;
+}
+
+.material-btn:selected {
+    -fx-background-color: #595969;
+}
+
+.material-btn:hover {
+    -fx-background-color: #4a4a6a;
+}
 
 
 .primary-button {

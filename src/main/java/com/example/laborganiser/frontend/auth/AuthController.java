@@ -1,6 +1,7 @@
 package com.example.laborganiser.frontend.auth;
 
 import com.example.laborganiser.app.AppContext;
+import com.example.laborganiser.app.SoundUtil;
 import com.example.laborganiser.backend.security.PasswordUtil;
 import com.example.laborganiser.backend.users.User;
 import com.example.laborganiser.backend.vials.VialService;
@@ -25,6 +26,8 @@ public class AuthController {
     private Stage stage;
     private final AlertWindow alert = new AlertWindow();
     private final PasswordUtil passwordUtil = new PasswordUtil();
+
+    private SoundUtil soundUtil = new SoundUtil();
 
 
     private AppContext appContext;
@@ -67,7 +70,7 @@ public class AuthController {
         usernameField.setText("admin");
         passwordField.setText("admin123");
 
-
+        //soundUtil.playClick();
 
         if(appContext.getUserService().loginUser(usernameField.getText(), passwordField.getText())) {
             try {

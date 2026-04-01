@@ -3,27 +3,36 @@ package com.example.laborganiser.frontend.vialAdd;
 import com.example.laborganiser.app.AppContext;
 import com.example.laborganiser.backend.users.UserService;
 import com.example.laborganiser.backend.vials.VialService;
+import com.example.laborganiser.frontend.alerts.AlertWindow;
+import com.example.laborganiser.frontend.auth.AuthController;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.io.IOException;
 
 public class VialAddController {
 
     @FXML
     public TextField vialNameField;
     @FXML
-    public TextField vialMaterialField;
+    private ToggleButton plasticBtn;
+
+    @FXML
+    private ToggleButton glassBtn;
+
+    private ToggleGroup materialGroup;
     @FXML
     public TextField vialShapeField;
     @FXML
     public TextField vialVolumeField;
     @FXML
-    public TextField vialUnitField;
+    public ComboBox<String> vialUnitField;
     @FXML
     public TextField vialColorField;
     @FXML
@@ -36,13 +45,26 @@ public class VialAddController {
     private Stage stage;
     private AppContext appContext;
 
+    private AlertWindow alert;
+
     public void onAddVialClicked(ActionEvent actionEvent) {
+
+        alert = new AlertWindow();
+
+        Toggle selected = materialGroup.getSelectedToggle();
+        String material = null;
+
+        if (selected != null) {
+            material = ((ToggleButton) selected).getText(); // "PLASTIC" sau "GLASS"
+        }
+
+
         appContext.getVialService().addVial(
                 vialNameField.getText(),
-                vialMaterialField.getText(),
+                material,
                 vialShapeField.getText(),
                 vialVolumeField.getText(),
-                vialUnitField.getText(),
+                vialUnitField.getValue(),
                 vialColorField.getText(),
                 vialCapField.getText(),
                 vialCapColorField.getText(),
@@ -55,7 +77,8 @@ public class VialAddController {
 
 
     public void hideAll() {
-        vialMaterialField.setVisible(false);
+        plasticBtn.setVisible(false);
+        glassBtn.setVisible(false);
         vialShapeField.setVisible(false);
         vialVolumeField.setVisible(false);
         vialUnitField.setVisible(false);
@@ -68,11 +91,24 @@ public class VialAddController {
     @FXML
     public void initialize() {
         hideAll();
+        //material choosing stuff
+        materialGroup = new ToggleGroup();
+        plasticBtn.setToggleGroup(materialGroup);
+        glassBtn.setToggleGroup(materialGroup);
 
-        vialNameField.setOnAction(e -> showNext(vialMaterialField));
-        vialMaterialField.setOnAction(e -> showNext(vialShapeField));
-        vialShapeField.setOnAction(e -> showNext(vialVolumeField));
-        vialVolumeField.setOnAction(e -> showNext(vialUnitField));
+        //volume choosing stuff
+        vialUnitField.getItems().addAll("μl","ml","cl","dl","l");
+
+
+        vialNameField.setOnAction(e -> {showNext(plasticBtn);showNext(glassBtn);});
+
+
+        plasticBtn.setOnAction(e -> showNext(vialShapeField));
+        glassBtn.setOnAction(e -> showNext(vialShapeField));
+
+        vialShapeField.setOnAction(e -> {showNext(vialVolumeField);showNext(vialUnitField);});
+
+        //vialVolumeField.setOnAction(e -> showNext(vialUnitField));
         vialUnitField.setOnAction(e -> showNext(vialColorField));
         vialColorField.setOnAction(e -> showNext(vialCapField));
         vialCapField.setOnAction(e -> showNext(vialCapColorField));
@@ -101,5 +137,10 @@ public class VialAddController {
     public void init(Stage stage, AppContext appContext) {
         this.stage = stage;
         this.appContext = appContext;
+    }
+
+    public void onBackButtonClick(ActionEvent actionEvent) {
+        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+        stage.close();
     }
 }
