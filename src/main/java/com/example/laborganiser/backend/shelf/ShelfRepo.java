@@ -1,5 +1,7 @@
-package com.example.laborganiser.backend.collections;
+package com.example.laborganiser.backend.shelf;
 
+
+import com.example.laborganiser.backend.vials.Vial;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -10,16 +12,16 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CollectionRepo {
-    private List<Collection> collections;
-    private static final String JSON_FILE_PATH = "src/main/resources/collections.json";
+public class ShelfRepo {
+    private List<Shelf> shelves;
+    private static final String JSON_FILE_PATH = "src/main/resources/shelves.json";
     private int currentId;
 
-    public CollectionRepo() {
-        this.collections = loadCollectionsFromJson();
+    public ShelfRepo() {
+        this.shelves = loadShelvesFromJson();
         try{
-            currentId = collections.stream()
-                    .mapToInt(Collection::getId)
+            currentId = shelves.stream()
+                    .mapToInt(Shelf::getId)
                     .max()
                     .orElse(0);
         }catch(Exception e){
@@ -28,7 +30,7 @@ public class CollectionRepo {
 
     }
 
-    private List<Collection> loadCollectionsFromJson() {
+    private List<Shelf> loadShelvesFromJson() {
         try {
             Path path = Paths.get(JSON_FILE_PATH);
 
@@ -43,31 +45,31 @@ public class CollectionRepo {
             }
 
             Gson gson = new Gson();
-            List<Collection> loaded = gson.fromJson(jsonContent, new TypeToken<ArrayList<Collection>>(){}.getType());
+            List<Shelf> loaded = gson.fromJson(jsonContent, new TypeToken<ArrayList<Shelf>>(){}.getType());
 
             return (loaded != null) ? loaded : new ArrayList<>();
 
         } catch (IOException e) {
-            System.err.println("Error reading collections.json: " + e.getMessage());
+            System.err.println("Error reading shelf.json: " + e.getMessage());
             return new ArrayList<>();
         }
     }
 
-    private void saveCollectionsToJson() {
+    private void saveShelvesToJson() {
         try {
             Path path = Paths.get(JSON_FILE_PATH);
             Gson gson = new Gson();
-            String jsonContent = gson.toJson(collections);
+            String jsonContent = gson.toJson(shelves);
             Files.writeString(path, jsonContent);
         } catch (IOException e) {
             System.err.println("Error writing shelves.json: " + e.getMessage());
         }
     }
 
-    public boolean addCollection(Collection collection) {
-        if (collections.size() == 0||(collection != null && !collections.contains(collection))) {
-            collections.add(collection);
-            saveCollectionsToJson();
+    public boolean addShelf(Shelf shelf) {
+        if (shelves.size() == 0||(shelf != null && !shelves.contains(shelf))) {
+            shelves.add(shelf);
+            saveShelvesToJson();
             return true;
         }
         return false;
@@ -77,7 +79,7 @@ public class CollectionRepo {
         return ++currentId;
     }
 
-    public List<Collection>  getCollections(){
-        return collections;
+    public List<Shelf>  getShelves(){
+        return shelves;
     }
 }

@@ -43,4 +43,10 @@ public class MainPage {
             e.printStackTrace();
         }
     }
+
+    public void onAddShelfClick(ActionEvent actionEvent) {
+        String name = new String("bomboclat");
+
+
+    }
 }

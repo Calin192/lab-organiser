@@ -3,6 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.geometry.Insets?>
 <BorderPane styleClass="root" stylesheets="@mainPage.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.laborganiser.frontend.mainPage.MainPage">
 
 
@@ -20,17 +21,22 @@
     <left>
         <VBox spacing="10" styleClass="sidebar" fx:id="sidebarContainer">
             <children>
+                <Button styleClass="nav-button" onAction="#onAddShelfClick" text="AddShelf" prefWidth="200"/>
                 <Button styleClass="nav-button" onAction="#onAddVialClick" text="AddVial" prefWidth="200"/>
             </children>
         </VBox>
     </left>
 
     <center>
-        <StackPane styleClass="content">
-            <children>
-                <Label styleClass="title" text="Welcome to your dashboard" />
-            </children>
-        </StackPane>
+        <ScrollPane fitToWidth="true" styleClass="content">
+            <content>
+                <TilePane prefColumns="4" hgap="15" vgap="15">
+                    <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                    </padding>
+                </TilePane>
+            </content>
+        </ScrollPane>
     </center>
    <right>
       <ScrollBar orientation="VERTICAL" BorderPane.alignment="CENTER" />
