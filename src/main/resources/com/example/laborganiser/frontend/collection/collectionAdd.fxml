@@ -7,10 +7,10 @@
 <?import javafx.scene.layout.*?>
 
 <StackPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.laborganiser.frontend.shelfAdd.ShelfAddController"
-            prefHeight="200.0" prefWidth="300.0">
-    <VBox alignment="CENTER"><TextField promptText="Shelf Name" fx:id="shelfName" styleClass="input" maxWidth="300"/>
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.example.laborganiser.frontend.collectionAdd.CollectionAddController"
+           prefHeight="200.0" prefWidth="300.0">
+    <VBox alignment="CENTER"><TextField promptText="Collection Name" fx:id="collectionName" styleClass="input" maxWidth="300"/>
         <Button mnemonicParsing="false" text="Add" onAction="#onAddClicked" styleClass="primary-button"/>
     </VBox>
 

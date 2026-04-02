@@ -21,6 +21,7 @@
     <left>
         <VBox spacing="10" styleClass="sidebar" fx:id="sidebarContainer">
             <children>
+                <Button styleClass="nav-button" onAction="#onAddCollectionClick" text="AddCollection" prefWidth="200"/>
                 <Button styleClass="nav-button" onAction="#onAddShelfClick" text="AddShelf" prefWidth="200"/>
                 <Button styleClass="nav-button" onAction="#onAddVialClick" text="AddVial" prefWidth="200"/>
             </children>

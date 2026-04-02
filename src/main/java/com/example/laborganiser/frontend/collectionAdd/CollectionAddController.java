@@ -1,4 +1,4 @@
-package com.example.laborganiser.frontend.shelfAdd;
+package com.example.laborganiser.frontend.collectionAdd;
 
 import com.example.laborganiser.app.AppContext;
 import javafx.application.Platform;
@@ -7,9 +7,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class ShelfAddController {
+public class CollectionAddController {
     @FXML
-    public TextField shelfName;
+    public TextField collectionName;
+
     Stage stage = new Stage();
     AppContext appContext = new AppContext();
 
@@ -18,7 +19,7 @@ public class ShelfAddController {
         this.appContext = appContext;
 
         Platform.runLater(() -> {
-            this.stage = (Stage) shelfName.getScene().getWindow();
+            this.stage = (Stage) collectionName.getScene().getWindow();
             this.stage.setWidth(500);
             this.stage.setHeight(500);
         });
