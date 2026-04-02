@@ -27,6 +27,7 @@ public class CollectionAddController {
 
 
     public void onAddClicked(ActionEvent actionEvent) {
-
+        appContext.getCollectionService().addCollection(collectionName.getText().trim());
+         stage.close();
     }
 }

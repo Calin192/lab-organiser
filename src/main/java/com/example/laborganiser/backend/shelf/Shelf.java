@@ -2,6 +2,7 @@ package com.example.laborganiser.backend.shelf;
 
 import com.example.laborganiser.backend.vials.Vial;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Shelf {
@@ -12,6 +13,7 @@ public class Shelf {
     public Shelf(int id, String name) {
         this.id = id;
         this.name = name;
+        this.vials = new ArrayList<>();
     }
 
     public Shelf() {

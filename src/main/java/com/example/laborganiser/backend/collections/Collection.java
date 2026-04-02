@@ -2,6 +2,7 @@ package com.example.laborganiser.backend.collections;
 
 import com.example.laborganiser.backend.shelf.Shelf;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Collection {
@@ -12,6 +13,7 @@ public class Collection {
     public Collection(int id, String name) {
         this.id = id;
         this.name = name;
+        this.shelves = new ArrayList<>();
     }
 
     public Collection(){

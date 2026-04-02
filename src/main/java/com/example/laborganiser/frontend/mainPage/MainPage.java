@@ -1,18 +1,26 @@
 package com.example.laborganiser.frontend.mainPage;
 
 import com.example.laborganiser.app.AppContext;
+import com.example.laborganiser.backend.Observer;
+import com.example.laborganiser.backend.collections.Collection;
 import com.example.laborganiser.frontend.collectionAdd.CollectionAddController;
 import com.example.laborganiser.frontend.shelfAdd.ShelfAddController;
 import com.example.laborganiser.frontend.vialAdd.VialAddController;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.io.IOException;
 
-public class MainPage {
-
+public class MainPage implements Observer {
+    @FXML
+    public TilePane collectionContainer;
     private Stage stage;
 
     private AppContext appContext;
@@ -21,10 +29,42 @@ public class MainPage {
         this.stage = stage;
         this.appContext = appContext;
 
+        appContext.getCollectionService().addObserver(this);
 
         stage.setWidth(1200);
         stage.setHeight(800);
         stage.centerOnScreen();
+        
+        loadCollections();
+    }
+
+    private void loadCollections() {
+        collectionContainer.getChildren().clear();
+
+        var collections = appContext.getCollectionService().getCollection();
+
+        for (var collection : collections) {
+            VBox card = createCollectionCard(collection);
+            collectionContainer.getChildren().add(card);
+        }
+    }
+
+    private VBox createCollectionCard(Collection collection) {
+        VBox box = new VBox();
+        box.getStyleClass().add("collection-card");
+        box.setPrefSize(150, 150);
+
+        Label name = new Label(collection.getName());
+        name.getStyleClass().add("title");
+
+        box.getChildren().add(name);
+
+        // click event (optional)
+        box.setOnMouseClicked(e -> {
+            System.out.println("Clicked: " + collection.getName());
+        });
+
+        return box;
     }
 
     public void onAddVialClick(ActionEvent actionEvent) {
@@ -81,8 +121,15 @@ public class MainPage {
             stage.setScene(scene);
 
             stage.show();
+
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void update() {
+        loadCollections();
     }
 }

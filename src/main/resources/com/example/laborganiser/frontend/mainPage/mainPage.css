@@ -27,6 +27,18 @@
     -fx-background-color: #2b2b45;
     -fx-padding: 20;
 }
+
+.scroll-pane {
+    -fx-background: #1e1e2f;
+    -fx-background-color: #1e1e2f;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
 .tile-pane {
     -fx-padding: 20;
 }
@@ -36,11 +48,23 @@
     -fx-vgap: 15;
 }
 
+.collection-card {
+    -fx-background-color: #2f2f4f;
+    -fx-background-radius: 10;
+    -fx-padding: 15;
+    -fx-alignment: center;
+    -fx-cursor: hand;
+}
+
+.collection-card:hover {
+    -fx-background-color: #3b3b5f;
+}
+
 .nav-button:hover {
     -fx-background-color: #7d75ff;
 }
 
-/* 📚 Sidebar */
+
 .sidebar {
     -fx-background-color: #25253a;
     -fx-padding: 15;
@@ -59,10 +83,7 @@
     -fx-text-fill: white;
 }
 
-/* 🧩 Content */
-.content {
-    -fx-padding: 20;
-}
+
 
 .title {
     -fx-text-fill: white;
