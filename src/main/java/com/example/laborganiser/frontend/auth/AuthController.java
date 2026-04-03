@@ -70,7 +70,7 @@ public class AuthController {
         usernameField.setText("admin");
         passwordField.setText("admin123");
 
-        //soundUtil.playClick();
+/*        soundUtil.playClick();*/
 
         if(appContext.getUserService().loginUser(usernameField.getText(), passwordField.getText())) {
             try {

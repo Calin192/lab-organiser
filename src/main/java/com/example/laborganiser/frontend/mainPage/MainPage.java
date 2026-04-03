@@ -11,11 +11,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.io.IOException;
 
 public class MainPage implements Observer {
@@ -131,5 +133,31 @@ public class MainPage implements Observer {
     @Override
     public void update() {
         loadCollections();
+    }
+
+
+    public void onImageClick(ActionEvent actionEvent) {
+        Stage stage = new Stage();
+
+        var resource = getClass().getResource("/Images/Cub calin.png");
+        if (resource == null) {
+
+            return;
+        }
+
+        String imagePath = resource.toExternalForm();
+
+        ImageView imageView = new ImageView(new Image(imagePath));
+        imageView.setPreserveRatio(true);
+        imageView.setFitWidth(400);
+
+        StackPane root = new StackPane(imageView);
+        root.setStyle("-fx-background-color: red;");
+
+        Scene scene = new Scene(root, 400, 400);
+
+        stage.setTitle("Image");
+        stage.setScene(scene);
+        stage.show();
     }
 }
