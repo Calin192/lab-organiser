@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -16,70 +17,89 @@ import java.io.IOException;
 
 public class RegisterController {
 
-    @FXML
-    public PasswordField passwordConfirm;
-    @FXML
-    public PasswordField password;
-    @FXML
-    public TextField username;
+    @FXML public PasswordField passwordConfirm;
+    @FXML public PasswordField password;
+    @FXML public TextField username;
+
+    @FXML public TextField visiblePasswordConfirm;
+    @FXML public TextField visiblePasswordField;
+
+    @FXML public Button registerButton;
+
     private Stage stage;
     private final AlertWindow alert = new AlertWindow();
 
     private UserService userService;
     private AppContext appContext;
 
+    private boolean passwordsVisible = false;
 
-    public void init(Stage stage, AppContext  appContext) {
+    public void init(Stage stage, AppContext appContext) {
         this.stage = stage;
         this.appContext = appContext;
         this.userService = appContext.getUserService();
     }
 
     @FXML
+    private void initialize() {
+
+        registerButton.setDisable(true);
+
+        visiblePasswordField.textProperty().bindBidirectional(password.textProperty());
+        visiblePasswordConfirm.textProperty().bindBidirectional(passwordConfirm.textProperty());
+
+        username.textProperty().addListener((obs, oldVal, newVal) -> validate());
+        password.textProperty().addListener((obs, oldVal, newVal) -> validate());
+        passwordConfirm.textProperty().addListener((obs, oldVal, newVal) -> validate());
+    }
+
+    @FXML
     private void onBackToLoginClicked() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/laborganiser/frontend/auth/authentificator.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+            FXMLLoader fxmlLoader = new FXMLLoader(
+                    getClass().getResource("/com/example/laborganiser/frontend/auth/authentificator.fxml")
+            );
+
+            Scene scene = new Scene(
+                    fxmlLoader.load(),
+                    appContext.getWidth(),
+                    appContext.getHeight()
+            );
+
             AuthController controller = fxmlLoader.getController();
-            controller.init(stage,appContext);
+            controller.init(stage, appContext);
+
             stage.setScene(scene);
+
         } catch (IOException e) {
             alert.showAlert("Error", "Could not load login page.");
         }
     }
 
+    @FXML
     public void onRegisterClick(ActionEvent actionEvent) {
+
         String usernameText = username.getText().trim();
         String passwordText = password.getText();
         String passwordConfirmText = passwordConfirm.getText();
 
         if (usernameText.isEmpty() || passwordText.isEmpty() || passwordConfirmText.isEmpty()) {
-            alert.showAlert( "Validation Error",
-                    "Please fill in all fields.");
-            return;
-        }
-
-        if (usernameText.length() < 3) {
-            alert.showAlert( "Validation Error",
-                    "Username must be at least 3 characters long.");
+            alert.showAlert("Validation Error", "Please fill in all fields.");
             return;
         }
 
         if (passwordText.length() < 6) {
-            alert.showAlert( "Validation Error",
-                    "Password must be at least 6 characters long.");
+            alert.showAlert("Validation Error", "Password must be at least 6 characters long.");
             return;
         }
 
         if (!passwordText.equals(passwordConfirmText)) {
-            alert.showAlert("Validation Error",
-                    "The password and confirm password fields do not match.");
+            alert.showAlert("Validation Error", "Passwords do not match.");
             return;
         }
 
         if (userExists(usernameText)) {
-            alert.showAlert( "User Exists",
-                    "This username is already registered. Please choose another.");
+            alert.showAlert("User Exists", "This email is already registered.");
             return;
         }
 
@@ -87,15 +107,16 @@ public class RegisterController {
             User newUser = new User(usernameText, passwordText);
             userService.addUser(newUser);
 
-            alert.showAlert( "Success",
-                    "Your account has been created successfully! You will be redirected to login.");
+            alert.showAlert("Success",
+                    "Account created successfully!");
 
             clearFields();
 
             onBackToLoginClicked();
+
         } catch (Exception e) {
             alert.showAlert("Error",
-                    "An error occurred during registration: " + e.getMessage());
+                    "Registration failed: " + e.getMessage());
         }
     }
 
@@ -110,6 +131,35 @@ public class RegisterController {
         passwordConfirm.clear();
     }
 
+    @FXML
+    public void togglePassword(ActionEvent actionEvent) {
 
+        passwordsVisible = !passwordsVisible;
 
+        visiblePasswordField.setVisible(passwordsVisible);
+        visiblePasswordField.setManaged(passwordsVisible);
+
+        visiblePasswordConfirm.setVisible(passwordsVisible);
+        visiblePasswordConfirm.setManaged(passwordsVisible);
+
+        password.setVisible(!passwordsVisible);
+        password.setManaged(!passwordsVisible);
+
+        passwordConfirm.setVisible(!passwordsVisible);
+        passwordConfirm.setManaged(!passwordsVisible);
+    }
+
+    private void validate() {
+
+        boolean validEmail =
+                username.getText().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
+
+        boolean validPassword =
+                password.getText().length() >= 6;
+
+        boolean samePasswords =
+                password.getText().equals(passwordConfirm.getText());
+
+        registerButton.setDisable(!(validEmail && validPassword && samePasswords));
+    }
 }

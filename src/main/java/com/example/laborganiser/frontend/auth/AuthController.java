@@ -78,7 +78,7 @@ public class AuthController {
 
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/laborganiser/frontend/auth/register.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+            Scene scene = new Scene(fxmlLoader.load(), appContext.getWidth(), appContext.getHeight());
             RegisterController controller = fxmlLoader.getController();
 
 

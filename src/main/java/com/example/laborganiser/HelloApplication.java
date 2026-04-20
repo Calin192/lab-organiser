@@ -38,8 +38,8 @@ public class HelloApplication extends Application {
 
         AppContext appContext = new AppContext();
 
-        appContext.setHeight(1000);
-        appContext.setWidth(1800);
+        appContext.setHeight(880);
+        appContext.setWidth(1440);
 
         controller.init(stage,appContext);
 
