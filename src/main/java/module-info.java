@@ -18,5 +18,6 @@ module com.example.laborganiser {
     opens com.example.laborganiser.frontend.shelfAdd to javafx.fxml;
     opens com.example.laborganiser.frontend.collectionAdd to javafx.fxml;
 
+
     exports com.example.laborganiser;
 }

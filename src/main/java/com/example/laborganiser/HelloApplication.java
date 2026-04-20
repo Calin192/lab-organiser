@@ -22,6 +22,8 @@ public class HelloApplication extends Application {
     private static VialRepo vialRepo;
     private static VialService vialService;
 
+
+
     @Override
 
 
@@ -30,13 +32,14 @@ public class HelloApplication extends Application {
         //bigest change
         
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/com/example/laborganiser/frontend/auth/authentificator.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+        Scene scene = new Scene(fxmlLoader.load(), 1440, 880);
         AuthController controller = fxmlLoader.getController();
 
 
         AppContext appContext = new AppContext();
 
-
+        appContext.setHeight(1000);
+        appContext.setWidth(1800);
 
         controller.init(stage,appContext);
 
@@ -45,4 +48,5 @@ public class HelloApplication extends Application {
         stage.setResizable(true);
         stage.show();
     }
+
 }

@@ -3,18 +3,93 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<StackPane stylesheets="@authentificator.css" styleClass="root" minHeight="300.0" minWidth="500.0" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.laborganiser.frontend.auth.AuthController">
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<StackPane stylesheets="@authentificator.css" styleClass="root"
+           minHeight="300.0" minWidth="500.0"
+           prefHeight="600.0" prefWidth="1000.0"
+           xmlns="http://javafx.com/javafx/17.0.12"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.example.laborganiser.frontend.auth.AuthController">
+
    <children>
 
-            <VBox alignment="CENTER" styleClass="card" fx:id="vbox" spacing="15.0">
-               <children>
-                  <Label text="Enter your credentials" styleClass="title"/>
-                  <TextField promptText="Username" fx:id="usernameField" styleClass="input" maxWidth="300"/>
-                  <PasswordField promptText="Password" fx:id="passwordField" styleClass="input" maxWidth="300"/>
-                  <Button mnemonicParsing="false" text="Login" onAction="#onLoginClicked" styleClass="primary-button"/>
-                  <Hyperlink onAction="#onRegisterClicked" text="Don't have an account? Register here" styleClass="link"/>
-               </children>
-            </VBox>
+      <VBox fx:id="vbox"
+            alignment="CENTER"
+            spacing="5.0"
+            styleClass="card"
+            prefWidth="666.0"
+            prefHeight="581.0"
+            maxWidth="666.0"
+            maxHeight="581.0">
+
+         <children>
+
+            <ImageView fitWidth="80" fitHeight="80" preserveRatio="true">
+                <image>
+                    <Image url="@/Images/flask 1.png"/>
+                </image>
+            </ImageView>
+
+            <Label text="Welcome to Larp Organiser"
+                   styleClass="title"/>
+
+            <Label  text="Email" prefWidth="385" maxWidth="385" styleClass="small-label"  alignment="CENTER_LEFT"></Label>
+            <TextField fx:id="usernameField"
+                       promptText="john.doe@gmail.com"
+                       styleClass="input"
+                       maxWidth="385.0"
+                       prefHeight="40.0"/>
+            <Label maxHeight="10" prefHeight="10"></Label>
+
+            <Label  text="Password" prefWidth="385" maxWidth="385" styleClass="small-label" alignment="CENTER_LEFT"></Label>
+            <StackPane  alignment="CENTER" prefWidth="385" maxWidth="385">
+               <PasswordField fx:id="passwordField"
+                           promptText="*********"
+                           styleClass="input"
+                           prefWidth="385" maxWidth="385"
+                           prefHeight="40.0"/>
+               <TextField fx:id="visiblePasswordField"
+                          promptText="*********"
+                          styleClass="input"
+                          prefWidth="385" maxWidth="385"
+                          prefHeight="40.0"
+                          visible="false"
+                          managed="false"/>
+
+               <Button onAction="#togglePassword"
+                       StackPane.alignment="CENTER_RIGHT"
+                       styleClass="inside-button">
+
+                  <graphic>
+                     <ImageView fitWidth="18" fitHeight="18" preserveRatio="true">
+                        <image>
+                           <Image url="@/Images/visibility.png"/>
+                        </image>
+                     </ImageView>
+                  </graphic>
+
+               </Button>
+
+            </StackPane>
+            <Label maxHeight="10" prefHeight="10"></Label>
+
+            <Button fx:id="loginButton"
+                    text="Login"
+                    mnemonicParsing="false"
+                    onAction="#onLoginClicked"
+                    styleClass="primary-button"
+                    prefWidth="385.0"
+                    prefHeight="40.0"/>
+
+            <Hyperlink text="Don't have an account? Register here"
+                       onAction="#onRegisterClicked"
+                       styleClass="link"/>
+
+         </children>
+
+      </VBox>
 
    </children>
+
 </StackPane>

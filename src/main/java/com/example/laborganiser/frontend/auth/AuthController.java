@@ -9,9 +9,11 @@ import com.example.laborganiser.frontend.alerts.AlertWindow;
 import com.example.laborganiser.frontend.mainPage.MainPage;
 import com.example.laborganiser.backend.users.UserService;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
@@ -23,9 +25,15 @@ public class AuthController {
 
     public TextField usernameField;
     public PasswordField passwordField;
+    public TextField visiblePasswordField;
+    public boolean passwordVisible = false;
+
     private Stage stage;
     private final AlertWindow alert = new AlertWindow();
     private final PasswordUtil passwordUtil = new PasswordUtil();
+
+    @FXML
+    private Button loginButton;
 
     private SoundUtil soundUtil = new SoundUtil();
 
@@ -39,12 +47,30 @@ public class AuthController {
     public void init(Stage stage,AppContext appContext) {
         this.stage = stage;
         this.appContext = appContext;
+
+
+
+        Platform.runLater(() -> vbox.requestFocus());
+
+        usernameField.textProperty().addListener((obs, oldVal, newVal) -> validate());
+        passwordField.textProperty().addListener((obs, oldVal, newVal) -> validate());
+
+
     }
 
 
     @FXML
     private void initialize() {
+        loginButton.setDisable(true);
+
+
         Platform.runLater(() -> vbox.requestFocus());
+
+        usernameField.textProperty().addListener((obs, oldVal, newVal) -> validate());
+        passwordField.textProperty().addListener((obs, oldVal, newVal) -> validate());
+
+
+
     }
 
     @FXML
@@ -67,35 +93,64 @@ public class AuthController {
 
     @FXML
     private void onLoginClicked() {
-        usernameField.setText("admin");
-        passwordField.setText("admin123");
+        String email = usernameField.getText();
+        String password = passwordField.getText();
 
-/*        soundUtil.playClick();*/
+        UserService userService = appContext.getUserService();
+        User user = userService.getUser(email);
 
-        if(appContext.getUserService().loginUser(usernameField.getText(), passwordField.getText())) {
-            try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/laborganiser/frontend/mainPage/mainPage.fxml"));
-                Scene scene = new Scene(fxmlLoader.load(), 800, 600);
-                MainPage controller = fxmlLoader.getController();
-
-                User user = appContext.getUserService().getUser(usernameField.getText());
-
-                appContext.setCurrentUser(user);
-
-                controller.init(stage,appContext);
-
-
-                stage.setScene(scene);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }else
-        {
-            alert.showAlert( "Error processing the username and/or password",
-                    "Please check your credentials and try again.");
+        if (user == null || !passwordUtil.verifyPassword(password, user.getPassword())) {
+            alert.showAlert("Login Failed", "Invalid email or password.");
             return;
         }
 
+        appContext.setCurrentUser(user);
+
+
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/laborganiser/frontend/mainPage/mainPage.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 1440, 880);
+            MainPage controller = fxmlLoader.getController();
+
+            controller.init(stage,appContext);
+
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+
+    }}
+
+    public void togglePassword(ActionEvent actionEvent) {
+
+        if (!passwordVisible) {
+            visiblePasswordField.setText(passwordField.getText());
+
+            visiblePasswordField.setVisible(true);
+            visiblePasswordField.setManaged(true);
+
+            passwordField.setVisible(false);
+            passwordField.setManaged(false);
+
+            passwordVisible = true;
+        } else {
+            passwordField.setText(visiblePasswordField.getText());
+
+            passwordField.setVisible(true);
+            passwordField.setManaged(true);
+
+            visiblePasswordField.setVisible(false);
+            visiblePasswordField.setManaged(false);
+
+            passwordVisible = false;
+        }
+    }
+
+
+    private void validate(){
+        boolean validEmail = usernameField.getText().matches("[a-zA-Z]*@[a-zA-Z]+\\.[a-zA-Z]+");
+        boolean validPassword = passwordField.getText().length() >= 6;
+
+        loginButton.setDisable(!validEmail || !validPassword);
     }
 
 }

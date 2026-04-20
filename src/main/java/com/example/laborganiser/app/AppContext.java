@@ -16,6 +16,9 @@ public class AppContext {
     private final ShelfService shelfService;
     private final CollectionService collectionService;
 
+    private  int height;
+    private  int width;
+
     private User currentUser;
 
     public AppContext() {
@@ -23,6 +26,8 @@ public class AppContext {
         VialRepo vialRepo = new VialRepo();
         ShelfRepo shelfRepo = new ShelfRepo();
         CollectionRepo collectionRepo = new CollectionRepo();
+
+
 
         this.userService = new UserService(userRepo);
         this.vialService = new VialService(vialRepo);
@@ -49,6 +54,14 @@ public class AppContext {
     public User getCurrentUser() {
         return currentUser;
     }
+
+    public int getHeight() { return height; }
+
+    public void setHeight(int height) { this.height = height; }
+
+    public int getWidth() { return width; }
+
+    public void setWidth(int width) { this.width = width; }
 
 
 
