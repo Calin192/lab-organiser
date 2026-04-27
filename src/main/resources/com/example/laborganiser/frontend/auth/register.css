@@ -73,3 +73,24 @@
     -fx-background-color: transparent;
     -fx-cursor: hand;
 }
+
+
+.error-label {
+    -fx-background-color: #e53935;
+    -fx-text-fill: white;
+    -fx-padding: 12 25 12 25;
+    -fx-background-radius: 8;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-translate-y: -20;
+}
+
+.success-label {
+    -fx-background-color: #4caf50;
+    -fx-text-fill: white;
+    -fx-padding: 12 25 12 25;
+    -fx-background-radius: 8;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-translate-y: -20;
+}

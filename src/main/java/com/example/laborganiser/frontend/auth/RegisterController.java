@@ -4,14 +4,17 @@ import com.example.laborganiser.app.AppContext;
 import com.example.laborganiser.frontend.alerts.AlertWindow;
 import com.example.laborganiser.backend.users.User;
 import com.example.laborganiser.backend.users.UserService;
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 
@@ -25,6 +28,7 @@ public class RegisterController {
     @FXML public TextField visiblePasswordField;
 
     @FXML public Button registerButton;
+    public Label onRegisterFailed;
 
     private Stage stage;
     private final AlertWindow alert = new AlertWindow();
@@ -44,6 +48,9 @@ public class RegisterController {
     private void initialize() {
 
         registerButton.setDisable(true);
+
+        onRegisterFailed.setVisible(false);
+        onRegisterFailed.setManaged(false);
 
         visiblePasswordField.textProperty().bindBidirectional(password.textProperty());
         visiblePasswordConfirm.textProperty().bindBidirectional(passwordConfirm.textProperty());
@@ -84,22 +91,26 @@ public class RegisterController {
         String passwordConfirmText = passwordConfirm.getText();
 
         if (usernameText.isEmpty() || passwordText.isEmpty() || passwordConfirmText.isEmpty()) {
-            alert.showAlert("Validation Error", "Please fill in all fields.");
+            //alert.showAlert("Validation Error", "Please fill in all fields.");
+            showRegisterFailedPopup(true,"Please fill in all fields.");
             return;
         }
 
         if (passwordText.length() < 6) {
-            alert.showAlert("Validation Error", "Password must be at least 6 characters long.");
+            //alert.showAlert("Validation Error", "Password must be at least 6 characters long.");
+            showRegisterFailedPopup(true,"Password must be at least 6 characters long.");
             return;
         }
 
         if (!passwordText.equals(passwordConfirmText)) {
-            alert.showAlert("Validation Error", "Passwords do not match.");
+            //alert.showAlert("Validation Error", "Passwords do not match.");
+            showRegisterFailedPopup(true,"Passwords do not match.");
             return;
         }
 
         if (userExists(usernameText)) {
-            alert.showAlert("User Exists", "This email is already registered.");
+            //alert.showAlert("User Exists", "This email is already registered.");
+            showRegisterFailedPopup(true,"User already exists.");
             return;
         }
 
@@ -107,16 +118,21 @@ public class RegisterController {
             User newUser = new User(usernameText, passwordText);
             userService.addUser(newUser);
 
-            alert.showAlert("Success",
-                    "Account created successfully!");
+//            alert.showAlert("Success",
+//                    "Account created successfully!");
+            showRegisterFailedPopup(false,"Account created successfully!");
 
             clearFields();
 
-            onBackToLoginClicked();
+            PauseTransition pause = new PauseTransition(Duration.millis(1500));
+            pause.setOnFinished(e -> onBackToLoginClicked());
+            pause.play();
+
 
         } catch (Exception e) {
-            alert.showAlert("Error",
-                    "Registration failed: " + e.getMessage());
+//            alert.showAlert("Error",
+//                    "Registration failed: " + e.getMessage());
+            showRegisterFailedPopup(true,e.getMessage());
         }
     }
 
@@ -161,5 +177,29 @@ public class RegisterController {
                 password.getText().equals(passwordConfirm.getText());
 
         registerButton.setDisable(!(validEmail && validPassword && samePasswords));
+    }
+
+    private void showRegisterFailedPopup(Boolean error,String message) {
+
+
+        if (error) {
+            onRegisterFailed.getStyleClass().clear();
+            onRegisterFailed.getStyleClass().add("error-label");
+
+        }else {
+            onRegisterFailed.getStyleClass().clear();
+            onRegisterFailed.getStyleClass().add("success-label");
+
+        }
+
+        onRegisterFailed.setManaged(true);
+        onRegisterFailed.setVisible(true);
+
+        onRegisterFailed.setText(message);
+
+
+        PauseTransition pause = new PauseTransition(Duration.seconds(3));
+        pause.setOnFinished(e -> onRegisterFailed.setVisible(false));
+        pause.play();
     }
 }
