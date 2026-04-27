@@ -8,16 +8,19 @@ import com.example.laborganiser.backend.vials.VialService;
 import com.example.laborganiser.frontend.alerts.AlertWindow;
 import com.example.laborganiser.frontend.mainPage.MainPage;
 import com.example.laborganiser.backend.users.UserService;
+import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 
@@ -27,6 +30,9 @@ public class AuthController {
     public PasswordField passwordField;
     public TextField visiblePasswordField;
     public boolean passwordVisible = false;
+    public Label passwordError;
+    public Label emailError;
+    public Label onLoginFailed;
 
     private Stage stage;
     private final AlertWindow alert = new AlertWindow();
@@ -48,7 +54,8 @@ public class AuthController {
         this.stage = stage;
         this.appContext = appContext;
 
-
+        onLoginFailed.setVisible(false);
+        onLoginFailed.setManaged(false);
 
         Platform.runLater(() -> vbox.requestFocus());
 
@@ -100,7 +107,8 @@ public class AuthController {
         User user = userService.getUser(email);
 
         if (user == null || !passwordUtil.verifyPassword(password, user.getPassword())) {
-            alert.showAlert("Login Failed", "Invalid email or password.");
+            //alert.showAlert("Login Failed", "Invalid email or password.");
+            showLoginFailedPopup();
             return;
         }
 
@@ -153,4 +161,13 @@ public class AuthController {
         loginButton.setDisable(!validEmail || !validPassword);
     }
 
+
+    private void showLoginFailedPopup() {
+        onLoginFailed.setManaged(true);
+        onLoginFailed.setVisible(true);
+
+        PauseTransition pause = new PauseTransition(Duration.seconds(3));
+        pause.setOnFinished(e -> onLoginFailed.setVisible(false));
+        pause.play();
+    }
 }

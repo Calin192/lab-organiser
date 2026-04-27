@@ -40,7 +40,7 @@
                        styleClass="input"
                        maxWidth="385.0"
                        prefHeight="40.0"/>
-            <Label maxHeight="10" prefHeight="10"></Label>
+            <Label fx:id="emailError" maxHeight="10" prefHeight="10"/>
 
             <Label  text="Password" prefWidth="385" maxWidth="385" styleClass="small-label" alignment="CENTER_LEFT"></Label>
             <StackPane  alignment="CENTER" prefWidth="385" maxWidth="385">
@@ -72,7 +72,7 @@
                </Button>
 
             </StackPane>
-            <Label maxHeight="10" prefHeight="10"></Label>
+            <Label fx:id="passwordError" maxHeight="10" prefHeight="10"/>
 
             <Button fx:id="loginButton"
                     text="Login"
@@ -89,6 +89,14 @@
          </children>
 
       </VBox>
+
+       <Label fx:id="onLoginFailed"
+              text="Login failed. Please check your credentials and try again."
+              styleClass="error-label"
+              visible="false"
+              managed="false"
+              StackPane.alignment="BOTTOM_CENTER" />
+
 
    </children>
 
