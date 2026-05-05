@@ -42,7 +42,7 @@
                            <Image url="@/Images/search.png"/>
                        </image>
                    </ImageView>
-                   <TextField promptText="Type here..." styleClass="search-field"/>
+                   <TextField promptText="Type here..." styleClass="search-field" prefWidth="800" />
                </HBox>
 
 
