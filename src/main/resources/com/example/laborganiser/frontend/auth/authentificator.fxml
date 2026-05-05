@@ -27,7 +27,7 @@
 
             <ImageView fitWidth="80" fitHeight="80" preserveRatio="true">
                 <image>
-                    <Image url="@/Images/flask 1.png"/>
+                    <Image url="@/Images/flask black.png"/>
                 </image>
             </ImageView>
 

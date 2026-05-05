@@ -103,6 +103,8 @@ public class AuthController {
         String email = usernameField.getText();
         String password = passwordField.getText();
 
+
+
         UserService userService = appContext.getUserService();
         User user = userService.getUser(email);
 
@@ -117,7 +119,7 @@ public class AuthController {
 
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/laborganiser/frontend/mainPage/mainPage.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 1440, 880);
+            Scene scene = new Scene(fxmlLoader.load(), this.appContext.getWidth(), this.appContext.getHeight());
             MainPage controller = fxmlLoader.getController();
 
             controller.init(stage,appContext);

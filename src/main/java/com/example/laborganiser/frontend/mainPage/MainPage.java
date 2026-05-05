@@ -33,22 +33,22 @@ public class MainPage implements Observer {
 
         appContext.getCollectionService().addObserver(this);
 
-        stage.setWidth(1200);
-        stage.setHeight(800);
+        stage.setWidth(appContext.getWidth());
+        stage.setHeight(appContext.getHeight());
         stage.centerOnScreen();
         
         loadCollections();
     }
 
     private void loadCollections() {
-        collectionContainer.getChildren().clear();
-
-        var collections = appContext.getCollectionService().getCollection();
-
-        for (var collection : collections) {
-            VBox card = createCollectionCard(collection);
-            collectionContainer.getChildren().add(card);
-        }
+//        collectionContainer.getChildren().clear();
+//
+//        var collections = appContext.getCollectionService().getCollection();
+//
+//        for (var collection : collections) {
+//            VBox card = createCollectionCard(collection);
+//            collectionContainer.getChildren().add(card);
+//        }
     }
 
     private VBox createCollectionCard(Collection collection) {

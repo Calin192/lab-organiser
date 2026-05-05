@@ -4,18 +4,10 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <BorderPane styleClass="root" stylesheets="@mainPage.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.laborganiser.frontend.mainPage.MainPage">
 
-
-    <top>
-        <HBox alignment="CENTER_LEFT" spacing="20" styleClass="navbar">
-            <children>
-                <Label styleClass="logo" text="Lab Organiser" />
-                <Region HBox.hgrow="ALWAYS" />
-                <Button styleClass="nav-button" text="Logout" />
-            </children>
-        </HBox>
-    </top>
 
 
     <left>
@@ -30,15 +22,57 @@
     </left>
 
     <center>
-        <ScrollPane fitToWidth="true" styleClass="content">
-            <content>
-                <TilePane prefColumns="4" hgap="15" vgap="15" fx:id="collectionContainer">
-                    <padding>
-                        <Insets top="20" right="20" bottom="20" left="20"/>
-                    </padding>
-                </TilePane>
-            </content>
-        </ScrollPane>
+       <VBox styleClass="content" spacing="10">
+        <HBox>
+            <Label text="Produse"
+                   styleClass="label-gray" />
+
+            <Pane HBox.hgrow="ALWAYS"/>
+
+            <Button text="Add product"
+                    styleClass="button-blue"/>
+        </HBox>
+
+           <VBox spacing="10"
+                 styleClass="card">
+
+               <HBox>
+                   <ImageView fitWidth="20" fitHeight="20" preserveRatio="true">
+                       <image>
+                           <Image url="@/Images/search.png"/>
+                       </image>
+                   </ImageView>
+                   <TextField promptText="Type here..." styleClass="search-field"/>
+               </HBox>
+
+
+
+                <TableView fx:id="tableView" styleClass="table-view" VBox.vgrow="ALWAYS">
+
+                    <columns>
+                       <TableColumn text="Title" fx:id="titleCol" prefWidth="150"/>
+                       <TableColumn text="Status" fx:id="statusCol" prefWidth="120"/>
+                       <TableColumn text="Tip produs" fx:id="typeCol" prefWidth="180"/>
+                       <TableColumn text="Locatie" fx:id="locationCol" prefWidth="120"/>
+                       <TableColumn text="Tip substanta" fx:id="substanceCol" prefWidth="150"/>
+                   </columns>
+
+               </TableView>
+
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Label text="Viewing 8 of 12 items" styleClass="label-white"/>
+
+                    <Pane HBox.hgrow="ALWAYS"/>
+
+                    <HBox alignment="CENTER" spacing="5">
+                        <Button text="←" styleClass="button-white"/>
+                        <Label text="Page 1 of 2" styleClass = "label-white"/>
+                        <Button text="→" styleClass="button-white"/>
+                    </HBox>
+                </HBox>
+
+           </VBox>
+       </VBox>
     </center>
    <right>
       <ScrollBar orientation="VERTICAL" BorderPane.alignment="CENTER" />
