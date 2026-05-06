@@ -11,12 +11,13 @@ module com.example.laborganiser {
     opens com.example.laborganiser.frontend.alerts to javafx.fxml;
     opens com.example.laborganiser.frontend.mainPage to javafx.fxml;
     opens com.example.laborganiser.frontend.vialAdd to javafx.fxml;
-    opens com.example.laborganiser.backend.vials to com.google.gson;
+    opens com.example.laborganiser.backend.vials to com.google.gson,javafx.fxml,javafx.base;
     opens com.example.laborganiser.app to javafx.fxml;
     opens com.example.laborganiser.backend.collections to com.google.gson;
     opens com.example.laborganiser.backend.shelf to com.google.gson;
     opens com.example.laborganiser.frontend.shelfAdd to javafx.fxml;
     opens com.example.laborganiser.frontend.collectionAdd to javafx.fxml;
+
 
 
     exports com.example.laborganiser;

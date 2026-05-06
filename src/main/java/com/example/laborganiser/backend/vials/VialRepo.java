@@ -79,7 +79,7 @@ public class VialRepo {
             return false;
     }
 
-    private boolean removeVial(Vial vial) {
+    public boolean removeVial(Vial vial) {
         if (vials.remove(vial)) {
             saveVialsToJson();
             return true;
@@ -106,4 +106,11 @@ public class VialRepo {
         return ++currentId;
     }
 
+    public List<Vial> getVials() {
+        return vials;
+    }
+
+    public Vial getVial(int id) {
+        return vials.get(id);
+    }
 }

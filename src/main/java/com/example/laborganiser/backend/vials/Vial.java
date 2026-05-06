@@ -11,9 +11,9 @@ public class Vial {
     private String cap;
     private String capColor;
     private String description;
-    private String ownder;
+    private String owner;
 
-    public Vial(int id, String name, String material, String shape, String size,String unit, String color, String cap, String capColor, String description, String ownder) {
+    public Vial(int id, String name, String material, String shape, String size,String unit, String color, String cap, String capColor, String description, String owner) {
         this.id = id;
         this.name = name;
         this.material = material;
@@ -108,9 +108,9 @@ public class Vial {
     }
 
     public String getOwner(){
-        return ownder;
+        return owner;
     }
     public void setOwner(String ownder){
-        this.ownder = ownder;
+        this.owner = ownder;
     }
 }

@@ -114,10 +114,10 @@
     -fx-border-color: transparent;
 }
 
-.button-white {
-    -fx-background-color: white;
+.button-gray {
+    -fx-background-color: #F2F2F2;
     -fx-border-color: transparent;
-
+    -fx-radious: 8;
 }
 .button-blue {
     -fx-background-color: #6c63ff;

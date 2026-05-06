@@ -3,6 +3,7 @@ package com.example.laborganiser.frontend.mainPage;
 import com.example.laborganiser.app.AppContext;
 import com.example.laborganiser.backend.Observer;
 import com.example.laborganiser.backend.collections.Collection;
+import com.example.laborganiser.backend.vials.Vial;
 import com.example.laborganiser.frontend.collectionAdd.CollectionAddController;
 import com.example.laborganiser.frontend.shelfAdd.ShelfAddController;
 import com.example.laborganiser.frontend.vialAdd.VialAddController;
@@ -11,6 +12,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -21,8 +25,15 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class MainPage implements Observer {
-    @FXML
-    public TilePane collectionContainer;
+
+    public TableView tableView;
+    public TableColumn name;
+    public TableColumn material;
+    public TableColumn size;
+    public TableColumn color;
+    public TableColumn owner;
+    public Label paginationLabel;
+    public Label paginationButtonLabel;
     private Stage stage;
 
     private AppContext appContext;
@@ -32,42 +43,65 @@ public class MainPage implements Observer {
         this.appContext = appContext;
 
         appContext.getCollectionService().addObserver(this);
+        appContext.getVialService().addObserver(this);
 
         stage.setWidth(appContext.getWidth());
         stage.setHeight(appContext.getHeight());
         stage.centerOnScreen();
         
-        loadCollections();
+        initializeTableColumns();
+        load();
     }
 
-    private void loadCollections() {
-//        collectionContainer.getChildren().clear();
-//
-//        var collections = appContext.getCollectionService().getCollection();
-//
-//        for (var collection : collections) {
-//            VBox card = createCollectionCard(collection);
-//            collectionContainer.getChildren().add(card);
-//        }
+    private void initializeTableColumns() {
+        name.setCellValueFactory(new PropertyValueFactory<>("name"));
+        material.setCellValueFactory(new PropertyValueFactory<>("material"));
+        size.setCellValueFactory(new PropertyValueFactory<>("size"));
+        color.setCellValueFactory(new PropertyValueFactory<>("color"));
+        owner.setCellValueFactory(new PropertyValueFactory<>("owner"));
     }
 
-    private VBox createCollectionCard(Collection collection) {
-        VBox box = new VBox();
-        box.getStyleClass().add("collection-card");
-        box.setPrefSize(150, 150);
+    // private int id;
+    //    private String name;
+    //    private String material;
+    //    private String shape;
+    //    private String size;
+    //    private String unit;
+    //    private String color;
+    //    private String cap;
+    //    private String capColor;
+    //    private String description;
+    //    private String ownder;
+    private void load() {
+        paginationLabel.setText("Loading...");
 
-        Label name = new Label(collection.getName());
-        name.getStyleClass().add("title");
+        tableView.getItems().clear();
+        for (Vial vial : appContext.getVialService().getVials()) {
+            tableView.getItems().add(vial);
+        }
 
-        box.getChildren().add(name);
-
-        // click event (optional)
-        box.setOnMouseClicked(e -> {
-            System.out.println("Clicked: " + collection.getName());
-        });
-
-        return box;
+        setPaginationLabel();
     }
+
+    private void setPaginationLabel(){
+        int vialCount =  appContext.getVialService().getVials().size();
+        if(vialCount == 0) {
+            paginationLabel.setText("No vials found");
+            paginationButtonLabel.setText("Page 1");
+        }
+        else{
+            if(vialCount < 8){
+                paginationLabel.setText("Viewing " + vialCount   + " vials");
+                paginationButtonLabel.setText("Page 1");
+            }
+            else{
+                paginationLabel.setText("Viewing 8 out of "  + vialCount + " vials");
+                paginationButtonLabel.setText("Page 1 of " + vialCount/8);
+            }
+        }
+    }
+
+
 
     public void onAddVialClick(ActionEvent actionEvent) {
         try {
@@ -132,7 +166,7 @@ public class MainPage implements Observer {
 
     @Override
     public void update() {
-        loadCollections();
+        load();
     }
 
 
