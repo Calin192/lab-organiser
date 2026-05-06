@@ -38,6 +38,9 @@ public class MainPage implements Observer {
 
     private AppContext appContext;
 
+    private static final int ITEMS_PER_PAGE = 8;
+    private int currentPage = 0;
+
     public void init(Stage stage, AppContext appContext) {
         this.stage = stage;
         this.appContext = appContext;
@@ -74,30 +77,51 @@ public class MainPage implements Observer {
     //    private String ownder;
     private void load() {
         paginationLabel.setText("Loading...");
+        currentPage = 0;
+        loadPage();
+    }
 
+    private void loadPage() {
         tableView.getItems().clear();
-        for (Vial vial : appContext.getVialService().getVials()) {
-            tableView.getItems().add(vial);
+        int startIndex = currentPage * ITEMS_PER_PAGE;
+        int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, appContext.getVialService().getVials().size());
+
+        for (int i = startIndex; i < endIndex; i++) {
+            tableView.getItems().add(appContext.getVialService().getVials().get(i));
         }
 
         setPaginationLabel();
     }
 
     private void setPaginationLabel(){
-        int vialCount =  appContext.getVialService().getVials().size();
+        int vialCount = appContext.getVialService().getVials().size();
+        int totalPages = (vialCount + ITEMS_PER_PAGE - 1) / ITEMS_PER_PAGE;
+
         if(vialCount == 0) {
             paginationLabel.setText("No vials found");
             paginationButtonLabel.setText("Page 1");
+        } else {
+            int startIndex = currentPage * ITEMS_PER_PAGE + 1;
+            int endIndex = Math.min((currentPage + 1) * ITEMS_PER_PAGE, vialCount);
+            paginationLabel.setText("Viewing " + startIndex + "-" + endIndex + " out of " + vialCount + " vials");
+            paginationButtonLabel.setText("Page " + (currentPage + 1) + " of " + totalPages);
         }
-        else{
-            if(vialCount < 8){
-                paginationLabel.setText("Viewing " + vialCount   + " vials");
-                paginationButtonLabel.setText("Page 1");
-            }
-            else{
-                paginationLabel.setText("Viewing 8 out of "  + vialCount + " vials");
-                paginationButtonLabel.setText("Page 1 of " + vialCount/8);
-            }
+    }
+
+    @FXML
+    public void nextPage() {
+        int totalPages = (appContext.getVialService().getVials().size() + ITEMS_PER_PAGE - 1) / ITEMS_PER_PAGE;
+        if (currentPage < totalPages - 1) {
+            currentPage++;
+            loadPage();
+        }
+    }
+
+    @FXML
+    public void previousPage() {
+        if (currentPage > 0) {
+            currentPage--;
+            loadPage();
         }
     }
 

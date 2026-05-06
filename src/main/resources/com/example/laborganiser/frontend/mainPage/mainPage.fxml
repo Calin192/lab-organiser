@@ -75,9 +75,9 @@
                     <Pane HBox.hgrow="ALWAYS"/>
 
                     <HBox alignment="CENTER" spacing="5">
-                        <Button text="←" styleClass="button-gray"/>
+                        <Button text="←" styleClass="button-gray" onAction="#previousPage"/>
                         <Label text="Page 1 of 2" styleClass = "label-white" fx:id="paginationButtonLabel"/>
-                        <Button text="→" styleClass="button-gray"/>
+                        <Button text="→" styleClass="button-gray" onAction="#nextPage"/>
                     </HBox>
                 </HBox>
 
