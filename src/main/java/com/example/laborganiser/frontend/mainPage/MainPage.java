@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -23,6 +24,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class MainPage implements Observer {
 
@@ -34,7 +38,10 @@ public class MainPage implements Observer {
     public TableColumn owner;
     public Label paginationLabel;
     public Label paginationButtonLabel;
+    public TextField searchField;
     private Stage stage;
+
+    private List<Vial> allVials = new ArrayList<>();
 
     private AppContext appContext;
 
@@ -51,8 +58,31 @@ public class MainPage implements Observer {
         stage.setWidth(appContext.getWidth());
         stage.setHeight(appContext.getHeight());
         stage.centerOnScreen();
+
+        searchField.textProperty().addListener((obs, oldValue, newValue) -> {
+
+            currentPage = 0;
+
+            List<Vial> filtered = appContext.getVialService()
+                    .getVials()
+                    .stream()
+                    .filter(vial ->
+                            vial.getName()
+                                    .toLowerCase()
+                                    .contains(newValue.toLowerCase())
+                    ).toList();
+            loadPage(filtered);});
         
         initializeTableColumns();
+
+
+        allVials = new ArrayList<>(appContext.getVialService().getVials());
+
+
+        tableView.setPrefHeight(
+                51 * 8 + 30
+        );
+
         load();
     }
 
@@ -74,27 +104,45 @@ public class MainPage implements Observer {
     //    private String cap;
     //    private String capColor;
     //    private String description;
-    //    private String ownder;
+    //    private String owner;
     private void load() {
         paginationLabel.setText("Loading...");
         currentPage = 0;
-        loadPage();
+        loadPage(null);
+        setPaginationLabel();
     }
 
-    private void loadPage() {
-        tableView.getItems().clear();
-        int startIndex = currentPage * ITEMS_PER_PAGE;
-        int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, appContext.getVialService().getVials().size());
+    private void loadPage(List<Vial> vials) {
 
-        for (int i = startIndex; i < endIndex; i++) {
-            tableView.getItems().add(appContext.getVialService().getVials().get(i));
+        tableView.getItems().clear();
+
+        if (vials == null) {
+
+            List<Vial> serviceVials = appContext.getVialService().getVials();
+
+            if (serviceVials == null) {
+                serviceVials = new ArrayList<>();
+            }
+
+            vials = new ArrayList<>(serviceVials);
         }
+
+        int startIndex = currentPage * ITEMS_PER_PAGE;
+        int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, vials.size());
+
+        if (startIndex > endIndex) {
+            return;
+        }
+
+        tableView.getItems().addAll(
+                vials.subList(startIndex, endIndex)
+        );
 
         setPaginationLabel();
     }
 
     private void setPaginationLabel(){
-        int vialCount = appContext.getVialService().getVials().size();
+        int vialCount = allVials.size();
         int totalPages = (vialCount + ITEMS_PER_PAGE - 1) / ITEMS_PER_PAGE;
 
         if(vialCount == 0) {
@@ -113,7 +161,7 @@ public class MainPage implements Observer {
         int totalPages = (appContext.getVialService().getVials().size() + ITEMS_PER_PAGE - 1) / ITEMS_PER_PAGE;
         if (currentPage < totalPages - 1) {
             currentPage++;
-            loadPage();
+            loadPage(null);
         }
     }
 
@@ -121,7 +169,7 @@ public class MainPage implements Observer {
     public void previousPage() {
         if (currentPage > 0) {
             currentPage--;
-            loadPage();
+            loadPage(null);
         }
     }
 
@@ -218,4 +266,6 @@ public class MainPage implements Observer {
         stage.setScene(scene);
         stage.show();
     }
+
+
 }

@@ -42,12 +42,12 @@
                            <Image url="@/Images/search.png"/>
                        </image>
                    </ImageView>
-                   <TextField promptText="Type here..." styleClass="search-field" prefWidth="800" />
+                   <TextField promptText="Type here..." styleClass="search-field" prefWidth="800" fx:id="searchField"/>
                </HBox>
 
 
 
-                <TableView fx:id="tableView" styleClass="table-view" VBox.vgrow="ALWAYS">
+                <TableView fx:id="tableView" styleClass="table-view" VBox.vgrow="ALWAYS"  >
 <!--                    private int id;-->
 <!--                    private String name;-->
 <!--                    private String material;-->

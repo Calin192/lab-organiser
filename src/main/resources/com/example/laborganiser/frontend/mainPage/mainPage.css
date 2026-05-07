@@ -72,6 +72,10 @@
     -fx-border-radius: 10;
     -fx-padding: 0;
     -fx-margin: 0;
+    -fx-font-size: 14px;
+
+        -fx-fixed-cell-size: 50px;
+
 }
 
 .table-view .column-header-background {
@@ -88,7 +92,7 @@
     -fx-background-color: white;
     -fx-text-fill: #333333;
     -fx-font-weight: bold;
-    -fx-font-size: 12px;
+    -fx-font-size: 14px;
     -fx-padding: 12;
 }
 
@@ -140,4 +144,5 @@
     -fx-aligment: center;
 
     -fx-font-size: 21px;
+    -fx-font-weight: bold;
 }
