@@ -1,10 +1,10 @@
 .root {
-    -fx-background-color: #1e1e2f;
+    -fx-background-color: #FFFFFF;;
     -fx-font-family: "Segoe UI", "Roboto", sans-serif;
 }
 
 .card{
-    -fx-background-color: #2f2f4f;
+    -fx-background-color: #FFFFFF;
     -fx-padding: 30;
     -fx-background-radius: 0;
     -fx-spacing: 10;
@@ -19,13 +19,13 @@
 }
 
 .title{
-    -fx-text-fill: white;
+    -fx-text-fill: black;
 }
 
 
 .input {
-    -fx-background-color: #3b3b5f;
-    -fx-text-fill: white;
+    -fx-background-color: #F3F3F3;
+    -fx-text-fill: black;
     -fx-prompt-text-fill: #8888aa;
     -fx-background-radius: 8;
     -fx-padding: 8;
@@ -33,22 +33,22 @@
 
 
 .input .content {
-    -fx-background-color: #3b3b5f;
+    -fx-background-color: #F3F3F3;
 }
 
 .material-btn {
-    -fx-background-color: #3b3b5f;
-    -fx-text-fill: white;
+    -fx-background-color: #F3F3F3;
+    -fx-text-fill: black;
     -fx-background-radius: 8;
     -fx-padding: 8 16;
 }
 
 .material-btn:selected {
-    -fx-background-color: #595969;
+    -fx-background-color: #6c63ff;
 }
 
 .material-btn:hover {
-    -fx-background-color: #4a4a6a;
+    -fx-background-color: #bdbdbd;
 }
 
 
@@ -58,3 +58,9 @@
     -fx-background-radius: 8;
     -fx-padding: 10;
 }
+
+.primary-button:disabled{
+    -fx-background-color: #bdbdbd;
+    -fx-text-fill: white;
+}
+

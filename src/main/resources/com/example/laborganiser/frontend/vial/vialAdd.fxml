@@ -32,7 +32,7 @@
                 <TextField promptText="Cap" fx:id="vialCapField" styleClass="input" maxWidth="300"/>
                 <TextField promptText="Cap Color" fx:id="vialCapColorField" styleClass="input" maxWidth="300"/>
                 <TextArea promptText= "Description" fx:id="vialDescriptionField" styleClass="input" maxWidth="300" prefRowCount="3"/>
-                <Button mnemonicParsing="false" fx:id="addButton" text="Add Vial" onAction="#onAddVialClicked" styleClass="primary-button" visible="false"/>
+                <Button mnemonicParsing="false" fx:id="addButton" text="Add Vial" onAction="#onAddVialClicked" styleClass="primary-button"/>
             </children>
         </VBox>
         <Button mnemonicParsing="false" text="Back"  onAction="#onBackButtonClick" styleClass="back-button" StackPane.alignment="TOP_LEFT"/>

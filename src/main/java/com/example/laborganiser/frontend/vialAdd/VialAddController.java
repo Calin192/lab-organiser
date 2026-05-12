@@ -90,8 +90,11 @@ public class VialAddController {
 
     @FXML
     public void initialize() {
-        hideAll();
+        //hideAll();
         //material choosing stuff
+
+        addButton.setDisable(true);
+
         materialGroup = new ToggleGroup();
         plasticBtn.setToggleGroup(materialGroup);
         glassBtn.setToggleGroup(materialGroup);
@@ -99,31 +102,40 @@ public class VialAddController {
         //volume choosing stuff
         vialUnitField.getItems().addAll("μl","ml","cl","dl","l");
 
+        vialNameField.textProperty().addListener((obs, oldVal, newVal) -> validate());
+        vialShapeField.textProperty().addListener((obs, oldVal, newVal) -> validate());
+        vialVolumeField.textProperty().addListener((obs, oldVal, newVal) -> validate());
+        vialUnitField.valueProperty().addListener((obs, oldVal, newVal) -> validate());
+        vialColorField.textProperty().addListener((obs, oldVal, newVal) -> validate());
+        vialCapField.textProperty().addListener((obs, oldVal, newVal) -> validate());
+        vialCapColorField.textProperty().addListener((obs, oldVal, newVal) -> validate());
 
-        vialNameField.setOnAction(e -> {showNext(plasticBtn);showNext(glassBtn);});
+        materialGroup.selectedToggleProperty().addListener((obs, oldVal, newVal) -> validate());
 
 
-        plasticBtn.setOnAction(e -> showNext(vialShapeField));
-        glassBtn.setOnAction(e -> showNext(vialShapeField));
-
-        vialShapeField.setOnAction(e -> {showNext(vialVolumeField);showNext(vialUnitField);});
-
-        //vialVolumeField.setOnAction(e -> showNext(vialUnitField));
-        vialUnitField.setOnAction(e -> showNext(vialColorField));
-        vialColorField.setOnAction(e -> showNext(vialCapField));
-        vialCapField.setOnAction(e -> showNext(vialCapColorField));
-        vialCapColorField.setOnAction(e -> showNext(vialDescriptionField));
-        vialDescriptionField.setOnKeyPressed(e -> {
-            switch (e.getCode()) {
-                case ENTER -> {
-                    addButton.setVisible(true);
-                    addButton.requestFocus();
-                }
-            }
-        });
+//        vialNameField.setOnAction(e -> {showNext(plasticBtn);showNext(glassBtn);});
+//
+//        plasticBtn.setOnAction(e -> showNext(vialShapeField));
+//        glassBtn.setOnAction(e -> showNext(vialShapeField));
+//
+//        vialShapeField.setOnAction(e -> {showNext(vialVolumeField);showNext(vialUnitField);});
+//
+//        //vialVolumeField.setOnAction(e -> showNext(vialUnitField));
+//        vialUnitField.setOnAction(e -> showNext(vialColorField));
+//        vialColorField.setOnAction(e -> showNext(vialCapField));
+//        vialCapField.setOnAction(e -> showNext(vialCapColorField));
+//        vialCapColorField.setOnAction(e -> showNext(vialDescriptionField));
+//        vialDescriptionField.setOnKeyPressed(e -> {
+//            switch (e.getCode()) {
+//                case ENTER -> {
+//                    addButton.setVisible(true);
+//                    addButton.requestFocus();
+//                }
+//            }
+//        });
     }
 
-    public void showNext(javafx.scene.Node node){
+    private void showNext(javafx.scene.Node node){
         node.setOpacity(0);
         node.setVisible(true);
 
@@ -142,5 +154,23 @@ public class VialAddController {
     public void onBackButtonClick(ActionEvent actionEvent) {
         Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
         stage.close();
+    }
+
+    private void validate() {
+        String name = vialNameField.getText().trim();
+        String shape = vialShapeField.getText().trim();
+        String volume = vialVolumeField.getText().trim();
+        String unit = vialUnitField.getValue();
+        String color = vialColorField.getText().trim();
+        String cap = vialCapField.getText().trim();
+        String capColor = vialCapColorField.getText().trim();
+
+        // Verifică dacă toate câmpurile sunt completate și materialul e selectat
+        boolean allFieldsFilled = !name.isEmpty() && !shape.isEmpty() && !volume.isEmpty()
+                && unit != null && !color.isEmpty() && !cap.isEmpty() && !capColor.isEmpty();
+
+        boolean materialSelected = materialGroup.getSelectedToggle() != null;
+
+        addButton.setDisable(!(allFieldsFilled && materialSelected));
     }
 }

@@ -62,7 +62,7 @@ public class AuthController {
         usernameField.textProperty().addListener((obs, oldVal, newVal) -> validate());
         passwordField.textProperty().addListener((obs, oldVal, newVal) -> validate());
 
-
+        onLoginClicked();
     }
 
 
@@ -100,6 +100,9 @@ public class AuthController {
 
     @FXML
     private void onLoginClicked() {
+
+
+
         String email = usernameField.getText();
         String password = passwordField.getText();
 

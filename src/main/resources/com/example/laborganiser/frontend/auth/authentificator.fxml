@@ -31,7 +31,7 @@
                 </image>
             </ImageView>
 
-            <Label text="Welcome to Larp Organiser"
+            <Label text="Welcome to Lab Organiser"
                    styleClass="title"/>
 
             <Label  text="Email" prefWidth="385" maxWidth="385" styleClass="small-label"  alignment="CENTER_LEFT"></Label>
