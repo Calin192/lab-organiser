@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -39,6 +40,9 @@ public class MainPage implements Observer {
     public Label paginationLabel;
     public Label paginationButtonLabel;
     public TextField searchField;
+    public Button vialFilterBtn;
+    public Button shelfFilterBtn;
+    public Button collectionFilterBtn;
     private Stage stage;
 
     private List<Vial> allVials = new ArrayList<>();
@@ -47,6 +51,10 @@ public class MainPage implements Observer {
 
     private static final int ITEMS_PER_PAGE = 8;
     private int currentPage = 0;
+
+    // Tipul de filtru selectat
+    private enum FilterType { VIALS, SHELVES, COLLECTIONS }
+    private FilterType currentFilter = FilterType.VIALS;
 
     public void init(Stage stage, AppContext appContext) {
         this.stage = stage;
@@ -117,26 +125,22 @@ public class MainPage implements Observer {
 
         tableView.getItems().clear();
 
-        if (vials == null) {
+        // Folosește lista pasată sau allVials
+        List<Vial> dataToDisplay = (vials != null) ? vials : allVials;
 
-            List<Vial> serviceVials = appContext.getVialService().getVials();
-
-            if (serviceVials == null) {
-                serviceVials = new ArrayList<>();
-            }
-
-            vials = new ArrayList<>(serviceVials);
+        if (dataToDisplay == null || dataToDisplay.isEmpty()) {
+            dataToDisplay = new ArrayList<>();
         }
 
         int startIndex = currentPage * ITEMS_PER_PAGE;
-        int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, vials.size());
+        int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, dataToDisplay.size());
 
-        if (startIndex > endIndex) {
+        if (startIndex >= dataToDisplay.size()) {
             return;
         }
 
         tableView.getItems().addAll(
-                vials.subList(startIndex, endIndex)
+                dataToDisplay.subList(startIndex, endIndex)
         );
 
         setPaginationLabel();
@@ -159,7 +163,7 @@ public class MainPage implements Observer {
 
     @FXML
     public void nextPage() {
-        int totalPages = (appContext.getVialService().getVials().size() + ITEMS_PER_PAGE - 1) / ITEMS_PER_PAGE;
+        int totalPages = (allVials.size() + ITEMS_PER_PAGE - 1) / ITEMS_PER_PAGE;
         if (currentPage < totalPages - 1) {
             currentPage++;
             loadPage(null);
@@ -173,8 +177,6 @@ public class MainPage implements Observer {
             loadPage(null);
         }
     }
-
-
 
     public void onAddVialClick(ActionEvent actionEvent) {
         try {
@@ -269,4 +271,97 @@ public class MainPage implements Observer {
     }
 
 
+    @FXML
+    public void filterVials() {
+        currentFilter = FilterType.VIALS;
+        currentPage = 0;
+        updateFilterButtons();
+        allVials = new ArrayList<>(appContext.getVialService().getVials());
+        loadPage(null);
+        setPaginationLabel();
+    }
+
+    @FXML
+    public void filterShelves() {
+        currentFilter = FilterType.SHELVES;
+        currentPage = 0;
+        updateFilterButtons();
+        tableView.getItems().clear();
+        allVials.clear();
+
+        for (var shelf : appContext.getShelfService().getAllShelves()) {
+            Vial vialPlaceholder = new Vial();
+            vialPlaceholder.setName(shelf.getName());
+            vialPlaceholder.setMaterial("Shelf");
+            allVials.add(vialPlaceholder);
+        }
+
+        loadPage(null);
+        setPaginationLabel();
+    }
+
+    @FXML
+    public void filterCollections() {
+        currentFilter = FilterType.COLLECTIONS;
+        currentPage = 0;
+        updateFilterButtons();
+        tableView.getItems().clear();
+        allVials.clear();
+
+        for (var collection : appContext.getCollectionService().getCollection()) {
+            Vial vialPlaceholder = new Vial();
+            vialPlaceholder.setName(collection.getName());
+            vialPlaceholder.setMaterial("Collection");
+            allVials.add(vialPlaceholder);
+        }
+
+        loadPage(null);
+        setPaginationLabel();
+    }
+
+    private void updateFilterButtons() {
+        // Schimbă între button-blue și button-gray fără a șterge alte stiluri
+        boolean isVial = currentFilter == FilterType.VIALS;
+        boolean isShelf = currentFilter == FilterType.SHELVES;
+        boolean isCollection = currentFilter == FilterType.COLLECTIONS;
+
+        // Vials
+        if (isVial) {
+            vialFilterBtn.getStyleClass().remove("button-gray");
+            if (!vialFilterBtn.getStyleClass().contains("button-blue")) {
+                vialFilterBtn.getStyleClass().add("button-blue");
+            }
+        } else {
+            vialFilterBtn.getStyleClass().remove("button-blue");
+            if (!vialFilterBtn.getStyleClass().contains("button-gray")) {
+                vialFilterBtn.getStyleClass().add("button-gray");
+            }
+        }
+
+        // Shelves
+        if (isShelf) {
+            shelfFilterBtn.getStyleClass().remove("button-gray");
+            if (!shelfFilterBtn.getStyleClass().contains("button-blue")) {
+                shelfFilterBtn.getStyleClass().add("button-blue");
+            }
+        } else {
+            shelfFilterBtn.getStyleClass().remove("button-blue");
+            if (!shelfFilterBtn.getStyleClass().contains("button-gray")) {
+                shelfFilterBtn.getStyleClass().add("button-gray");
+            }
+        }
+
+        // Collections
+        if (isCollection) {
+            collectionFilterBtn.getStyleClass().remove("button-gray");
+            if (!collectionFilterBtn.getStyleClass().contains("button-blue")) {
+                collectionFilterBtn.getStyleClass().add("button-blue");
+            }
+        } else {
+            collectionFilterBtn.getStyleClass().remove("button-blue");
+            if (!collectionFilterBtn.getStyleClass().contains("button-gray")) {
+                collectionFilterBtn.getStyleClass().add("button-gray");
+            }
+        }
+    }
 }

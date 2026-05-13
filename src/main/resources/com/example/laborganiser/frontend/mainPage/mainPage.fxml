@@ -36,14 +36,20 @@
            <VBox spacing="10"
                  styleClass="card">
 
-               <HBox>
-                   <ImageView fitWidth="20" fitHeight="20" preserveRatio="true">
-                       <image>
-                           <Image url="@/Images/search.png"/>
-                       </image>
-                   </ImageView>
-                   <TextField promptText="Type here..." styleClass="search-field" prefWidth="800" fx:id="searchField"/>
-               </HBox>
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Button text="Vials" styleClass="button-blue" onAction="#filterVials" fx:id="vialFilterBtn" prefHeight="20" prefWidth="80"/>
+                    <Button text="Shelves" styleClass="button-gray" onAction="#filterShelves" fx:id="shelfFilterBtn" prefHeight="20" prefWidth="80"/>
+                    <Button text="Collections" styleClass="button-gray" onAction="#filterCollections" fx:id="collectionFilterBtn" prefHeight="20" prefWidth="80"/>
+                </HBox>
+
+                <HBox>
+                    <ImageView fitWidth="20" fitHeight="20" preserveRatio="true">
+                        <image>
+                            <Image url="@/Images/search.png"/>
+                        </image>
+                    </ImageView>
+                    <TextField promptText="Type here..." styleClass="search-field" prefWidth="800" fx:id="searchField"/>
+                </HBox>
 
 
 
