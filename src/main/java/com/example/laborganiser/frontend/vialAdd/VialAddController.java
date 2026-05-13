@@ -63,7 +63,22 @@ public class VialAddController {
         }
 
 
-        appContext.getVialService().addVial(
+        String selectedShelfName = shelfComboBox.getValue().toString();
+        Shelf selectedShelf = null;
+        if (selectedShelfName != null && appContext.getShelfService() != null) {
+            selectedShelf = appContext.getShelfService().getAllShelves().stream()
+                    .filter(shelf -> shelf.getName().equals(selectedShelfName))
+                    .findFirst()
+                    .orElse(null);
+        }
+
+
+        if (selectedShelf == null) {
+            alert.showAlert("Error", "Please select a shelf.");
+            return;
+        }
+
+        int vialId = appContext.getVialService().addVial(
                 vialNameField.getText(),
                 material,
                 vialShapeField.getText(),
@@ -75,62 +90,15 @@ public class VialAddController {
                 vialDescriptionField.getText(),
                 appContext.getCurrentUser().getUsername()
         );
+
+        appContext.getShelfService().addVial(selectedShelf, vialId);
+
         Stage stage = (Stage) vialNameField.getScene().getWindow();
         stage.close();
     }
 
 
-    public void hideAll() {
-        plasticBtn.setVisible(false);
-        glassBtn.setVisible(false);
-        vialShapeField.setVisible(false);
-        vialVolumeField.setVisible(false);
-        vialUnitField.setVisible(false);
-        vialColorField.setVisible(false);
-        vialCapField.setVisible(false);
-        vialCapColorField.setVisible(false);
-        vialDescriptionField.setVisible(false);
-    }
 
-    @FXML
-    public void initialize() {
-        //hideAll();
-        //material choosing stuff
-
-
-
-//        vialNameField.setOnAction(e -> {showNext(plasticBtn);showNext(glassBtn);});
-//
-//        plasticBtn.setOnAction(e -> showNext(vialShapeField));
-//        glassBtn.setOnAction(e -> showNext(vialShapeField));
-//
-//        vialShapeField.setOnAction(e -> {showNext(vialVolumeField);showNext(vialUnitField);});
-//
-//        //vialVolumeField.setOnAction(e -> showNext(vialUnitField));
-//        vialUnitField.setOnAction(e -> showNext(vialColorField));
-//        vialColorField.setOnAction(e -> showNext(vialCapField));
-//        vialCapField.setOnAction(e -> showNext(vialCapColorField));
-//        vialCapColorField.setOnAction(e -> showNext(vialDescriptionField));
-//        vialDescriptionField.setOnKeyPressed(e -> {
-//            switch (e.getCode()) {
-//                case ENTER -> {
-//                    addButton.setVisible(true);
-//                    addButton.requestFocus();
-//                }
-//            }
-//        });
-    }
-
-    private void showNext(javafx.scene.Node node){
-        node.setOpacity(0);
-        node.setVisible(true);
-
-        FadeTransition ft = new FadeTransition(Duration.millis(300), node);
-        ft.setToValue(1);
-        ft.play();
-
-        node.requestFocus();
-    }
 
     public void init(Stage stage, AppContext appContext) {
         this.stage = stage;

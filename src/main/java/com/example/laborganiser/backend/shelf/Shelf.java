@@ -42,4 +42,8 @@ public class Shelf {
     public void setName(String name) {
         this.name = name;
     }
+
+    public void addVialId(int vialId) {
+        this.vials.add(vialId);
+    }
 }

@@ -31,15 +31,14 @@ public class CollectionService {
         }
     }
 
-    public boolean addCollection(String name) {
-        Collection collection = new Collection(collectionRepo.getNextId(), name);
-        boolean result = collectionRepo.addCollection(collection);
+    public Integer addCollection(String name) {
+        int id = collectionRepo.getNextId();
+        Collection collection = new Collection(id, name);
+        collectionRepo.addCollection(collection);
+        notifyObservers();
 
-        if(result) {
-            notifyObservers();
-        }
+        return id;
 
-        return result;
     }
 
     public List<Collection> getAllShelves(){

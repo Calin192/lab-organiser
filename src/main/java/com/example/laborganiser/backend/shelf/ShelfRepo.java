@@ -1,6 +1,7 @@
 package com.example.laborganiser.backend.shelf;
 
 
+import com.example.laborganiser.backend.collections.Collection;
 import com.example.laborganiser.backend.vials.Vial;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -94,5 +95,28 @@ public class ShelfRepo {
         Shelf shelf = getShelf(name);
         return (shelf != null) ? shelf.getId() : -1;
 
+    }
+
+    public boolean addVial(Shelf shelf, Integer vialId) {
+        if (shelf != null) {
+            Shelf foundShelf = shelves.stream()
+                    .filter(c -> c.getId() == shelf.getId())
+                    .findFirst()
+                    .orElse(null);
+
+            if (foundShelf != null) {
+                foundShelf.addVialId(vialId);
+                saveShelvesToJson();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Shelf getShelfById(Integer id) {
+        return shelves.stream()
+                .filter(shelf -> shelf.getId() == id)
+                .findFirst()
+                .orElse(null);
     }
 }

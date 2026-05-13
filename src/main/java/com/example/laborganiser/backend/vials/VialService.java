@@ -1,6 +1,7 @@
 package com.example.laborganiser.backend.vials;
 
 import com.example.laborganiser.backend.Observer;
+import com.example.laborganiser.backend.shelf.Shelf;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,13 +16,15 @@ public class VialService {
         this.vialRepo = vialRepo;
     }
 
-    public void addVial(String name, String material, String shape, String size, String unit,String color, String cap, String capColor, String description, String owner) {
+    public Integer addVial(String name, String material, String shape, String size, String unit,String color, String cap, String capColor, String description, String owner) {
         int id = vialRepo.getNextId();
 
         Vial vial = new Vial(id, name, material, shape, size, unit, color, cap, capColor, description,owner);
 
         vialRepo.addVial(vial);
+
         notifyObservers();
+        return id;
     }
 
     public void removeVial(int id) {
@@ -42,6 +45,8 @@ public class VialService {
             observer.update();
         }
     }
+
+
 
 
 }

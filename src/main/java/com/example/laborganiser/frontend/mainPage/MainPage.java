@@ -53,6 +53,7 @@ public class MainPage implements Observer {
         this.appContext = appContext;
 
         appContext.getCollectionService().addObserver(this);
+        appContext.getShelfService().addObserver(this);
         appContext.getVialService().addObserver(this);
 
         stage.setWidth(appContext.getWidth());

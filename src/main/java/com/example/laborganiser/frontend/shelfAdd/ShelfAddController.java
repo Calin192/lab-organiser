@@ -67,11 +67,14 @@ public class ShelfAddController {
             return;
         }
 
-        boolean success = appContext.getShelfService().addShelf(name);
-        Shelf shelf = appContext.getShelfService().getShelf(name);
+        // Adaugă raftul în lista globală și obține ID-ul
+        int shelfId = appContext.getShelfService().addShelf(name);
+        Shelf shelf = appContext.getShelfService().getShelfById(shelfId);
+
+        // Adaugă ID-ul raftului în colecție
         boolean addedToCollection = appContext.getCollectionService().addShelf(selectedCollection, shelf);
 
-        if(success && addedToCollection) {
+        if(addedToCollection) {
             stage.close();
         } else {
             // Show error message
