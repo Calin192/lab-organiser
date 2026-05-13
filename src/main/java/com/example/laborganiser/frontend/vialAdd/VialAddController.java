@@ -1,6 +1,7 @@
 package com.example.laborganiser.frontend.vialAdd;
 
 import com.example.laborganiser.app.AppContext;
+import com.example.laborganiser.backend.shelf.Shelf;
 import com.example.laborganiser.backend.users.UserService;
 import com.example.laborganiser.backend.vials.VialService;
 import com.example.laborganiser.frontend.alerts.AlertWindow;
@@ -15,11 +16,14 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class VialAddController {
 
     @FXML
     public TextField vialNameField;
+    public ComboBox shelfComboBox;
     @FXML
     private ToggleButton plasticBtn;
 
@@ -93,24 +97,6 @@ public class VialAddController {
         //hideAll();
         //material choosing stuff
 
-        addButton.setDisable(true);
-
-        materialGroup = new ToggleGroup();
-        plasticBtn.setToggleGroup(materialGroup);
-        glassBtn.setToggleGroup(materialGroup);
-
-        //volume choosing stuff
-        vialUnitField.getItems().addAll("μl","ml","cl","dl","l");
-
-        vialNameField.textProperty().addListener((obs, oldVal, newVal) -> validate());
-        vialShapeField.textProperty().addListener((obs, oldVal, newVal) -> validate());
-        vialVolumeField.textProperty().addListener((obs, oldVal, newVal) -> validate());
-        vialUnitField.valueProperty().addListener((obs, oldVal, newVal) -> validate());
-        vialColorField.textProperty().addListener((obs, oldVal, newVal) -> validate());
-        vialCapField.textProperty().addListener((obs, oldVal, newVal) -> validate());
-        vialCapColorField.textProperty().addListener((obs, oldVal, newVal) -> validate());
-
-        materialGroup.selectedToggleProperty().addListener((obs, oldVal, newVal) -> validate());
 
 
 //        vialNameField.setOnAction(e -> {showNext(plasticBtn);showNext(glassBtn);});
@@ -149,6 +135,35 @@ public class VialAddController {
     public void init(Stage stage, AppContext appContext) {
         this.stage = stage;
         this.appContext = appContext;
+
+        addButton.setDisable(true);
+
+        materialGroup = new ToggleGroup();
+        plasticBtn.setToggleGroup(materialGroup);
+        glassBtn.setToggleGroup(materialGroup);
+
+        //volume choosing stuff
+        vialUnitField.getItems().addAll("μl","ml","cl","dl","l");
+
+
+        if (appContext != null && appContext.getShelfService() != null && appContext.getShelfService().getAllShelves() != null) {
+            for (Shelf shelf : appContext.getShelfService().getAllShelves()) {
+                shelfComboBox.getItems().add(shelf.getName());
+            }
+        } else {
+            shelfComboBox.setPromptText("No shelves available");
+            shelfComboBox.setDisable(true);
+        }
+        vialNameField.textProperty().addListener((obs, oldVal, newVal) -> validate());
+        vialShapeField.textProperty().addListener((obs, oldVal, newVal) -> validate());
+        vialVolumeField.textProperty().addListener((obs, oldVal, newVal) -> validate());
+        vialUnitField.valueProperty().addListener((obs, oldVal, newVal) -> validate());
+        vialColorField.textProperty().addListener((obs, oldVal, newVal) -> validate());
+        vialCapField.textProperty().addListener((obs, oldVal, newVal) -> validate());
+        vialCapColorField.textProperty().addListener((obs, oldVal, newVal) -> validate());
+
+        materialGroup.selectedToggleProperty().addListener((obs, oldVal, newVal) -> validate());
+
     }
 
     public void onBackButtonClick(ActionEvent actionEvent) {

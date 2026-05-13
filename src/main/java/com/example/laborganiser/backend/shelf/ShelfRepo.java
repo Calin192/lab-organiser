@@ -82,4 +82,17 @@ public class ShelfRepo {
     public List<Shelf>  getShelves(){
         return shelves;
     }
+
+    public Shelf getShelf(String name){
+        return shelves.stream()
+                .filter(shelf -> shelf.getName() == name)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public int getShelfId(String name) {
+        Shelf shelf = getShelf(name);
+        return (shelf != null) ? shelf.getId() : -1;
+
+    }
 }

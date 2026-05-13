@@ -25,7 +25,6 @@ public class CollectionRepo {
         }catch(Exception e){
             currentId = 0;
         }
-
     }
 
     private List<Collection> loadCollectionsFromJson() {
@@ -45,6 +44,14 @@ public class CollectionRepo {
             Gson gson = new Gson();
             List<Collection> loaded = gson.fromJson(jsonContent, new TypeToken<ArrayList<Collection>>(){}.getType());
 
+            if (loaded != null) {
+                for (Collection collection : loaded) {
+                    if (collection.getShelfIds() == null) {
+                        collection.setShelfIds(new ArrayList<>());
+                    }
+                }
+            }
+
             return (loaded != null) ? loaded : new ArrayList<>();
 
         } catch (IOException e) {
@@ -60,7 +67,7 @@ public class CollectionRepo {
             String jsonContent = gson.toJson(collections);
             Files.writeString(path, jsonContent);
         } catch (IOException e) {
-            System.err.println("Error writing shelves.json: " + e.getMessage());
+            System.err.println("Error writing collections.json: " + e.getMessage());
         }
     }
 
@@ -81,5 +88,19 @@ public class CollectionRepo {
         return collections;
     }
 
+    public boolean addShelf(Collection collection, int shelfId) {
+        if (collection != null) {
+            Collection foundCollection = collections.stream()
+                    .filter(c -> c.getId() == collection.getId())
+                    .findFirst()
+                    .orElse(null);
 
+            if (foundCollection != null) {
+                foundCollection.addShelfId(shelfId);
+                saveCollectionsToJson();
+                return true;
+            }
+        }
+        return false;
+    }
 }

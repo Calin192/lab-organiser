@@ -1,19 +1,17 @@
 package com.example.laborganiser.backend.collections;
 
-import com.example.laborganiser.backend.shelf.Shelf;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Collection {
     private int id;
     private String name;
-    private List<Shelf> shelves;
+    private List<Integer> shelfIds;
 
     public Collection(int id, String name) {
         this.id = id;
         this.name = name;
-        this.shelves = new ArrayList<>();
+        this.shelfIds = new ArrayList<>();
     }
 
     public Collection(){
@@ -36,11 +34,17 @@ public class Collection {
         this.name = name;
     }
 
-    public List<Shelf> getShelves() {
-        return shelves;
+    public List<Integer> getShelfIds() {
+        return shelfIds;
     }
 
-    public void setShelves(List<Shelf> shelves) {
-        this.shelves = shelves;
+    public void setShelfIds(List<Integer> shelfIds) {
+        this.shelfIds = shelfIds;
+    }
+
+    public void addShelfId(int shelfId) {
+        if (!shelfIds.contains(shelfId)) {
+            shelfIds.add(shelfId);
+        }
     }
 }

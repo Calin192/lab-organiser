@@ -3,6 +3,7 @@ package com.example.laborganiser.backend.collections;
 
 
 import com.example.laborganiser.backend.Observer;
+import com.example.laborganiser.backend.shelf.Shelf;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,4 +49,14 @@ public class CollectionService {
     public List<Collection> getCollection(){
         return this.collectionRepo.getCollections();
     }
+
+    public boolean addShelf(Collection collection,Shelf shelf) {
+        if(collection != null && shelf != null)
+         {
+            collectionRepo.addShelf(collection, shelf.getId());
+            return true;
+        }
+        return false;
+    }
+
 }

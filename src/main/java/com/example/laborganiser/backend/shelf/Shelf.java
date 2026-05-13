@@ -8,7 +8,7 @@ import java.util.List;
 public class Shelf {
     private int id;
     private String name;
-    private List<Vial> vials;
+    private List<Integer> vials;
 
     public Shelf(int id, String name) {
         this.id = id;
@@ -27,11 +27,11 @@ public class Shelf {
         this.id = id;
     }
 
-    public List<Vial> getVials() {
+    public List<Integer> getVials() {
         return vials;
     }
 
-    public void setVials(List<Vial> vials) {
+    public void setVials(List<Integer> vials) {
         this.vials = vials;
     }
 

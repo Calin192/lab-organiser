@@ -18,4 +18,12 @@ public class ShelfService {
     public List<Shelf> getAllShelves(){
         return shelfRepo.getShelves();
     }
+
+    public Shelf getShelf(String name){
+        return shelfRepo.getShelf(name);
+    }
+
+    public int getShelfIdByName(String name) {
+        return shelfRepo.getShelfId(name);
+    }
 }

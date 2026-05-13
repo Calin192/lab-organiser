@@ -100,7 +100,8 @@ public class AuthController {
 
     @FXML
     private void onLoginClicked() {
-
+        usernameField.setText("ciombi@gmail.com");
+        passwordField.setText("123123");
 
 
         String email = usernameField.getText();
