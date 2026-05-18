@@ -47,6 +47,7 @@ public class VialService {
     }
 
 
-
-
+    public Vial getVialById(Integer vialId) {
+        return vialRepo.getVial(vialId);
+    }
 }

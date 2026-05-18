@@ -111,6 +111,9 @@ public class VialRepo {
     }
 
     public Vial getVial(int id) {
-        return vials.get(id);
+        return vials.stream()
+                .filter(v -> v.getId() == id)
+                .findFirst()
+                .orElse(null);
     }
 }

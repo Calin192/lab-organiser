@@ -9,10 +9,13 @@ import javafx.stage.Stage;
 public class CollectionViewController {
     public Label nameLabel;
     private AppContext appContext;
-    private Object stage;
+    private Stage stage;
     private Collection collection;
 
     public void onBackButtonClick(ActionEvent actionEvent) {
+        if (stage != null) {
+            stage.close();
+        }
     }
 
     public void init(Stage stage, AppContext appContext, Collection collection) {

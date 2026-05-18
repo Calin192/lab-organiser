@@ -11,27 +11,38 @@
            styleClass="root">
 
     <children>
-        <VBox alignment="CENTER" spacing="20.0" styleClass="card">
-            <children>
-                <Label text="Shelf Details" styleClass="title"/>
+        <ScrollPane fitToWidth="true" prefViewportHeight="520.0" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" StackPane.alignment="CENTER">
+            <content>
+                <VBox alignment="TOP_CENTER" spacing="20.0" styleClass="card" prefWidth="520.0" maxWidth="720.0">
+                    <children>
+                        <Label text="Shelf Details" styleClass="title"/>
 
-                <VBox spacing="12.0">
-                    <Label text="Name" styleClass="detail-title"/>
-                    <Label fx:id="nameLabel" styleClass="detail-value"/>
+                        <VBox spacing="12.0">
+                            <Label text="Name" styleClass="detail-title"/>
+                            <Label fx:id="nameLabel" styleClass="detail-value"/>
+                        </VBox>
+
+                        <VBox spacing="12.0">
+                            <Label text="Collection" styleClass="detail-title"/>
+                            <Label fx:id="collectionLabel" styleClass="detail-value"/>
+                            <TableView fx:id="vialsTable" prefHeight="200.0">
+                                <columns>
+                                    <TableColumn text="Name" fx:id="nameColumn" prefWidth="150.0"/>
+                                    <TableColumn text="Material" fx:id="materialColumn" prefWidth="150.0"/>
+                                    <TableColumn text="Size" fx:id="sizeColumn" prefWidth="100.0"/>
+                                </columns>
+                            </TableView>
+
+                        </VBox>
+
+                        <HBox spacing="10" alignment="CENTER">
+                            <Button text="Edit" styleClass="primary-button" prefWidth="120"/>
+                            <Button text="Delete" styleClass="danger-button" prefWidth="120"/>
+                        </HBox>
+                    </children>
                 </VBox>
-
-                <VBox spacing="12.0">
-                    <Label text="Collection" styleClass="detail-title"/>
-                    <Label fx:id="collectionLabel" styleClass="detail-value"/>
-                </VBox>
-
-
-                <HBox spacing="10" alignment="CENTER">
-                    <Button text="Edit" styleClass="primary-button" prefWidth="120"/>
-                    <Button text="Delete" styleClass="danger-button" prefWidth="120"/>
-                </HBox>
-            </children>
-        </VBox>
+            </content>
+        </ScrollPane>
 
         <Button text="Back" styleClass="back-button" StackPane.alignment="TOP_LEFT" onAction="#onBackButtonClick"/>
     </children>

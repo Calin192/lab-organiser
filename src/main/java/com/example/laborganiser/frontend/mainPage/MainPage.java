@@ -150,7 +150,7 @@ public class MainPage implements Observer {
 
         tableView.getItems().clear();
 
-        // Folosește lista pasată sau allVials
+
         List<Vial> dataToDisplay = (vials != null) ? vials : allVials;
 
         if (dataToDisplay == null || dataToDisplay.isEmpty()) {
