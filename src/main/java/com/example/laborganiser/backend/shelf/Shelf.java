@@ -3,6 +3,7 @@ package com.example.laborganiser.backend.shelf;
 import com.example.laborganiser.backend.vials.Vial;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class Shelf {
@@ -46,4 +47,6 @@ public class Shelf {
     public void addVialId(int vialId) {
         this.vials.add(vialId);
     }
+
+
 }

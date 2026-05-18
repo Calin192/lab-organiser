@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane xmlns="http://javafx.com/javafx"
+            stylesheets="@vialView.css"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.laborganiser.frontend.vial.VialViewController"
+            prefHeight="600.0" prefWidth="600.0"
+            styleClass="root">
+
+    <children>
+        <VBox alignment="CENTER" spacing="20.0" styleClass="card">
+            <children>
+                <Label text="Vial Details" styleClass="title"/>
+
+                <VBox spacing="12.0">
+                    <Label text="Name" styleClass="detail-title"/>
+                    <Label fx:id="nameLabel" styleClass="detail-value"/>
+                </VBox>
+
+                <VBox spacing="12.0">
+                    <Label text="Material" styleClass="detail-title"/>
+                    <Label fx:id="materialLabel" styleClass="detail-value"/>
+                </VBox>
+
+                <VBox spacing="12.0">
+                    <Label text="Shelf" styleClass="detail-title"/>
+                    <Label fx:id="shelfLabel" styleClass="detail-value"/>
+                </VBox>
+
+                <VBox spacing="12.0">
+                    <Label text="Size" styleClass="detail-title"/>
+                    <Label fx:id="sizeLabel" styleClass="detail-value"/>
+                </VBox>
+
+                <VBox spacing="12.0">
+                    <Label text="Color" styleClass="detail-title"/>
+                    <Label fx:id="colorLabel" styleClass="detail-value"/>
+                </VBox>
+
+<!--                <VBox spacing="12.0">-->
+<!--                    <Label text="Cap" styleClass="detail-title"/>-->
+<!--                    <Label fx:id="capLabel" styleClass="detail-value"/>-->
+<!--                </VBox>-->
+
+<!--                <VBox spacing="12.0">-->
+<!--                    <Label text="Cap Color" styleClass="detail-title"/>-->
+<!--                    <Label fx:id="capColorLabel" styleClass="detail-value"/>-->
+<!--                </VBox>-->
+
+                <VBox spacing="12.0">
+                    <Label text="Owner" styleClass="detail-title"/>
+                    <Label fx:id="ownerLabel" styleClass="detail-value"/>
+                </VBox>
+
+                <VBox spacing="12.0">
+                    <Label text="Description" styleClass="detail-title"/>
+                    <TextArea fx:id="descriptionArea" styleClass="detail-textarea" wrapText="true" prefHeight="100"/>
+                </VBox>
+
+                <HBox spacing="10" alignment="CENTER">
+                    <Button text="Edit" styleClass="primary-button" prefWidth="120"/>
+                    <Button text="Delete" styleClass="danger-button" prefWidth="120"/>
+                </HBox>
+            </children>
+        </VBox>
+
+        <Button text="Back" styleClass="back-button" StackPane.alignment="TOP_LEFT" onAction="#onBackButtonClick"/>
+    </children>
+
+</StackPane>

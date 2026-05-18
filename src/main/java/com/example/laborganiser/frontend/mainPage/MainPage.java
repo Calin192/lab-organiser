@@ -3,10 +3,14 @@ package com.example.laborganiser.frontend.mainPage;
 import com.example.laborganiser.app.AppContext;
 import com.example.laborganiser.backend.Observer;
 import com.example.laborganiser.backend.collections.Collection;
+import com.example.laborganiser.backend.shelf.Shelf;
 import com.example.laborganiser.backend.vials.Vial;
-import com.example.laborganiser.frontend.collectionAdd.CollectionAddController;
-import com.example.laborganiser.frontend.shelfAdd.ShelfAddController;
-import com.example.laborganiser.frontend.vialAdd.VialAddController;
+import com.example.laborganiser.frontend.collection.CollectionAddController;
+import com.example.laborganiser.frontend.collection.CollectionViewController;
+import com.example.laborganiser.frontend.shelf.ShelfAddController;
+import com.example.laborganiser.frontend.shelf.ShelfViewController;
+import com.example.laborganiser.frontend.vial.VialAddController;
+import com.example.laborganiser.frontend.vial.VialViewController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,14 +24,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class MainPage implements Observer {
 
@@ -44,6 +45,8 @@ public class MainPage implements Observer {
     public Button shelfFilterBtn;
     public Button collectionFilterBtn;
     private Stage stage;
+
+    private String currentSearchTerm = " vials";
 
     private List<Vial> allVials = new ArrayList<>();
 
@@ -103,7 +106,7 @@ public class MainPage implements Observer {
         owner.setCellValueFactory(new PropertyValueFactory<>("owner"));
     }
 
-    // private int id;
+     // private int id;
     //    private String name;
     //    private String material;
     //    private String shape;
@@ -119,6 +122,28 @@ public class MainPage implements Observer {
         currentPage = 0;
         loadPage(null);
         setPaginationLabel();
+
+
+        tableView.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                Object selectedItem = tableView.getSelectionModel().getSelectedItem();
+                if (selectedItem != null) {
+                    if (currentFilter == FilterType.VIALS) {
+                        onVialClicked((Vial) selectedItem);
+                    } else if (currentFilter == FilterType.SHELVES) {
+                        onShelfClicked((Shelf) appContext.getShelfService().getAllShelves().stream()
+                                .filter(s -> s.getName().equals(((Vial) selectedItem).getName()))
+                                .findFirst()
+                                .orElse(null));
+                    } else if (currentFilter == FilterType.COLLECTIONS) {
+                        onCollectionClicked((Collection) appContext.getCollectionService().getCollection().stream()
+                                .filter(c -> c.getName().equals(((Vial) selectedItem).getName()))
+                                .findFirst()
+                                .orElse(null));
+                    }
+                }
+            }
+        });
     }
 
     private void loadPage(List<Vial> vials) {
@@ -156,7 +181,7 @@ public class MainPage implements Observer {
         } else {
             int startIndex = currentPage * ITEMS_PER_PAGE + 1;
             int endIndex = Math.min((currentPage + 1) * ITEMS_PER_PAGE, vialCount);
-            paginationLabel.setText("Viewing " + startIndex + "-" + endIndex + " out of " + vialCount + " vials");
+            paginationLabel.setText("Viewing " + startIndex + "-" + endIndex + " out of " + vialCount + currentSearchTerm);
             paginationButtonLabel.setText("Page " + (currentPage + 1) + " of " + totalPages);
         }
     }
@@ -241,7 +266,19 @@ public class MainPage implements Observer {
 
     @Override
     public void update() {
-        load();
+        currentPage = 0;
+
+        switch (currentFilter) {
+            case VIALS:
+                filterVials();
+                break;
+            case SHELVES:
+                filterShelves();
+                break;
+            case COLLECTIONS:
+                filterCollections();
+                break;
+        }
     }
 
 
@@ -273,21 +310,27 @@ public class MainPage implements Observer {
 
     @FXML
     public void filterVials() {
+        currentSearchTerm=" vials";
         currentFilter = FilterType.VIALS;
         currentPage = 0;
         updateFilterButtons();
         allVials = new ArrayList<>(appContext.getVialService().getVials());
+        searchField.setDisable(false);
+        searchField.clear();
         loadPage(null);
         setPaginationLabel();
     }
 
     @FXML
     public void filterShelves() {
+        currentSearchTerm=" shelves";
         currentFilter = FilterType.SHELVES;
         currentPage = 0;
         updateFilterButtons();
         tableView.getItems().clear();
         allVials.clear();
+        searchField.setDisable(true);
+        searchField.clear();
 
         for (var shelf : appContext.getShelfService().getAllShelves()) {
             Vial vialPlaceholder = new Vial();
@@ -302,11 +345,14 @@ public class MainPage implements Observer {
 
     @FXML
     public void filterCollections() {
+        currentSearchTerm=" collections";
         currentFilter = FilterType.COLLECTIONS;
         currentPage = 0;
         updateFilterButtons();
         tableView.getItems().clear();
         allVials.clear();
+        searchField.setDisable(true);
+        searchField.clear();
 
         for (var collection : appContext.getCollectionService().getCollection()) {
             Vial vialPlaceholder = new Vial();
@@ -338,7 +384,7 @@ public class MainPage implements Observer {
             }
         }
 
-        // Shelves
+
         if (isShelf) {
             shelfFilterBtn.getStyleClass().remove("button-gray");
             if (!shelfFilterBtn.getStyleClass().contains("button-blue")) {
@@ -361,6 +407,69 @@ public class MainPage implements Observer {
             collectionFilterBtn.getStyleClass().remove("button-blue");
             if (!collectionFilterBtn.getStyleClass().contains("button-gray")) {
                 collectionFilterBtn.getStyleClass().add("button-gray");
+            }
+        }
+    }
+
+
+    private void onVialClicked(Vial vial) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/laborganiser/frontend/vial/vialView.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 600, 700);
+
+            VialViewController controller = fxmlLoader.getController();
+            Stage vialStage = new Stage();
+            Shelf shelf = appContext.getShelfService().getShelf(vial);
+
+            controller.init(vialStage, appContext, vial, shelf);
+
+            vialStage.setTitle("Vial Details");
+            vialStage.setScene(scene);
+            vialStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void onShelfClicked(Shelf shelf) {
+        if (shelf != null) {
+            System.out.println("Shelf clicked: " + shelf.getName());
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/laborganiser/frontend/shelf/shelfView.fxml"));
+                Scene scene = new Scene(fxmlLoader.load(), 600, 700);
+
+                ShelfViewController controller = fxmlLoader.getController();
+                Stage shelfStage = new Stage();
+                Collection collection = appContext.getCollectionService().getCollection(shelf);
+
+                controller.init(shelfStage, appContext, shelf,collection);
+
+                shelfStage.setTitle("Shelf Details");
+                shelfStage.setScene(scene);
+                shelfStage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void onCollectionClicked(Collection collection) {
+        if (collection != null) {
+            System.out.println("Collection clicked: " + collection.getName());
+
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/laborganiser/frontend/collection/CollectionView.fxml"));
+                Scene scene = new Scene(fxmlLoader.load(), 600, 700);
+
+                CollectionViewController controller = fxmlLoader.getController();
+                Stage shelfStage = new Stage();
+                controller.init(shelfStage, appContext, collection);
+
+                shelfStage.setTitle("Collection Details");
+                shelfStage.setScene(scene);
+                shelfStage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }

@@ -1,6 +1,7 @@
 package com.example.laborganiser.backend.shelf;
 
 import com.example.laborganiser.backend.Observer;
+import com.example.laborganiser.backend.collections.Collection;
 import com.example.laborganiser.backend.vials.Vial;
 
 import java.util.ArrayList;
@@ -60,5 +61,15 @@ public class ShelfService {
         for (Observer observer : observers) {
             observer.update();
         }
+    }
+
+    public Shelf getShelf(Vial vial){
+        List<Shelf> shelves = shelfRepo.getShelves();
+        for(Shelf shelf : shelves){
+            if(shelf.getVials() != null && shelf.getVials().contains(vial.getId())){
+                return shelf;
+            }
+        }
+        return null;
     }
 }

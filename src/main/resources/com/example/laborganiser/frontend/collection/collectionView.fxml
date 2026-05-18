@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane xmlns="http://javafx.com/javafx"
+           stylesheets="@collectionView.css"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.example.laborganiser.frontend.collection.CollectionViewController"
+           prefHeight="600.0" prefWidth="600.0"
+           styleClass="root">
+
+    <children>
+        <VBox alignment="CENTER" spacing="20.0" styleClass="card">
+            <children>
+                <Label text="Collection Details" styleClass="title"/>
+
+                <VBox spacing="12.0">
+                    <Label text="Name" styleClass="detail-title"/>
+                    <Label fx:id="nameLabel" styleClass="detail-value"/>
+                </VBox>
+
+<!--                <VBox spacing="12.0">-->
+<!--                    <Label text="Collection" styleClass="detail-title"/>-->
+<!--                    <Label fx:id="CollectionLabel" styleClass="detail-value"/>-->
+<!--                </VBox>-->
+
+
+                <HBox spacing="10" alignment="CENTER">
+                    <Button text="Edit" styleClass="primary-button" prefWidth="120"/>
+                    <Button text="Delete" styleClass="danger-button" prefWidth="120"/>
+                </HBox>
+            </children>
+        </VBox>
+
+        <Button text="Back" styleClass="back-button" StackPane.alignment="TOP_LEFT" onAction="#onBackButtonClick"/>
+    </children>
+
+</StackPane>

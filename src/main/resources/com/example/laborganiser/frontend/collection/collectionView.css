@@ -1,0 +1,79 @@
+.root {
+    -fx-background-color: #F3F3F3;
+    -fx-font-family: "Segoe UI", "Roboto", sans-serif;
+}
+
+.card {
+    -fx-background-color: white;
+    -fx-padding: 30;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 10, 0, 0, 5);
+}
+
+.title {
+    -fx-text-fill: black;
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+}
+
+.detail-title {
+    -fx-text-fill: #666666;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.detail-value {
+    -fx-text-fill: #333333;
+    -fx-font-size: 14px;
+    -fx-padding: 8;
+    -fx-background-color: #F3F3F3;
+    -fx-background-radius: 6;
+}
+
+.detail-textarea {
+    -fx-control-inner-background: #F3F3F3;
+    -fx-text-fill: #333333;
+    -fx-font-size: 13px;
+    -fx-padding: 8;
+    -fx-background-radius: 6;
+    -fx-border-color: transparent;
+}
+
+.back-button {
+    -fx-background-color: #6c63ff;
+    -fx-text-fill: white;
+    -fx-background-radius: 8;
+    -fx-padding: 10;
+    -fx-cursor: hand;
+}
+
+.back-button:hover {
+    -fx-background-color: #5a52d5;
+}
+
+.primary-button {
+    -fx-background-color: #6c63ff;
+    -fx-text-fill: white;
+    -fx-background-radius: 8;
+    -fx-padding: 10 20;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.primary-button:hover {
+    -fx-background-color: #5a52d5;
+}
+
+.danger-button {
+    -fx-background-color: #e53935;
+    -fx-text-fill: white;
+    -fx-background-radius: 8;
+    -fx-padding: 10 20;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.danger-button:hover {
+    -fx-background-color: #c62828;
+}
+

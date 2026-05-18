@@ -58,4 +58,14 @@ public class CollectionService {
         return false;
     }
 
+    public Collection getCollection(Shelf shelf){
+        List<Collection> collections = collectionRepo.getCollections();
+        for(Collection collection : collections){
+            if(collection.getShelfIds() != null && collection.getShelfIds().contains(shelf.getId())){
+                return collection;
+            }
+        }
+        return null;
+    }
+
 }

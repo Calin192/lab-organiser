@@ -1,4 +1,4 @@
-package com.example.laborganiser.frontend.shelfAdd;
+package com.example.laborganiser.frontend.shelf;
 
 import com.example.laborganiser.app.AppContext;
 import com.example.laborganiser.backend.collections.Collection;
@@ -9,9 +9,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ShelfAddController {
     @FXML

@@ -1,23 +1,12 @@
-package com.example.laborganiser.frontend.vialAdd;
+package com.example.laborganiser.frontend.vial;
 
 import com.example.laborganiser.app.AppContext;
 import com.example.laborganiser.backend.shelf.Shelf;
-import com.example.laborganiser.backend.users.UserService;
-import com.example.laborganiser.backend.vials.VialService;
 import com.example.laborganiser.frontend.alerts.AlertWindow;
-import com.example.laborganiser.frontend.auth.AuthController;
-import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import javafx.util.Duration;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class VialAddController {
 
@@ -61,6 +50,8 @@ public class VialAddController {
         if (selected != null) {
             material = ((ToggleButton) selected).getText(); // "PLASTIC" sau "GLASS"
         }
+
+
 
 
         String selectedShelfName = shelfComboBox.getValue().toString();
@@ -110,7 +101,7 @@ public class VialAddController {
         plasticBtn.setToggleGroup(materialGroup);
         glassBtn.setToggleGroup(materialGroup);
 
-        //volume choosing stuff
+
         vialUnitField.getItems().addAll("μl","ml","cl","dl","l");
 
 

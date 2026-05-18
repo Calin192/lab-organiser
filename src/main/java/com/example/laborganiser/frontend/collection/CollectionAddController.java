@@ -1,4 +1,4 @@
-package com.example.laborganiser.frontend.collectionAdd;
+package com.example.laborganiser.frontend.collection;
 
 import com.example.laborganiser.app.AppContext;
 import javafx.application.Platform;
