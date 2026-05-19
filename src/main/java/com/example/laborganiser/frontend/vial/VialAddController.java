@@ -6,6 +6,7 @@ import com.example.laborganiser.frontend.alerts.AlertWindow;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class VialAddController {
@@ -27,11 +28,11 @@ public class VialAddController {
     @FXML
     public ComboBox<String> vialUnitField;
     @FXML
-    public TextField vialColorField;
+    public ColorPicker vialColorField;
     @FXML
     public TextField vialCapField;
     @FXML
-    public TextField vialCapColorField;
+    public ColorPicker vialCapColorField;
     @FXML
     public TextArea vialDescriptionField;
     public Button addButton;
@@ -69,15 +70,19 @@ public class VialAddController {
             return;
         }
 
+        // convert ColorPicker values to hex strings (e.g. #RRGGBB)
+        String colorHex = colorToHex(vialColorField.getValue());
+        String capColorHex = colorToHex(vialCapColorField.getValue());
+
         int vialId = appContext.getVialService().addVial(
                 vialNameField.getText(),
                 material,
                 vialShapeField.getText(),
                 vialVolumeField.getText(),
                 vialUnitField.getValue(),
-                vialColorField.getText(),
+                colorHex,
                 vialCapField.getText(),
-                vialCapColorField.getText(),
+                capColorHex,
                 vialDescriptionField.getText(),
                 appContext.getCurrentUser().getUsername()
         );
@@ -117,9 +122,9 @@ public class VialAddController {
         vialShapeField.textProperty().addListener((obs, oldVal, newVal) -> validate());
         vialVolumeField.textProperty().addListener((obs, oldVal, newVal) -> validate());
         vialUnitField.valueProperty().addListener((obs, oldVal, newVal) -> validate());
-        vialColorField.textProperty().addListener((obs, oldVal, newVal) -> validate());
+        vialColorField.valueProperty().addListener((obs, oldVal, newVal) -> validate());
         vialCapField.textProperty().addListener((obs, oldVal, newVal) -> validate());
-        vialCapColorField.textProperty().addListener((obs, oldVal, newVal) -> validate());
+        vialCapColorField.valueProperty().addListener((obs, oldVal, newVal) -> validate());
 
         materialGroup.selectedToggleProperty().addListener((obs, oldVal, newVal) -> validate());
 
@@ -135,16 +140,24 @@ public class VialAddController {
         String shape = vialShapeField.getText().trim();
         String volume = vialVolumeField.getText().trim();
         String unit = vialUnitField.getValue();
-        String color = vialColorField.getText().trim();
+        Color color = vialColorField.getValue();
         String cap = vialCapField.getText().trim();
-        String capColor = vialCapColorField.getText().trim();
+        Color capColor = vialCapColorField.getValue();
 
         // Verifică dacă toate câmpurile sunt completate și materialul e selectat
         boolean allFieldsFilled = !name.isEmpty() && !shape.isEmpty() && !volume.isEmpty()
-                && unit != null && !color.isEmpty() && !cap.isEmpty() && !capColor.isEmpty();
+                && unit != null && color != null && !cap.isEmpty() && capColor != null;
 
         boolean materialSelected = materialGroup.getSelectedToggle() != null;
 
         addButton.setDisable(!(allFieldsFilled && materialSelected));
+    }
+
+    private String colorToHex(Color color) {
+        if (color == null) return "#000000";
+        int r = (int) Math.round(color.getRed() * 255);
+        int g = (int) Math.round(color.getGreen() * 255);
+        int b = (int) Math.round(color.getBlue() * 255);
+        return String.format("#%02X%02X%02X", r, g, b);
     }
 }

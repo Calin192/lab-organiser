@@ -28,9 +28,15 @@
                     <TextField promptText="Volume" fx:id="vialVolumeField" styleClass="input" maxWidth="300"/>
                     <ComboBox promptText="Unit" fx:id="vialUnitField" styleClass="input" maxWidth="300"/>
                 </HBox>
-                <TextField promptText="Color" fx:id="vialColorField" styleClass="input" maxWidth="300"/>
+                <HBox spacing="10" alignment="CENTER">
+                    <Label text="Vial Color:"/>
+                    <ColorPicker fx:id="vialColorField" styleClass="input" maxWidth="300"/>
+                </HBox>
                 <TextField promptText="Cap" fx:id="vialCapField" styleClass="input" maxWidth="300"/>
-                <TextField promptText="Cap Color" fx:id="vialCapColorField" styleClass="input" maxWidth="300"/>
+                <HBox spacing="10" alignment="CENTER">
+                    <Label text="Cap Color:"/>
+                    <ColorPicker fx:id="vialCapColorField" styleClass="input" maxWidth="300"/>
+                </HBox>
                 <TextArea promptText= "Description" fx:id="vialDescriptionField" styleClass="input" maxWidth="300" prefRowCount="3"/>
                 <ComboBox promptText="Shelf" fx:id="shelfComboBox" styleClass="input"/>
                 <Button mnemonicParsing="false" fx:id="addButton" text="Add Vial" onAction="#onAddVialClicked" styleClass="primary-button"/>
