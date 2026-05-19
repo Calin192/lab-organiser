@@ -8,9 +8,10 @@
 
 <StackPane xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml"
+              stylesheets="@collectionAdd.css"
            fx:controller="com.example.laborganiser.frontend.collection.CollectionAddController"
            prefHeight="200.0" prefWidth="300.0">
-    <VBox alignment="CENTER"><TextField promptText="Collection Name" fx:id="collectionName" styleClass="input" maxWidth="300"/>
+    <VBox alignment="CENTER" spacing="20.0"><TextField promptText="Collection Name" fx:id="collectionName" styleClass="input" maxWidth="300"/>
         <Button mnemonicParsing="false" text="Add" onAction="#onAddClicked" styleClass="primary-button"/>
     </VBox>
 

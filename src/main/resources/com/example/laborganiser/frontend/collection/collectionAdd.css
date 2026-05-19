@@ -1,0 +1,66 @@
+.root {
+    -fx-background-color: #FFFFFF;;
+    -fx-font-family: "Segoe UI", "Roboto", sans-serif;
+}
+
+.card{
+    -fx-background-color: #FFFFFF;
+    -fx-padding: 30;
+    -fx-background-radius: 0;
+    -fx-spacing: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 15, 0.2, 0, 5);
+}
+
+.back-button {
+    -fx-background-color: #6c63ff;
+    -fx-text-fill: white;
+    -fx-background-radius: 8;
+    -fx-padding: 10;
+}
+
+.title{
+    -fx-text-fill: black;
+}
+
+
+.input {
+    -fx-background-color: #F3F3F3;
+    -fx-text-fill: black;
+    -fx-prompt-text-fill: #8888aa;
+    -fx-background-radius: 8;
+    -fx-padding: 8;
+}
+
+
+.input .content {
+    -fx-background-color: #F3F3F3;
+}
+
+.material-btn {
+    -fx-background-color: #F3F3F3;
+    -fx-text-fill: black;
+    -fx-background-radius: 8;
+    -fx-padding: 8 16;
+}
+
+.material-btn:selected {
+    -fx-background-color: #6c63ff;
+}
+
+.material-btn:hover {
+    -fx-background-color: #bdbdbd;
+}
+
+
+.primary-button {
+    -fx-background-color: #6c63ff;
+    -fx-text-fill: white;
+    -fx-background-radius: 8;
+    -fx-padding: 10;
+}
+
+.primary-button:disabled{
+    -fx-background-color: #bdbdbd;
+    -fx-text-fill: white;
+}
+

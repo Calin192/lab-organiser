@@ -44,6 +44,8 @@ public class MainPage implements Observer {
     public Button vialFilterBtn;
     public Button shelfFilterBtn;
     public Button collectionFilterBtn;
+    @FXML
+    public Button addProductBtn;
     private Stage stage;
 
     private String currentSearchTerm = " vials";
@@ -86,6 +88,9 @@ public class MainPage implements Observer {
             loadPage(filtered);});
         
         initializeTableColumns();
+
+
+        updateFilterButtons();
 
 
         allVials = new ArrayList<>(appContext.getVialService().getVials());
@@ -366,12 +371,12 @@ public class MainPage implements Observer {
     }
 
     private void updateFilterButtons() {
-        // Schimbă între button-blue și button-gray fără a șterge alte stiluri
+
         boolean isVial = currentFilter == FilterType.VIALS;
         boolean isShelf = currentFilter == FilterType.SHELVES;
         boolean isCollection = currentFilter == FilterType.COLLECTIONS;
 
-        // Vials
+
         if (isVial) {
             vialFilterBtn.getStyleClass().remove("button-gray");
             if (!vialFilterBtn.getStyleClass().contains("button-blue")) {
@@ -397,7 +402,7 @@ public class MainPage implements Observer {
             }
         }
 
-        // Collections
+
         if (isCollection) {
             collectionFilterBtn.getStyleClass().remove("button-gray");
             if (!collectionFilterBtn.getStyleClass().contains("button-blue")) {
@@ -408,6 +413,27 @@ public class MainPage implements Observer {
             if (!collectionFilterBtn.getStyleClass().contains("button-gray")) {
                 collectionFilterBtn.getStyleClass().add("button-gray");
             }
+        }
+
+        if (addProductBtn != null) {
+            if (isVial) addProductBtn.setText("Add Vial");
+            else if (isShelf) addProductBtn.setText("Add Shelf");
+            else if (isCollection) addProductBtn.setText("Add Collection");
+        }
+    }
+
+    @FXML
+    public void onAddProductClick(ActionEvent actionEvent) {
+        switch (currentFilter) {
+            case VIALS:
+                onAddVialClick(actionEvent);
+                break;
+            case SHELVES:
+                onAddShelfClick(actionEvent);
+                break;
+            case COLLECTIONS:
+                onAddCollectionClick(actionEvent);
+                break;
         }
     }
 
@@ -433,7 +459,7 @@ public class MainPage implements Observer {
 
     private void onShelfClicked(Shelf shelf) {
         if (shelf != null) {
-            System.out.println("Shelf clicked: " + shelf.getName());
+
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/laborganiser/frontend/shelf/shelfView.fxml"));
                 Scene scene = new Scene(fxmlLoader.load(), 600, 700);
@@ -455,7 +481,7 @@ public class MainPage implements Observer {
 
     private void onCollectionClicked(Collection collection) {
         if (collection != null) {
-            System.out.println("Collection clicked: " + collection.getName());
+
 
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/laborganiser/frontend/collection/CollectionView.fxml"));
