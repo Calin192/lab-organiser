@@ -70,7 +70,7 @@ public class VialAddController {
             return;
         }
 
-        // convert ColorPicker values to hex strings (e.g. #RRGGBB)
+
         String colorHex = colorToHex(vialColorField.getValue());
         String capColorHex = colorToHex(vialCapColorField.getValue());
 

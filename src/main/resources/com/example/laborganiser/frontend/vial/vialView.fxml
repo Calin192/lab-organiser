@@ -46,6 +46,16 @@
                         </VBox>
 
                         <VBox spacing="12.0">
+                            <Label text="Cap" styleClass="detail-title"/>
+                            <Label fx:id="capLabel" styleClass="detail-value"/>
+                        </VBox>
+
+                        <VBox spacing="12.0">
+                            <Label text="Cap Color" styleClass="detail-title"/>
+                            <Label fx:id="capColorLabel" styleClass="detail-value"/>
+                        </VBox>
+
+                        <VBox spacing="12.0">
                             <Label text="Owner" styleClass="detail-title"/>
                             <Label fx:id="ownerLabel" styleClass="detail-value"/>
                         </VBox>
