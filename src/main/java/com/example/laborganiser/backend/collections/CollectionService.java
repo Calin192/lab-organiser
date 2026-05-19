@@ -61,7 +61,7 @@ public class CollectionService {
     public Collection getCollection(Shelf shelf){
         List<Collection> collections = collectionRepo.getCollections();
         for(Collection collection : collections){
-            if(collection.getShelfIds() != null && collection.getShelfIds().contains(shelf.getId())){
+            if(collection.getShelves() != null && collection.getShelves().contains(shelf.getId())){
                 return collection;
             }
         }

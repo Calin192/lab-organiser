@@ -12,8 +12,11 @@
 
     <children>
         <ScrollPane fitToWidth="true" prefViewportHeight="520.0" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" StackPane.alignment="CENTER">
+
             <content>
+
                 <VBox alignment="TOP_CENTER" spacing="20.0" styleClass="card" prefWidth="520.0" maxWidth="720.0">
+
                     <children>
                         <Label text="Vial Details" styleClass="title"/>
 
@@ -58,10 +61,12 @@
                         </HBox>
                     </children>
                 </VBox>
-            </content>
-        </ScrollPane>
 
+            </content>
+
+        </ScrollPane>
         <Button text="Back" styleClass="back-button" StackPane.alignment="TOP_LEFT" onAction="#onBackButtonClick"/>
+
     </children>
 
 </StackPane>

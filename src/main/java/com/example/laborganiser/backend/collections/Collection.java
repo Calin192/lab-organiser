@@ -34,7 +34,7 @@ public class Collection {
         this.name = name;
     }
 
-    public List<Integer> getShelfIds() {
+    public List<Integer> getShelves() {
         return shelfIds;
     }
 
@@ -46,5 +46,12 @@ public class Collection {
         if (!shelfIds.contains(shelfId)) {
             shelfIds.add(shelfId);
         }
+    }
+
+    public Integer getShelfCount(){
+        if (shelfIds.size()>0){
+            return shelfIds.size();
+        }
+        return 0;
     }
 }

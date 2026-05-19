@@ -46,7 +46,7 @@ public class CollectionRepo {
 
             if (loaded != null) {
                 for (Collection collection : loaded) {
-                    if (collection.getShelfIds() == null) {
+                    if (collection.getShelves() == null) {
                         collection.setShelfIds(new ArrayList<>());
                     }
                 }

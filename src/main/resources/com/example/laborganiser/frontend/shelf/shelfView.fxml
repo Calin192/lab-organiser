@@ -25,7 +25,8 @@
                         <VBox spacing="12.0">
                             <Label text="Collection" styleClass="detail-title"/>
                             <Label fx:id="collectionLabel" styleClass="detail-value"/>
-                            <TableView fx:id="vialsTable" prefHeight="200.0">
+                            <Label text="Contents: " styleClass="detail-title"/>
+                            <TableView fx:id="vialsTable" prefHeight="200.0" styleClass="table-view">
                                 <columns>
                                     <TableColumn text="Name" fx:id="nameColumn" prefWidth="150.0"/>
                                     <TableColumn text="Material" fx:id="materialColumn" prefWidth="150.0"/>
