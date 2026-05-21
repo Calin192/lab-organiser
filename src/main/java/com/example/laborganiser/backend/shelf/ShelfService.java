@@ -72,4 +72,12 @@ public class ShelfService {
         }
         return null;
     }
+
+    public void removeShelf(Shelf shelf){
+        shelfRepo.removeShelf(shelf);
+    }
+
+    public void removeVial(int id, Shelf shelf) {
+        shelfRepo.removeVial(id, shelf);
+    }
 }

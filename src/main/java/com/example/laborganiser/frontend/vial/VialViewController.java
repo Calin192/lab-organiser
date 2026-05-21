@@ -3,6 +3,7 @@ package com.example.laborganiser.frontend.vial;
 import com.example.laborganiser.app.AppContext;
 import com.example.laborganiser.backend.shelf.Shelf;
 import com.example.laborganiser.backend.vials.Vial;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -25,6 +26,8 @@ public class VialViewController {
     private Vial vial;
     private Shelf shelf;
 
+    private Runnable onDelete;
+
     public void init(Stage stage, AppContext appContext, Vial vial, Shelf shelf) {
         this.appContext = appContext;
         this.stage = stage;
@@ -41,7 +44,6 @@ public class VialViewController {
             shelfLabel.setText(shelf.getName() != null ? shelf.getName() : "N/A");
             sizeLabel.setText(vial.getSize() + " " + (vial.getUnit() != null ? vial.getUnit() : ""));
 
-            // show hex and set background swatch
             String colorHex = vial.getColor();
             String norm = normalizeHex(colorHex);
             if (norm != null) {
@@ -106,4 +108,21 @@ public class VialViewController {
             return true;
         }
     }
+
+    public void deleteVial(ActionEvent actionEvent) {
+        appContext.getVialService().removeVial(vial.getId());
+        appContext.getShelfService().removeVial(vial.getId(), shelf);
+        stage.close();
+
+        if (onDelete != null) {
+            onDelete.run();
+        }
+
+    }
+
+    public void setOnDelete(Runnable onDelete) {
+        this.onDelete = onDelete;
+    }
+
+
 }

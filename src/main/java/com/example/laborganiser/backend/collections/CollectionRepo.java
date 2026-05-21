@@ -80,6 +80,15 @@ public class CollectionRepo {
         return false;
     }
 
+    public boolean removeCollection(Collection collection) {
+        if(collections.contains(collection)){
+            collections.remove(collection);
+            saveCollectionsToJson();
+            return true;
+        }
+        return false;
+    }
+
     public int getNextId(){
         return ++currentId;
     }

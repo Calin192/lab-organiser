@@ -25,9 +25,12 @@ public class CollectionViewController {
     public TableColumn<Shelf, Integer> shelfCountColumn;
     @FXML
     public javafx.scene.control.Label shelfCountLabel;
+
     private AppContext appContext;
     private Stage stage;
     private Collection collection;
+
+    private Runnable onDelete;
 
     public void onBackButtonClick(ActionEvent actionEvent) {
         if (stage != null) {
@@ -87,5 +90,19 @@ public class CollectionViewController {
 
         collectionTable.getItems().addAll(shelves);
 
+    }
+
+    public void deleteCollection(ActionEvent actionEvent) {
+        appContext.getCollectionService().removeCollection(collection);
+        stage.close();
+
+        if (onDelete != null) {
+            onDelete.run();
+        }
+
+    }
+
+    public void setOnDelete(Runnable onDelete) {
+        this.onDelete = onDelete;
     }
 }

@@ -97,6 +97,14 @@ public class ShelfRepo {
 
     }
 
+    public boolean removeShelf(Shelf shelf){
+        if (shelves.remove(shelf)) {
+            saveShelvesToJson();
+            return true;
+        }
+        return false;
+    }
+
     public boolean addVial(Shelf shelf, Integer vialId) {
         if (shelf != null) {
             Shelf foundShelf = shelves.stream()
@@ -118,5 +126,10 @@ public class ShelfRepo {
                 .filter(shelf -> shelf.getId() == id)
                 .findFirst()
                 .orElse(null);
+    }
+
+    public void removeVial(int id, Shelf shelf) {
+        shelf.removeVialId(id);
+        saveShelvesToJson();
     }
 }

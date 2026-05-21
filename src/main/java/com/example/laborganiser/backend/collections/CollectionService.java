@@ -68,4 +68,11 @@ public class CollectionService {
         return null;
     }
 
+    public void removeCollection(Collection collection){
+        if(collection != null){
+            collectionRepo.removeCollection(collection);
+            notifyObservers();
+        }
+    }
+
 }

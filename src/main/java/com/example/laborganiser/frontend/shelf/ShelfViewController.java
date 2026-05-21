@@ -22,10 +22,13 @@ public class ShelfViewController {
     public TableColumn nameColumn;
     public TableColumn materialColumn;
     public TableColumn sizeColumn;
+
     AppContext appContext;
     Stage stage;
     Shelf shelf;
     Collection collection;
+
+    private Runnable onDelete;
 
 
     public void onBackButtonClick(ActionEvent actionEvent) {
@@ -77,4 +80,19 @@ public class ShelfViewController {
                 .toList());
 
     }
+
+    public void deleteShelf(ActionEvent actionEvent) {
+        appContext.getShelfService().removeShelf(shelf);
+        stage.close();
+
+        if (onDelete != null) {
+            onDelete.run();
+        }
+
+    }
+
+    public void setOnDelete(Runnable onDelete) {
+        this.onDelete = onDelete;
+    }
+
 }

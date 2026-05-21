@@ -51,13 +51,14 @@ public class MainPage implements Observer {
     private String currentSearchTerm = " vials";
 
     private List<Vial> allVials = new ArrayList<>();
+    private List<Vial> currentDisplay = new ArrayList<>();
 
     private AppContext appContext;
 
     private static final int ITEMS_PER_PAGE = 8;
     private int currentPage = 0;
 
-    // Tipul de filtru selectat
+
     private enum FilterType { VIALS, SHELVES, COLLECTIONS }
     private FilterType currentFilter = FilterType.VIALS;
 
@@ -74,19 +75,45 @@ public class MainPage implements Observer {
         stage.centerOnScreen();
 
         searchField.textProperty().addListener((obs, oldValue, newValue) -> {
-
             currentPage = 0;
+            String q = (newValue == null) ? "" : newValue.toLowerCase();
 
-            List<Vial> filtered = appContext.getVialService()
-                    .getVials()
-                    .stream()
-                    .filter(vial ->
-                            vial.getName()
-                                    .toLowerCase()
-                                    .contains(newValue.toLowerCase())
-                    ).toList();
-            loadPage(filtered);});
-        
+            if (currentFilter == FilterType.VIALS) {
+                List<Vial> filtered = appContext.getVialService()
+                        .getVials()
+                        .stream()
+                        .filter(v -> v.getName() != null && v.getName().toLowerCase().contains(q))
+                        .toList();
+                loadPage(filtered);
+            } else if (currentFilter == FilterType.SHELVES) {
+                List<Vial> placeholders = appContext.getShelfService().getAllShelves().stream()
+                        .filter(s -> s.getName() != null && s.getName().toLowerCase().contains(q))
+                        .map(shelf -> {
+                            Vial p = new Vial();
+                            p.setName(shelf.getName());
+                            p.setMaterial("Shelf");
+                            int count = (shelf.getVials() == null) ? 0 : shelf.getVials().size();
+                            p.setOwner(String.valueOf(count));
+                            return p;
+                        })
+                        .toList();
+                loadPage(placeholders);
+            } else if (currentFilter == FilterType.COLLECTIONS) {
+                List<Vial> placeholders = appContext.getCollectionService().getCollection().stream()
+                        .filter(c -> c.getName() != null && c.getName().toLowerCase().contains(q))
+                        .map(col -> {
+                            Vial p = new Vial();
+                            p.setName(col.getName());
+                            p.setMaterial("Collection");
+                            int shelfCount = (col.getShelves() == null) ? 0 : col.getShelves().size();
+                            p.setOwner(String.valueOf(shelfCount));
+                            return p;
+                        })
+                        .toList();
+                loadPage(placeholders);
+            }
+        });
+
         initializeTableColumns();
 
 
@@ -111,17 +138,73 @@ public class MainPage implements Observer {
         owner.setCellValueFactory(new PropertyValueFactory<>("owner"));
     }
 
-     // private int id;
-    //    private String name;
-    //    private String material;
-    //    private String shape;
-    //    private String size;
-    //    private String unit;
-    //    private String color;
-    //    private String cap;
-    //    private String capColor;
-    //    private String description;
-    //    private String owner;
+    private void configureColumnsForVials() {
+        tableView.getColumns().clear();
+
+        TableColumn<Vial, String> nameCol = new TableColumn<>("Name");
+        nameCol.setPrefWidth(150);
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        TableColumn<Vial, String> materialCol = new TableColumn<>("Material");
+        materialCol.setPrefWidth(120);
+        materialCol.setCellValueFactory(new PropertyValueFactory<>("material"));
+
+        TableColumn<Vial, String> sizeCol = new TableColumn<>("Size");
+        sizeCol.setPrefWidth(180);
+        sizeCol.setCellValueFactory(cell -> {
+            Vial v = cell.getValue();
+            String sizeText = (v.getSize() == null ? "" : v.getSize()) + (v.getUnit() != null ? " " + v.getUnit() : "");
+            return new javafx.beans.property.ReadOnlyObjectWrapper<>(sizeText);
+        });
+
+        TableColumn<Vial, String> colorCol = new TableColumn<>("Color");
+        colorCol.setPrefWidth(120);
+        colorCol.setCellValueFactory(new PropertyValueFactory<>("color"));
+
+        TableColumn<Vial, String> ownerCol = new TableColumn<>("Owner");
+        ownerCol.setPrefWidth(150);
+        ownerCol.setCellValueFactory(new PropertyValueFactory<>("owner"));
+
+        tableView.getColumns().addAll(nameCol, materialCol, sizeCol, colorCol, ownerCol);
+    }
+
+    private void configureColumnsForShelves() {
+        tableView.getColumns().clear();
+
+        TableColumn<Vial, String> nameCol = new TableColumn<>("Name");
+        nameCol.setPrefWidth(300);
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        TableColumn<Vial, String> countCol = new TableColumn<>("Vial Count");
+        countCol.setPrefWidth(200);
+        // count stored in owner field for placeholders
+        countCol.setCellValueFactory(cell -> new javafx.beans.property.ReadOnlyObjectWrapper<>(cell.getValue().getOwner()));
+
+        tableView.getColumns().addAll(nameCol, countCol);
+    }
+
+    private void configureColumnsForCollections() {
+        tableView.getColumns().clear();
+
+        TableColumn<Vial, String> nameCol = new TableColumn<>("Name");
+        nameCol.setPrefWidth(300);
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        TableColumn<Vial, String> shelfCountCol = new TableColumn<>("Shelf Count");
+        shelfCountCol.setPrefWidth(200);
+        // shelf count stored in owner field for placeholders
+        shelfCountCol.setCellValueFactory(cell -> new javafx.beans.property.ReadOnlyObjectWrapper<>(cell.getValue().getOwner()));
+
+        tableView.getColumns().addAll(nameCol, shelfCountCol);
+    }
+
+    private void updateTableColumnsForCurrentFilter() {
+        if (currentFilter == FilterType.VIALS) configureColumnsForVials();
+        else if (currentFilter == FilterType.SHELVES) configureColumnsForShelves();
+        else if (currentFilter == FilterType.COLLECTIONS) configureColumnsForCollections();
+    }
+
+
     private void load() {
         paginationLabel.setText("Loading...");
         currentPage = 0;
@@ -158,6 +241,8 @@ public class MainPage implements Observer {
 
         List<Vial> dataToDisplay = (vials != null) ? vials : allVials;
 
+        currentDisplay = dataToDisplay;
+
         if (dataToDisplay == null || dataToDisplay.isEmpty()) {
             dataToDisplay = new ArrayList<>();
         }
@@ -177,7 +262,7 @@ public class MainPage implements Observer {
     }
 
     private void setPaginationLabel(){
-        int vialCount = allVials.size();
+        int vialCount = (currentDisplay == null) ? 0 : currentDisplay.size();
         int totalPages = (vialCount + ITEMS_PER_PAGE - 1) / ITEMS_PER_PAGE;
 
         if(vialCount == 0) {
@@ -334,13 +419,15 @@ public class MainPage implements Observer {
         updateFilterButtons();
         tableView.getItems().clear();
         allVials.clear();
-        searchField.setDisable(true);
+        searchField.setDisable(false);
         searchField.clear();
 
         for (var shelf : appContext.getShelfService().getAllShelves()) {
             Vial vialPlaceholder = new Vial();
             vialPlaceholder.setName(shelf.getName());
             vialPlaceholder.setMaterial("Shelf");
+            int count = (shelf.getVials() == null) ? 0 : shelf.getVials().size();
+            vialPlaceholder.setOwner(String.valueOf(count));
             allVials.add(vialPlaceholder);
         }
 
@@ -356,13 +443,15 @@ public class MainPage implements Observer {
         updateFilterButtons();
         tableView.getItems().clear();
         allVials.clear();
-        searchField.setDisable(true);
+        searchField.setDisable(false);
         searchField.clear();
 
         for (var collection : appContext.getCollectionService().getCollection()) {
             Vial vialPlaceholder = new Vial();
             vialPlaceholder.setName(collection.getName());
             vialPlaceholder.setMaterial("Collection");
+            int shelfCount = (collection.getShelves() == null) ? 0 : collection.getShelves().size();
+            vialPlaceholder.setOwner(String.valueOf(shelfCount));
             allVials.add(vialPlaceholder);
         }
 
@@ -420,6 +509,8 @@ public class MainPage implements Observer {
             else if (isShelf) addProductBtn.setText("Add Shelf");
             else if (isCollection) addProductBtn.setText("Add Collection");
         }
+
+        updateTableColumnsForCurrentFilter();
     }
 
     @FXML
@@ -448,6 +539,7 @@ public class MainPage implements Observer {
             Shelf shelf = appContext.getShelfService().getShelf(vial);
 
             controller.init(vialStage, appContext, vial, shelf);
+            controller.setOnDelete(() -> update());
 
             vialStage.setTitle("Vial Details");
             vialStage.setScene(scene);
@@ -469,6 +561,7 @@ public class MainPage implements Observer {
                 Collection collection = appContext.getCollectionService().getCollection(shelf);
 
                 controller.init(shelfStage, appContext, shelf,collection);
+                controller.setOnDelete(() -> update());
 
                 shelfStage.setTitle("Shelf Details");
                 shelfStage.setScene(scene);
@@ -490,6 +583,7 @@ public class MainPage implements Observer {
                 CollectionViewController controller = fxmlLoader.getController();
                 Stage shelfStage = new Stage();
                 controller.init(shelfStage, appContext, collection);
+                controller.setOnDelete(() -> update());
 
                 shelfStage.setTitle("Collection Details");
                 shelfStage.setScene(scene);

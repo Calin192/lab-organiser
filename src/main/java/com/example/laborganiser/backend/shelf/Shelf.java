@@ -45,10 +45,11 @@ public class Shelf {
         this.vials.add(vialId);
     }
 
-    // convenience getter used by TableView to show how many vials are on this shelf
     public int getVialCount() {
         return (vials == null) ? 0 : vials.size();
     }
 
-
+    public void removeVialId(int vialId) {
+        this.vials.remove(Integer.valueOf(vialId));
+    }
 }
