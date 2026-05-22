@@ -37,7 +37,7 @@
                         </VBox>
 
                         <HBox spacing="10" alignment="CENTER">
-                            <Button text="Edit" styleClass="primary-button" prefWidth="120"/>
+                            <Button text="Edit" styleClass="primary-button" prefWidth="120" onAction="#editShelf"/>
                             <Button text="Delete" styleClass="danger-button" prefWidth="120" onAction="#deleteShelf"/>
                         </HBox>
                     </children>

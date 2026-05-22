@@ -16,6 +16,7 @@ public class ShelfAddController {
     public ComboBox collectionCombobox;
     Stage stage = new Stage();
     AppContext appContext = new AppContext();
+    private Runnable onSave;
 
 
     public void init(Stage stage, AppContext appContext) {
@@ -76,5 +77,12 @@ public class ShelfAddController {
         } else {
             // Show error message
         }
+    }
+
+    public void addEditingShelf(Shelf shelf) {
+    }
+
+    public void setOnSave(Runnable onSave) {
+        this.onSave = onSave;
     }
 }

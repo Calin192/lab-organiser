@@ -563,6 +563,7 @@ public class MainPage implements Observer {
 
                 controller.init(shelfStage, appContext, shelf,collection);
                 controller.setOnDelete(() -> update());
+                controller.setOnUpdate(() ->update());
 
                 shelfStage.setTitle("Shelf Details");
                 shelfStage.setScene(scene);
