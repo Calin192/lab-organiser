@@ -118,4 +118,15 @@ public class CollectionRepo {
         collection.removeShelf(shelf.getId());
         saveCollectionsToJson();
     }
+
+    public boolean updateCollection(Collection collection) {
+        for (int i = 0; i < collections.size(); i++) {
+            if (collections.get(i).getId()==collection.getId()) {
+                collections.set(i, collection);
+                saveCollectionsToJson();
+                return true;
+            }
+        }
+        return false;
+    }
 }

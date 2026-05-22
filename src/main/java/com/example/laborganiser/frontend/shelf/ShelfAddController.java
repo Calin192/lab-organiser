@@ -18,6 +18,9 @@ public class ShelfAddController {
     AppContext appContext = new AppContext();
     private Runnable onSave;
 
+    private Shelf shelf = null;
+    private Collection previousCollection = null;
+
 
     public void init(Stage stage, AppContext appContext) {
         this.appContext = appContext;
@@ -45,41 +48,87 @@ public class ShelfAddController {
         String name = shelfName.getText();
         String collectionName = (String) collectionCombobox.getValue();
 
-        if(name == null || name.trim().isEmpty()) {
-            // Show error message
-            return;
-        }
+        if(shelf==null) {
+            if (name == null || name.trim().isEmpty()) {
+                // Show error message
+                return;
+            }
 
-        if(collectionName == null) {
-            // Show error message
-            return;
-        }
+            if (collectionName == null) {
+                // Show error message
+                return;
+            }
 
-        Collection selectedCollection = appContext.getCollectionService().getCollection().stream()
-                .filter(c -> c.getName().equals(collectionName))
-                .findFirst()
-                .orElse(null);
+            Collection selectedCollection = appContext.getCollectionService().getCollection().stream()
+                    .filter(c -> c.getName().equals(collectionName))
+                    .findFirst()
+                    .orElse(null);
 
-        if(selectedCollection == null) {
-            // Show error message
-            return;
-        }
+            if (selectedCollection == null) {
+                // Show error message
+                return;
+            }
 
-        // Adaugă raftul în lista globală și obține ID-ul
-        int shelfId = appContext.getShelfService().addShelf(name);
-        Shelf shelf = appContext.getShelfService().getShelfById(shelfId);
 
-        // Adaugă ID-ul raftului în colecție
-        boolean addedToCollection = appContext.getCollectionService().addShelf(selectedCollection, shelf);
+            int shelfId = appContext.getShelfService().addShelf(name);
+            Shelf shelf = appContext.getShelfService().getShelfById(shelfId);
 
-        if(addedToCollection) {
-            stage.close();
-        } else {
-            // Show error message
+
+            boolean addedToCollection = appContext.getCollectionService().addShelf(selectedCollection, shelf);
+
+            if (addedToCollection) {
+                stage.close();
+            } else {
+                // Show error message
+            }
+        }else {
+            if (name == null || name.trim().isEmpty()) {
+                // Show error message
+                return;
+            }
+
+            if (collectionName == null) {
+                // Show error message
+                return;
+            }
+
+            Collection selectedCollection = appContext.getCollectionService().getCollection().stream()
+                    .filter(c -> c.getName().equals(collectionName))
+                    .findFirst()
+                    .orElse(null);
+
+            if (selectedCollection == null) {
+                // Show error message
+                return;
+            }
+
+            shelf.setName(name);
+            appContext.getShelfService().updateShelf(shelf);
+
+
+            Collection currentCollection = appContext.getCollectionService().getCollection(shelf);
+            if (previousCollection != null) {
+                appContext.getCollectionService().removeShelf(shelf, currentCollection);
+
+            }
+            appContext.getCollectionService().addShelf(selectedCollection, shelf);
+
+            if (onSave != null) {
+                onSave.run();
+            }
+             stage.close();
         }
     }
 
     public void addEditingShelf(Shelf shelf) {
+        this.shelf = shelf;
+
+        shelfName.setText(shelf.getName());
+        this.previousCollection = appContext.getCollectionService().getCollection(shelf);
+        if(previousCollection==null) {
+            collectionCombobox.setValue("N/A");
+        }else{
+        collectionCombobox.setValue(previousCollection.getName());}
     }
 
     public void setOnSave(Runnable onSave) {

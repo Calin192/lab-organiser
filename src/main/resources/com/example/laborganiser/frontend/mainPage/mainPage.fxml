@@ -13,7 +13,7 @@
     <left>
         <VBox spacing="10" styleClass="sidebar" fx:id="sidebarContainer" prefWidth="240" >
             <children>
-                <Button styleClass="nav-button" onAction="#onImageClick" text="Image test fuck" prefWidth="200"/>
+                <Button styleClass="nav-button" onAction="#onImageClick" text="Image test" prefWidth="200"/>
             </children>
         </VBox>
     </left>

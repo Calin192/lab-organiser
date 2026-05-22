@@ -132,4 +132,16 @@ public class ShelfRepo {
         shelf.removeVialId(id);
         saveShelvesToJson();
     }
+
+    public boolean updateShelf(Shelf shelf) {
+        for (int i = 0; i < shelves.size(); i++) {
+            if (shelves.get(i).getId()==shelf.getId()) {
+                shelves.set(i, shelf);
+                saveShelvesToJson();
+                return true;
+            }
+        }
+        return false;
+
+    }
 }

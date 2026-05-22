@@ -375,7 +375,7 @@ public class MainPage implements Observer {
     public void onImageClick(ActionEvent actionEvent) {
         Stage stage = new Stage();
 
-        var resource = getClass().getResource("/Images/Cub calin.png");
+        var resource = getClass().getResource("/Images/Group 31.png");
         if (resource == null) {
 
             return;
@@ -390,7 +390,7 @@ public class MainPage implements Observer {
         StackPane root = new StackPane(imageView);
         root.setStyle("-fx-background-color: red;");
 
-        Scene scene = new Scene(root, 400, 400);
+        Scene scene = new Scene(root, 800, 600);
 
         stage.setTitle("Image");
         stage.setScene(scene);
@@ -586,6 +586,7 @@ public class MainPage implements Observer {
                 Stage shelfStage = new Stage();
                 controller.init(shelfStage, appContext, collection);
                 controller.setOnDelete(() -> update());
+                controller.setOnUpdate(() ->update());
 
                 shelfStage.setTitle("Collection Details");
                 shelfStage.setScene(scene);

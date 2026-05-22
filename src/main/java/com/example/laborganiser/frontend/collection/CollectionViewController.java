@@ -3,14 +3,18 @@ package com.example.laborganiser.frontend.collection;
 import com.example.laborganiser.app.AppContext;
 import com.example.laborganiser.backend.collections.Collection;
 import com.example.laborganiser.backend.shelf.Shelf;
+import com.example.laborganiser.frontend.shelf.ShelfAddController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +35,7 @@ public class CollectionViewController {
     private Collection collection;
 
     private Runnable onDelete;
+    private Runnable onUpdate;
 
     public void onBackButtonClick(ActionEvent actionEvent) {
         if (stage != null) {
@@ -104,5 +109,38 @@ public class CollectionViewController {
 
     public void setOnDelete(Runnable onDelete) {
         this.onDelete = onDelete;
+    }
+
+    public void editCollection(ActionEvent actionEvent) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/laborganiser/frontend/collection/collectionAdd.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 600, 700);
+
+            CollectionAddController controller = fxmlLoader.getController();
+            Stage collectionStage = new Stage();
+
+            controller.init(collectionStage, appContext);
+            controller.addEditingCollection(collection);
+
+            controller.setOnSave(() -> {
+
+                Stage currentStage = (Stage) nameLabel.getScene().getWindow();
+                currentStage.close();
+
+                if (onUpdate != null) {
+                    onUpdate.run();
+                }
+            });
+
+            collectionStage.setTitle("Collection Details");
+            collectionStage.setScene(scene);
+            collectionStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setOnUpdate(Runnable onUpdate) {
+        this.onUpdate = onUpdate;
     }
 }

@@ -80,4 +80,8 @@ public class ShelfService {
     public void removeVial(int id, Shelf shelf) {
         shelfRepo.removeVial(id, shelf);
     }
+
+    public void updateShelf(Shelf shelf) {
+        shelfRepo.updateShelf(shelf);
+    }
 }
