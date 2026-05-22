@@ -135,12 +135,12 @@
                                                    fitWidth="120"
                                                    fitHeight="120"
                                                    preserveRatio="true"
-                                                   smooth="false"
+                                                   smooth="true"
                                                    cache="true"/>
 
                                     </StackPane>
 
-                                    <StackPane prefWidth="160" prefHeight="160">
+                                    <StackPane prefWidth="160" prefHeight="160" translateY="-10">
 
                                         <Rectangle width="120"
                                                    height="160"
@@ -151,7 +151,7 @@
                                                    fitWidth="160"
                                                    fitHeight="160"
                                                    preserveRatio="true"
-                                                   smooth="false"
+                                                   smooth="true"
                                                    cache="true"/>
 
                                     </StackPane>

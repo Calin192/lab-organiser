@@ -14,7 +14,7 @@ public class ImageCache {
                 120,
                 120,
                 true,
-                false
+                true
         );
 
         CAP_IMAGE = new Image(
@@ -22,7 +22,7 @@ public class ImageCache {
                 160,
                 160,
                 true,
-                false
+                true
         );
     }
 }
