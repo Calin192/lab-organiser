@@ -3,11 +3,17 @@ package com.example.laborganiser.frontend.vial;
 import com.example.laborganiser.app.AppContext;
 import com.example.laborganiser.backend.shelf.Shelf;
 import com.example.laborganiser.backend.vials.Vial;
+import com.example.laborganiser.frontend.collection.CollectionViewController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class VialViewController {
     public Label shelfLabel;
@@ -27,6 +33,8 @@ public class VialViewController {
     private Shelf shelf;
 
     private Runnable onDelete;
+
+    private VialAddController controller;
 
     public void init(Stage stage, AppContext appContext, Vial vial, Shelf shelf) {
         this.appContext = appContext;
@@ -125,4 +133,29 @@ public class VialViewController {
     }
 
 
+    public void editVial(ActionEvent actionEvent) throws IOException {
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("vialAdd.fxml"));
+//        Parent root = loader.load();
+//
+//        this.controller = loader.getController();
+
+
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/laborganiser/frontend/vial/vialAdd.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 600, 700);
+
+            VialAddController controller = fxmlLoader.getController();
+            Stage shelfStage = new Stage();
+
+            controller.init(shelfStage, appContext);
+            controller.addEditingVial(vial);
+
+
+            shelfStage.setTitle("Vial Details");
+            shelfStage.setScene(scene);
+            shelfStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

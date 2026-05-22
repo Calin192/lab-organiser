@@ -2,12 +2,17 @@ package com.example.laborganiser.frontend.vial;
 
 import com.example.laborganiser.app.AppContext;
 import com.example.laborganiser.backend.shelf.Shelf;
+import com.example.laborganiser.backend.vials.Vial;
 import com.example.laborganiser.frontend.alerts.AlertWindow;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class VialAddController {
 
@@ -41,6 +46,46 @@ public class VialAddController {
 
     private AlertWindow alert;
 
+    private Vial editingVial = null;
+
+
+
+    public void addEditingVial(Vial vial) {
+        this.editingVial = vial;
+        vialNameField.setText(vial.getName());
+        vialShapeField.setText(vial.getShape());
+        shelfComboBox.setValue(appContext.getShelfService().getShelf(vial).getName());
+        if(vial.getMaterial().equals("PLASTIC")){
+            materialGroup.selectToggle(plasticBtn);
+        }else{
+            materialGroup.selectToggle(glassBtn);
+        }
+        vialShapeField.setText(vial.getShape());
+        vialVolumeField.setText(vial.getSize());
+        vialUnitField.setValue(vial.getUnit());
+
+
+        vialCapField.setText(vial.getCap());
+
+        vialCapColorField.setValue(Color.web(normalizeHex(vial.getCapColor())));
+        vialColorField.setValue(Color.web(normalizeHex(vial.getColor())));
+
+        vialDescriptionField.setText(vial.getDescription());
+    }
+
+    private String normalizeHex(String hex) {
+        if (hex == null || hex.isBlank()) {
+            return "#FFFFFF";
+        }
+
+        hex = hex.trim();
+
+        if (!hex.startsWith("#")) {
+            hex = "#" + hex;
+        }
+
+        return hex;
+    }
     public void onAddVialClicked(ActionEvent actionEvent) {
 
         alert = new AlertWindow();
@@ -49,10 +94,8 @@ public class VialAddController {
         String material = null;
 
         if (selected != null) {
-            material = ((ToggleButton) selected).getText(); // "PLASTIC" sau "GLASS"
+            material = ((ToggleButton) selected).getText();
         }
-
-
 
 
         String selectedShelfName = shelfComboBox.getValue().toString();
