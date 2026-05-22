@@ -1,5 +1,6 @@
 package com.example.laborganiser.backend.collections;
 
+import com.example.laborganiser.backend.shelf.Shelf;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -111,5 +112,10 @@ public class CollectionRepo {
             }
         }
         return false;
+    }
+
+    public void removeShelf(Shelf shelf, Collection collection) {
+        collection.removeShelf(shelf.getId());
+        saveCollectionsToJson();
     }
 }

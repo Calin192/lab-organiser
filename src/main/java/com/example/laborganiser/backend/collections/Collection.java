@@ -54,4 +54,8 @@ public class Collection {
         }
         return 0;
     }
+
+    public void removeShelf(int id) {
+        this.shelfIds.remove(Integer.valueOf(id));
+    }
 }

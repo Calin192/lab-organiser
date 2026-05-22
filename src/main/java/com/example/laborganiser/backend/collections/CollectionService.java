@@ -75,4 +75,7 @@ public class CollectionService {
         }
     }
 
+    public void removeShelf(Shelf shelf, Collection collection) {
+        collectionRepo.removeShelf(shelf, collection);
+    }
 }

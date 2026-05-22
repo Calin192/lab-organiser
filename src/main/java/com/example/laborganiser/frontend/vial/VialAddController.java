@@ -55,7 +55,16 @@ public class VialAddController {
         this.editingVial = vial;
         vialNameField.setText(vial.getName());
         vialShapeField.setText(vial.getShape());
-        shelfComboBox.setValue(appContext.getShelfService().getShelf(vial).getName());
+
+        Shelf shelf = appContext.getShelfService().getShelf(vial);
+        if(shelf == null){
+            shelfComboBox.getSelectionModel().clearSelection();
+        }
+        else
+        {
+            shelfComboBox.setValue(shelf.getName());
+        }
+
         if(vial.getMaterial().equals("PLASTIC")){
             materialGroup.selectToggle(plasticBtn);
         }else{
@@ -171,9 +180,9 @@ public class VialAddController {
                         .orElse(null);
             }
 
-
-            appContext.getShelfService().removeVial(vial.getId(), previousShelf);
-
+            if(previousShelf != null){
+                appContext.getShelfService().removeVial(vial.getId(), previousShelf);
+            }
             appContext.getShelfService().addVial(selectedShelf, vial.getId());
 
             appContext.getVialService().updateVial(vial);

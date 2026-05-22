@@ -85,6 +85,11 @@ public class ShelfViewController {
         appContext.getShelfService().removeShelf(shelf);
         stage.close();
 
+        appContext.getCollectionService().removeShelf(shelf, collection);
+
+
+
+
         if (onDelete != null) {
             onDelete.run();
         }

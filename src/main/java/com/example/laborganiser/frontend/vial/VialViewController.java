@@ -51,7 +51,11 @@ public class VialViewController {
         if (vial != null) {
             nameLabel.setText(vial.getName() != null ? vial.getName() : "N/A");
             materialLabel.setText(vial.getMaterial() != null ? vial.getMaterial() : "N/A");
-            shelfLabel.setText(shelf.getName() != null ? shelf.getName() : "N/A");
+            if(shelf == null){
+                shelfLabel.setText("N/A");
+            }else {
+                shelfLabel.setText(shelf.getName() != null ? shelf.getName() : "N/A");
+            }
             sizeLabel.setText(vial.getSize() + " " + (vial.getUnit() != null ? vial.getUnit() : ""));
 
             String colorHex = vial.getColor();
