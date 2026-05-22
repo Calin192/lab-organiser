@@ -540,6 +540,7 @@ public class MainPage implements Observer {
 
             controller.init(vialStage, appContext, vial, shelf);
             controller.setOnDelete(() -> update());
+            controller.setOnUpdate(() ->update());
 
             vialStage.setTitle("Vial Details");
             vialStage.setScene(scene);

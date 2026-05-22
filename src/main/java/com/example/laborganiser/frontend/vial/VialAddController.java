@@ -6,13 +6,9 @@ import com.example.laborganiser.backend.vials.Vial;
 import com.example.laborganiser.frontend.alerts.AlertWindow;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 
 public class VialAddController {
 
@@ -47,10 +43,15 @@ public class VialAddController {
     private AlertWindow alert;
 
     private Vial editingVial = null;
+    private Runnable onSave;
 
+    private Shelf previousShelf = null;
 
 
     public void addEditingVial(Vial vial) {
+
+        previousShelf = appContext.getShelfService().getShelf(vial);
+
         this.editingVial = vial;
         vialNameField.setText(vial.getName());
         vialShapeField.setText(vial.getShape());
@@ -90,49 +91,100 @@ public class VialAddController {
 
         alert = new AlertWindow();
 
-        Toggle selected = materialGroup.getSelectedToggle();
-        String material = null;
 
-        if (selected != null) {
-            material = ((ToggleButton) selected).getText();
+
+
+        if(editingVial == null) {
+
+            Toggle selected = materialGroup.getSelectedToggle();
+            String material = null;
+
+            if (selected != null) {
+                material = ((ToggleButton) selected).getText();
+            }
+
+            String selectedShelfName = shelfComboBox.getValue().toString();
+
+            Shelf selectedShelf = null;
+            if (selectedShelfName != null && appContext.getShelfService() != null) {
+                selectedShelf = appContext.getShelfService().getAllShelves().stream()
+                        .filter(shelf -> shelf.getName().equals(selectedShelfName))
+                        .findFirst()
+                        .orElse(null);
+            }
+
+
+
+
+            if (selectedShelf == null) {
+                alert.showAlert("Error", "Please select a shelf.");
+                return;
+            }
+
+
+            String colorHex = colorToHex(vialColorField.getValue());
+            String capColorHex = colorToHex(vialCapColorField.getValue());
+
+            int vialId = appContext.getVialService().addVial(
+                    vialNameField.getText(),
+                    material,
+                    vialShapeField.getText(),
+                    vialVolumeField.getText(),
+                    vialUnitField.getValue(),
+                    colorHex,
+                    vialCapField.getText(),
+                    capColorHex,
+                    vialDescriptionField.getText(),
+                    appContext.getCurrentUser().getUsername()
+            );
+
+            appContext.getShelfService().addVial(selectedShelf, vialId);
         }
+        else{
+            Vial vial = new Vial();
+            vial.setId(editingVial.getId());
+            vial.setName(vialNameField.getText());
+            Toggle selected = materialGroup.getSelectedToggle();
+            String material = null;
+
+            if (selected != null) {
+                material = ((ToggleButton) selected).getText();
+            }
+            vial.setMaterial(material);
+            vial.setShape(vialShapeField.getText());
+            vial.setSize(vialVolumeField.getText());
+            vial.setUnit(vialUnitField.getValue());
+            vial.setCap(vialCapField.getText());
+
+            vial.setColor(colorToHex(vialColorField.getValue()));
+            vial.setCapColor(colorToHex(vialCapColorField.getValue()));
+
+            vial.setDescription(vialDescriptionField.getText());
+
+            String selectedShelfName = shelfComboBox.getValue().toString();
+
+            Shelf selectedShelf = null;
+            if (selectedShelfName != null && appContext.getShelfService() != null) {
+                selectedShelf = appContext.getShelfService().getAllShelves().stream()
+                        .filter(shelf -> shelf.getName().equals(selectedShelfName))
+                        .findFirst()
+                        .orElse(null);
+            }
 
 
-        String selectedShelfName = shelfComboBox.getValue().toString();
-        Shelf selectedShelf = null;
-        if (selectedShelfName != null && appContext.getShelfService() != null) {
-            selectedShelf = appContext.getShelfService().getAllShelves().stream()
-                    .filter(shelf -> shelf.getName().equals(selectedShelfName))
-                    .findFirst()
-                    .orElse(null);
+            appContext.getShelfService().removeVial(vial.getId(), previousShelf);
+
+            appContext.getShelfService().addVial(selectedShelf, vial.getId());
+
+            appContext.getVialService().updateVial(vial);
+
         }
-
-
-        if (selectedShelf == null) {
-            alert.showAlert("Error", "Please select a shelf.");
-            return;
-        }
-
-
-        String colorHex = colorToHex(vialColorField.getValue());
-        String capColorHex = colorToHex(vialCapColorField.getValue());
-
-        int vialId = appContext.getVialService().addVial(
-                vialNameField.getText(),
-                material,
-                vialShapeField.getText(),
-                vialVolumeField.getText(),
-                vialUnitField.getValue(),
-                colorHex,
-                vialCapField.getText(),
-                capColorHex,
-                vialDescriptionField.getText(),
-                appContext.getCurrentUser().getUsername()
-        );
-
-        appContext.getShelfService().addVial(selectedShelf, vialId);
-
         Stage stage = (Stage) vialNameField.getScene().getWindow();
+
+        if (onSave != null) {
+            onSave.run();
+        }
+
         stage.close();
     }
 
@@ -187,7 +239,7 @@ public class VialAddController {
         String cap = vialCapField.getText().trim();
         Color capColor = vialCapColorField.getValue();
 
-        // Verifică dacă toate câmpurile sunt completate și materialul e selectat
+
         boolean allFieldsFilled = !name.isEmpty() && !shape.isEmpty() && !volume.isEmpty()
                 && unit != null && color != null && !cap.isEmpty() && capColor != null;
 
@@ -203,4 +255,9 @@ public class VialAddController {
         int b = (int) Math.round(color.getBlue() * 255);
         return String.format("#%02X%02X%02X", r, g, b);
     }
+
+    public void setOnSave(Runnable onSave) {
+        this.onSave = onSave;
+    }
+
 }

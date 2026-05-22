@@ -33,8 +33,10 @@ public class VialViewController {
     private Shelf shelf;
 
     private Runnable onDelete;
+    private Runnable onUpdate;
 
     private VialAddController controller;
+
 
     public void init(Stage stage, AppContext appContext, Vial vial, Shelf shelf) {
         this.appContext = appContext;
@@ -131,15 +133,12 @@ public class VialViewController {
     public void setOnDelete(Runnable onDelete) {
         this.onDelete = onDelete;
     }
+    public void setOnUpdate(Runnable onUpdate) {
+        this.onUpdate = onUpdate;
+    }
 
 
-    public void editVial(ActionEvent actionEvent) throws IOException {
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("vialAdd.fxml"));
-//        Parent root = loader.load();
-//
-//        this.controller = loader.getController();
-
-
+    public void editVial(ActionEvent actionEvent){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/example/laborganiser/frontend/vial/vialAdd.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 600, 700);
@@ -150,6 +149,16 @@ public class VialViewController {
             controller.init(shelfStage, appContext);
             controller.addEditingVial(vial);
 
+            controller.setOnSave(() -> {
+
+
+                Stage currentStage = (Stage) nameLabel.getScene().getWindow();
+                currentStage.close();
+
+                if (onUpdate != null) {
+                    onUpdate.run();
+                }
+            });
 
             shelfStage.setTitle("Vial Details");
             shelfStage.setScene(scene);
@@ -158,4 +167,6 @@ public class VialViewController {
             e.printStackTrace();
         }
     }
+
+
 }

@@ -50,4 +50,8 @@ public class VialService {
     public Vial getVialById(Integer vialId) {
         return vialRepo.getVial(vialId);
     }
+
+    public void updateVial(Vial vial) {
+        vialRepo.updateVial(vial);
+    }
 }
