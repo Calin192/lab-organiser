@@ -25,6 +25,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import com.example.laborganiser.app.ImageCache;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -63,8 +64,12 @@ public class MainPage implements Observer {
     private FilterType currentFilter = FilterType.VIALS;
 
     public void init(Stage stage, AppContext appContext) {
+
         this.stage = stage;
         this.appContext = appContext;
+
+        ImageCache.loadImages();
+
 
         appContext.getCollectionService().addObserver(this);
         appContext.getShelfService().addObserver(this);

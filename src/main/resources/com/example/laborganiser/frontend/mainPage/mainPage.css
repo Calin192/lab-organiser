@@ -146,3 +146,10 @@
     -fx-font-size: 21px;
     -fx-font-weight: bold;
 }
+
+.sidebar-label{
+    -fx-font-size: 23px;
+    -fx-font-family: "Playfair Display", serif;
+    -fx-font-weight: 700;
+
+}

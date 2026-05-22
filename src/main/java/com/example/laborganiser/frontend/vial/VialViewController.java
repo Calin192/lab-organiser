@@ -11,12 +11,17 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import com.example.laborganiser.app.ImageCache;
 
 import java.io.IOException;
 
 public class VialViewController {
     public Label shelfLabel;
+    public Rectangle capRectangle;
+    public Rectangle bottleRectangle;
     @FXML private Label nameLabel;
     @FXML private Label materialLabel;
     //@FXML private Label shapeLabel;
@@ -35,7 +40,11 @@ public class VialViewController {
     private Runnable onDelete;
     private Runnable onUpdate;
 
-    private VialAddController controller;
+    @FXML
+    private ImageView bottleImageView;
+
+    @FXML
+    private ImageView capImageView;
 
 
     public void init(Stage stage, AppContext appContext, Vial vial, Shelf shelf) {
@@ -43,6 +52,9 @@ public class VialViewController {
         this.stage = stage;
         this.vial = vial;
         this.shelf = shelf;
+
+        bottleImageView.setImage(ImageCache.BOTTLE_IMAGE);
+        capImageView.setImage(ImageCache.CAP_IMAGE);
 
         displayVialDetails();
     }
@@ -64,6 +76,8 @@ public class VialViewController {
                 colorLabel.setText(norm);
                 String textColor = isLight(norm) ? "#000000" : "#FFFFFF";
                 colorLabel.setStyle("-fx-background-color: " + norm + "; -fx-text-fill: " + textColor + "; -fx-padding: 6px; -fx-background-radius: 4px;");
+
+                bottleRectangle.setFill(javafx.scene.paint.Color.web(norm));
             } else {
                 colorLabel.setText("N/A");
                 colorLabel.setStyle("");
@@ -80,11 +94,17 @@ public class VialViewController {
                     capColorLabel.setText(capNorm);
                     String capTextColor = isLight(capNorm) ? "#000000" : "#FFFFFF";
                     capColorLabel.setStyle("-fx-background-color: " + capNorm + "; -fx-text-fill: " + capTextColor + "; -fx-padding: 6px; -fx-background-radius: 4px;");
+
+                    capRectangle.setFill(javafx.scene.paint.Color.web(capNorm));
                 } else {
                     capColorLabel.setText("N/A");
                     capColorLabel.setStyle("");
                 }
             }
+
+
+
+
 
             ownerLabel.setText(vial.getOwner() != null ? vial.getOwner() : "N/A");
             descriptionArea.setText(vial.getDescription() != null ? vial.getDescription() : "No description");

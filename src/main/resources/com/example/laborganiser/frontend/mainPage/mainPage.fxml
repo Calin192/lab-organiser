@@ -11,9 +11,17 @@
 
 
     <left>
-        <VBox spacing="10" styleClass="sidebar" fx:id="sidebarContainer" prefWidth="240" >
+        <VBox spacing="20" styleClass="sidebar" fx:id="sidebarContainer" prefWidth="240" alignment="TOP_CENTER" translateY="20">
             <children>
-                <Button styleClass="nav-button" onAction="#onImageClick" text="Image test" prefWidth="200"/>
+<!--                <Button styleClass="nav-button" onAction="#onImageClick" text="Image test" prefWidth="200"/>-->
+                <ImageView>
+                    <image>
+                        <Image url="@/Images/flask 1.png"
+                        requestedHeight="32"
+                        requestedWidth="32"/>
+                    </image>
+                </ImageView>
+                <Label text="Laboratorium" styleClass="sidebar-label"/>
             </children>
         </VBox>
     </left>
